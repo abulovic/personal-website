@@ -1,0 +1,1586 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ana Bulović</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:       #090909;
+      --surface:  #111111;
+      --surface2: #181818;
+      --border:   #1C1C1C;
+      --text:     #F0EFEC;
+      --text2:    #7A7A76;
+      --text3:    #363636;
+      --inner:    #A28EC8;
+      --shared:   #6FA09A;
+      --built:    #BF7055;
+      --living:   #C09A6A;
+      --gold:     #C4A882;
+      --accent:   #BF2318;
+      --font-d: 'Syne', system-ui, sans-serif;
+      --font-b: 'DM Sans', system-ui, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y proximity;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-b);
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ─── SNAP ─── */
+    .snap-section { scroll-snap-align: start; }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 580px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-photo-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-photo-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 32%;
+      display: block;
+      will-change: transform;
+    }
+    .hero-photo-vignette {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom,
+          rgba(9,9,9,0.55) 0%,
+          rgba(9,9,9,0.05) 28%,
+          rgba(9,9,9,0.05) 52%,
+          rgba(9,9,9,0.88) 100%),
+        radial-gradient(ellipse 85% 80% at 50% 45%, transparent 30%, rgba(9,9,9,0.38) 100%);
+    }
+
+    /* Grain */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.038;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    /* Geometric shapes SVG */
+    .hero-geo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    /* Nav */
+    .hero-nav {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      z-index: 10;
+      padding: clamp(22px, 3.5vh, 44px) clamp(24px, 7vw, 110px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hero-nav-name {
+      font-family: var(--font-b);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text2);
+    }
+
+    .hero-nav-contact {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--text2);
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+    .hero-nav-contact:hover, .hero-nav-contact:focus-visible { color: var(--text); outline: none; }
+
+    /* Centered name overlay */
+    .hero-overlay {
+      position: relative;
+      z-index: 4;
+      text-align: center;
+      padding: 0 clamp(16px, 4vw, 60px) clamp(52px, 9vh, 100px);
+      width: 100%;
+    }
+
+    .hero-name {
+      font-family: var(--font-d);
+      font-weight: 800;
+      font-size: clamp(46px, 8vw, 110px);
+      line-height: 0.88;
+      letter-spacing: -0.045em;
+      color: var(--text);
+      text-align: center;
+      margin-bottom: clamp(16px, 2.5vh, 24px);
+    }
+
+    .hero-tagline {
+      font-family: var(--font-b);
+      font-weight: 300;
+      font-size: clamp(10px, 1.1vw, 16px);
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--text2);
+    }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: clamp(24px, 4vh, 48px);
+      right: clamp(24px, 7vw, 110px);
+      z-index: 6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .scroll-cue-line {
+      width: 1px;
+      height: 52px;
+      background: linear-gradient(to bottom, var(--text3), transparent);
+      animation: cue 2.4s ease-in-out infinite;
+    }
+    @keyframes cue { 0%,100%{opacity:.3;transform:scaleY(1)} 50%{opacity:.8;transform:scaleY(1.08)} }
+
+    /* ─── CONSTELLATION ─── */
+    .const-section {
+      min-height: 100vh;
+      padding: clamp(64px, 10vh, 120px) 0 clamp(48px, 8vh, 96px);
+    }
+
+    .const-header {
+      padding: 0 clamp(24px, 7vw, 110px);
+      margin-bottom: clamp(40px, 6vh, 76px);
+    }
+
+    .eyebrow {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text3);
+      margin-bottom: 14px;
+    }
+
+    .const-title {
+      font-family: var(--font-d);
+      font-size: clamp(22px, 3vw, 38px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.12;
+      color: var(--text);
+      max-width: 680px;
+    }
+
+    .const-wrap {
+      position: relative;
+      width: 100%;
+      cursor: default;
+      user-select: none;
+    }
+
+    #map {
+      width: 100%;
+      height: auto;
+      display: block;
+      overflow: visible;
+    }
+
+    .w-node, .p-node { cursor: pointer; }
+    .w-outer { transition: fill-opacity 0.3s ease, stroke-opacity 0.3s ease; }
+    .w-dot   { transition: r 0.3s ease, fill-opacity 0.3s ease; }
+    .p-dot   { transition: r 0.3s ease, fill-opacity 0.3s ease, stroke-opacity 0.3s ease; }
+    .p-label { transition: fill-opacity 0.3s ease; }
+    .conn    { transition: stroke-opacity 0.3s ease, stroke-width 0.3s ease; }
+
+    .w-ring  {
+      fill: none;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    @keyframes breathe-inner  { 0%,100%{opacity:.18;transform:scale(1)}  55%{opacity:.07;transform:scale(1.12)} }
+    @keyframes breathe-shared { 0%,100%{opacity:.18;transform:scale(1)}  55%{opacity:.07;transform:scale(1.12)} }
+    @keyframes breathe-built  { 0%,100%{opacity:.18;transform:scale(1)}  55%{opacity:.07;transform:scale(1.12)} }
+    @keyframes breathe-living { 0%,100%{opacity:.18;transform:scale(1)}  55%{opacity:.07;transform:scale(1.12)} }
+
+    .ring-inner  { animation: breathe-inner  5.2s ease-in-out infinite; }
+    .ring-shared { animation: breathe-shared 6.1s ease-in-out infinite 1.3s; }
+    .ring-built  { animation: breathe-built  5.7s ease-in-out infinite 0.7s; }
+    .ring-living { animation: breathe-living 6.5s ease-in-out infinite 2.1s; }
+
+    .w-ring-2, .w-ring-3 { fill: none; transform-box: fill-box; transform-origin: center; opacity: 0; }
+    .orbit-dot { opacity: 0; }
+
+    /* ─── HOVER CARD ─── */
+    .h-card {
+      position: fixed;
+      z-index: 200;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(8px) scale(0.98);
+      transition: opacity 0.2s ease, transform 0.28s cubic-bezier(0.34, 1.3, 0.64, 1);
+      width: 520px;
+    }
+    .h-card.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+    a.h-card-name {
+      text-decoration: none;
+      display: block;
+      transition: opacity 0.18s ease;
+    }
+    a.h-card-name:hover, a.h-card-name:focus-visible { opacity: 0.78; outline: none; }
+    .h-card-body {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      box-shadow:
+        0 2px 8px rgba(0,0,0,.55),
+        0 12px 36px rgba(0,0,0,.5),
+        0 0 0 1px rgba(255,255,255,.025);
+    }
+    .h-card-img {
+      position: relative;
+      height: 190px;
+      overflow: hidden;
+    }
+    .h-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(1) contrast(1.08);
+      transition: transform 0.4s ease;
+    }
+    .h-card-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(17,17,17,.92) 0%, transparent 55%);
+    }
+    .h-card-bottom {
+      display: flex;
+    }
+    .h-card-main {
+      flex: 1;
+      min-width: 0;
+      padding: 18px 18px 18px 22px;
+    }
+    .h-card-divider {
+      width: 1px;
+      background: var(--border);
+      flex-shrink: 0;
+      align-self: stretch;
+    }
+    .h-card-funding {
+      width: 148px;
+      flex-shrink: 0;
+      padding: 18px 18px 18px 16px;
+    }
+    .h-fund-label {
+      font-size: 8.5px;
+      font-weight: 500;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--text3);
+      margin-bottom: 9px;
+    }
+    .h-fund-list {
+      font-family: var(--font-b);
+      font-size: 11px;
+      font-weight: 300;
+      line-height: 1.72;
+      color: var(--text2);
+    }
+    .h-card-eye  { font-size: 9.5px; font-weight: 500; letter-spacing: .17em; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; }
+    .h-card-name { font-family: var(--font-d); font-size: 20px; font-weight: 700; letter-spacing: -.02em; color: var(--text); margin-bottom: 10px; line-height: 1.1; }
+    .h-card-desc { font-size: 12px; font-weight: 300; line-height: 1.68; color: var(--text2); margin-bottom: 12px; }
+    .h-card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .h-tag {
+      font-size: 9.5px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 1px; border: 1px solid;
+    }
+    .h-card.h-compact { width: 290px; }
+    .h-card.h-compact .h-card-body { padding: 20px 22px 18px; }
+
+    /* ─── SELECTED WORK ─── */
+    .work-section {
+      min-height: 100vh;
+      padding: 0 0 clamp(80px, 12vh, 140px);
+      border-top: 1px solid var(--border);
+    }
+
+    .work-header {
+      padding: clamp(60px, 9vh, 110px) clamp(24px, 7vw, 110px) clamp(40px, 6vh, 72px);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 2px;
+    }
+
+    @media (max-width: 860px) {
+      .work-grid { grid-template-columns: 1fr 1fr; }
+      .work-item:last-child { display: none; }
+    }
+
+    @media (max-width: 560px) {
+      .work-grid { grid-template-columns: 1fr; }
+    }
+
+    .work-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--surface);
+    }
+
+    .work-item--tall { grid-row: span 2; }
+
+    .work-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      min-height: 280px;
+    }
+
+    .work-item:hover img { transform: scale(1.05); }
+
+    .work-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(9,9,9,.88) 0%, transparent 50%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: clamp(18px, 3vw, 32px);
+    }
+
+    .work-item-eye {
+      font-size: 9.5px;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--text3);
+      margin-bottom: 7px;
+      transition: color 0.3s ease;
+    }
+
+    .work-item:hover .work-item-eye { color: var(--text2); }
+
+    .work-item-title {
+      font-family: var(--font-d);
+      font-size: clamp(18px, 2.2vw, 26px);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+      color: var(--text);
+    }
+
+    /* ─── ABOUT ─── */
+    .about-section {
+      min-height: 100vh;
+      padding: clamp(80px, 12vh, 140px) clamp(24px, 7vw, 110px);
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: clamp(48px, 7vw, 110px);
+      border-top: 1px solid var(--border);
+    }
+    @media (max-width: 760px) { .about-section { grid-template-columns: 1fr; } }
+
+    .about-text {
+      font-family: var(--font-b);
+      font-size: clamp(15px, 1.6vw, 19px);
+      font-weight: 300;
+      line-height: 1.78;
+      color: var(--text2);
+    }
+    .about-text em { font-style: italic; color: var(--text); }
+
+    .creds { display: flex; flex-direction: column; }
+    .cred {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px 12px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .cred:first-child { padding-top: 0; }
+    .cred:last-child  { border-bottom: none; }
+    .cred-title { font-size: 13px; font-weight: 400; color: var(--text); margin-bottom: 3px; }
+    .cred-sub   { font-size: 11.5px; font-weight: 300; color: var(--text2); line-height: 1.5; }
+    .cred-sub em { font-style: italic; }
+    .cred-year  { font-size: 11px; color: var(--text3); white-space: nowrap; padding-top: 1px; }
+
+    /* ─── TURTLE MAFIA ─── */
+    .turtle {
+      padding: clamp(40px, 6vh, 72px) clamp(24px, 7vw, 110px);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: clamp(24px, 5vw, 64px);
+      flex-wrap: wrap;
+    }
+    .turtle-label { font-size: 10px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--text3); white-space: nowrap; }
+    .turtle-text  { font-size: 13.5px; font-weight: 300; line-height: 1.65; color: var(--text2); max-width: 560px; }
+    .turtle-text strong { font-weight: 400; color: var(--text); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .footer-meta {
+      padding: clamp(28px, 4vh, 48px) clamp(24px, 7vw, 110px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .footer-tagline {
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--text3);
+    }
+
+    .footer-mail {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--text3);
+      text-decoration: none;
+      transition: color .25s ease;
+      letter-spacing: .04em;
+    }
+    .footer-mail:hover, .footer-mail:focus-visible { color: var(--text); outline: none; }
+
+    .footer-wordmark {
+      padding: clamp(16px, 3vh, 32px) clamp(8px, 2vw, 24px) 0;
+      line-height: 0.82;
+    }
+
+    .footer-wordmark-text {
+      font-family: var(--font-d);
+      font-size: clamp(72px, 16vw, 240px);
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      color: var(--surface2);
+      display: block;
+      white-space: nowrap;
+      transition: color 0.5s ease;
+      user-select: none;
+    }
+
+    footer:hover .footer-wordmark-text { color: var(--surface2); }
+
+    .footer-wordmark-text .accent {
+      color: var(--text3);
+      transition: color 0.4s ease;
+    }
+
+    footer:hover .footer-wordmark-text .accent { color: var(--text2); }
+
+    /* ─── QUOTE GRAPH ─── */
+    .qg-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: clamp(60px, 9vh, 110px) 0;
+      position: relative;
+    }
+
+    .qg-split {
+      display: flex;
+      align-items: center;
+      gap: clamp(40px, 6vw, 96px);
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 0 clamp(24px, 6vw, 60px);
+    }
+
+    .qg-wrap {
+      flex: 0 0 auto;
+      width: clamp(320px, 46vw, 560px);
+    }
+
+    .qg-bio {
+      flex: 1;
+      font-family: var(--font-b);
+      font-size: clamp(15px, 1.5vw, 18px);
+      font-weight: 300;
+      line-height: 1.82;
+      color: var(--text2);
+    }
+
+    .qg-bio p + p { margin-top: 1.4em; }
+
+    @media (max-width: 720px) {
+      .qg-split { flex-direction: column; }
+      .qg-wrap { width: 100%; max-width: 400px; }
+    }
+
+    #qg-map {
+      width: 100%;
+      height: auto;
+      display: block;
+      overflow: visible;
+    }
+
+    .qg-dot, .qg-ring, .qg-outer {
+      transform-box: fill-box;
+      transform-origin: center;
+      opacity: 0;
+      transform: scale(0.12);
+      transition: opacity 0.55s ease, transform 0.62s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .qg-text-group { opacity: 0; }
+
+    .qg-arc { fill: none; stroke-width: 0.8; stroke-linecap: round; }
+
+    @keyframes qg-breathe-a { 0%,100%{opacity:.28;transform:scale(1)} 55%{opacity:.08;transform:scale(1.22)} }
+    @keyframes qg-breathe-b { 0%,100%{opacity:.28;transform:scale(1)} 55%{opacity:.08;transform:scale(1.22)} }
+    @keyframes qg-breathe-c { 0%,100%{opacity:.28;transform:scale(1)} 55%{opacity:.08;transform:scale(1.22)} }
+
+    .qg-section.qg-active .qg-dot  { opacity: 1; transform: scale(1); }
+    .qg-section.qg-active .qg-outer { opacity: 1; transform: scale(1); }
+    .qg-section.qg-active .qg-ring-a { opacity: .28; transform: scale(1); animation: qg-breathe-a 5.5s ease-in-out infinite; }
+    .qg-section.qg-active .qg-ring-b { opacity: .28; transform: scale(1); animation: qg-breathe-b 6.2s ease-in-out infinite 1.4s; }
+    .qg-section.qg-active .qg-ring-c { opacity: .28; transform: scale(1); animation: qg-breathe-c 5.8s ease-in-out infinite 0.8s; }
+
+    /* ─── GEO TRANSITIONS ─── */
+    .geo-transition {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 0;
+      overflow: visible;
+      position: relative;
+    }
+    .geo-svg { width: 320px; height: 90px; overflow: visible; }
+    .geo-dot, .geo-ring {
+      transform-box: fill-box;
+      transform-origin: center;
+      opacity: 0;
+      transform: scale(0.15);
+      transition: opacity 0.55s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .geo-line {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    .geo-transition.geo-active .geo-dot,
+    .geo-transition.geo-active .geo-ring {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .geo-transition.geo-active .geo-line { opacity: 1; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero snap-section">
+  <nav class="hero-nav">
+    <span class="hero-nav-name">ANA BULOVIĆ</span>
+    <a class="hero-nav-contact" href="mailto:bulovic.ana@gmail.com">Contact</a>
+  </nav>
+
+  <!-- Full-bleed photo -->
+  <div class="hero-photo-bg">
+    <img id="hero-photo-img" src="/brand_assets/ana_bulovic_photo.jpg" alt="Ana Bulović" loading="eager"/>
+    <div class="hero-photo-vignette"></div>
+  </div>
+
+  <!-- Geometric shapes SVG — scatter on scroll -->
+  <svg id="hero-geo" class="hero-geo" viewBox="0 0 1000 625" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+
+    <!-- Outer ring -->
+    <g class="geo-scatter" data-dx="0" data-dy="-0.6" data-rot="0" data-cx="500" data-cy="290">
+      <circle cx="500" cy="290" r="232"
+        fill="none" stroke="#F0EFEC" stroke-width="0.8" stroke-opacity="0.14"/>
+    </g>
+
+    <!-- Hexagon -->
+    <g class="geo-scatter" data-dx="0.4" data-dy="0.6" data-rot="12" data-cx="500" data-cy="290">
+      <polygon points="680,290 590,134 410,134 320,290 410,446 590,446"
+        fill="none" stroke="#F0EFEC" stroke-width="0.7" stroke-opacity="0.1"/>
+    </g>
+
+    <!-- Middle dashed ring -->
+    <g class="geo-scatter" data-dx="-0.5" data-dy="0.4" data-rot="-8" data-cx="500" data-cy="290">
+      <circle cx="500" cy="290" r="158"
+        fill="none" stroke="#F0EFEC" stroke-width="0.6" stroke-opacity="0.12"
+        stroke-dasharray="6 14"/>
+    </g>
+
+    <!-- Inner tight ring -->
+    <g class="geo-scatter" data-dx="0.2" data-dy="-0.4" data-rot="5" data-cx="500" data-cy="290">
+      <circle cx="500" cy="290" r="96"
+        fill="none" stroke="#F0EFEC" stroke-width="0.5" stroke-opacity="0.16"/>
+    </g>
+
+    <!-- Cardinal dots — scatter far in their directions -->
+    <g class="geo-scatter" data-dx="0" data-dy="-2.2" data-rot="0" data-cx="500" data-cy="290">
+      <circle cx="500" cy="54" r="4" fill="#F0EFEC" fill-opacity="0.45"/>
+    </g>
+    <g class="geo-scatter" data-dx="2.2" data-dy="0" data-rot="0" data-cx="500" data-cy="290">
+      <circle cx="734" cy="290" r="4" fill="#F0EFEC" fill-opacity="0.45"/>
+    </g>
+    <g class="geo-scatter" data-dx="0" data-dy="2.2" data-rot="0" data-cx="500" data-cy="290">
+      <circle cx="500" cy="526" r="4" fill="#F0EFEC" fill-opacity="0.45"/>
+    </g>
+    <g class="geo-scatter" data-dx="-2.2" data-dy="0" data-rot="0" data-cx="500" data-cy="290">
+      <circle cx="266" cy="290" r="4" fill="#F0EFEC" fill-opacity="0.45"/>
+    </g>
+
+    <!-- Small accent dots -->
+    <g class="geo-scatter" data-dx="1.4" data-dy="-1.4" data-rot="0" data-cx="500" data-cy="290">
+      <circle cx="680" cy="134" r="2.5" fill="#F0EFEC" fill-opacity="0.3"/>
+    </g>
+    <g class="geo-scatter" data-dx="-1.4" data-dy="1.4" data-rot="0" data-cx="500" data-cy="290">
+      <circle cx="320" cy="446" r="2.5" fill="#F0EFEC" fill-opacity="0.3"/>
+    </g>
+    <g class="geo-scatter" data-dx="-1.2" data-dy="-1.2" data-rot="0" data-cx="500" data-cy="290">
+      <circle cx="380" cy="155" r="2" fill="#F0EFEC" fill-opacity="0.24"/>
+    </g>
+    <g class="geo-scatter" data-dx="1.2" data-dy="1.2" data-rot="0" data-cx="500" data-cy="290">
+      <circle cx="622" cy="428" r="2" fill="#F0EFEC" fill-opacity="0.24"/>
+    </g>
+
+    <!-- Cross tick top-right -->
+    <g class="geo-scatter" data-dx="1.8" data-dy="-1.5" data-rot="0" data-cx="500" data-cy="290">
+      <line x1="697" y1="155" x2="711" y2="169" stroke="#F0EFEC" stroke-opacity="0.38" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="697" y1="169" x2="711" y2="155" stroke="#F0EFEC" stroke-opacity="0.38" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <!-- Cross tick bottom-left -->
+    <g class="geo-scatter" data-dx="-1.8" data-dy="1.5" data-rot="0" data-cx="500" data-cy="290">
+      <line x1="289" y1="411" x2="303" y2="425" stroke="#F0EFEC" stroke-opacity="0.38" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="289" y1="425" x2="303" y2="411" stroke="#F0EFEC" stroke-opacity="0.38" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+
+    <!-- Horizontal tick line (left) -->
+    <g class="geo-scatter" data-dx="-2" data-dy="-0.2" data-rot="0" data-cx="500" data-cy="290">
+      <line x1="226" y1="278" x2="250" y2="278" stroke="#F0EFEC" stroke-opacity="0.28" stroke-width="1" stroke-linecap="round"/>
+      <line x1="238" y1="266" x2="238" y2="290" stroke="#F0EFEC" stroke-opacity="0.28" stroke-width="1" stroke-linecap="round"/>
+    </g>
+    <!-- Horizontal tick line (right) -->
+    <g class="geo-scatter" data-dx="2" data-dy="0.2" data-rot="0" data-cx="500" data-cy="290">
+      <line x1="750" y1="298" x2="774" y2="298" stroke="#F0EFEC" stroke-opacity="0.28" stroke-width="1" stroke-linecap="round"/>
+      <line x1="762" y1="286" x2="762" y2="310" stroke="#F0EFEC" stroke-opacity="0.28" stroke-width="1" stroke-linecap="round"/>
+    </g>
+
+  </svg>
+
+  <!-- Name + tagline centered at bottom -->
+  <div class="hero-overlay">
+    <h1 class="hero-name">ANA<br>BULOVIĆ</h1>
+    <p class="hero-tagline">Artist · Composer · Researcher</p>
+  </div>
+
+  <div class="scroll-cue"><div class="scroll-cue-line"></div></div>
+</section>
+
+<!-- ═══ QUOTE GRAPH ═══ -->
+<section class="qg-section snap-section" id="qg-section">
+  <div class="qg-split">
+  <div class="qg-wrap">
+    <svg id="qg-map" viewBox="0 0 560 560" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="qg-glow" x="-150%" y="-150%" width="400%" height="400%">
+          <feGaussianBlur stdDeviation="3" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <path class="qg-arc" id="qg-arc-a" d="M 296.7 120.9 A 160 160 0 0 1 426.2 345.1"
+            stroke="#6FA09A" stroke-opacity="0.55" stroke-dasharray="302" stroke-dashoffset="302"/>
+      <path class="qg-arc" id="qg-arc-b" d="M 409.4 374.0 A 160 160 0 0 1 150.6 374.0"
+            stroke="#BF7055" stroke-opacity="0.55" stroke-dasharray="302" stroke-dashoffset="302"/>
+      <path class="qg-arc" id="qg-arc-c" d="M 133.8 345.1 A 160 160 0 0 1 263.3 120.9"
+            stroke="#A28EC8" stroke-opacity="0.55" stroke-dasharray="302" stroke-dashoffset="302"/>
+
+      <circle class="qg-outer"              cx="280"   cy="120" r="20"  fill="#6FA09A" fill-opacity="0.07"/>
+      <circle class="qg-ring qg-ring-a"     cx="280"   cy="120" r="28"  fill="none" stroke="#6FA09A" stroke-width="1" stroke-opacity="0.6"/>
+      <circle class="qg-dot"                cx="280"   cy="120" r="5.5" fill="#6FA09A" fill-opacity="0.9" filter="url(#qg-glow)"/>
+
+      <circle class="qg-outer"              cx="418.6" cy="360" r="20"  fill="#BF7055" fill-opacity="0.07"/>
+      <circle class="qg-ring qg-ring-b"     cx="418.6" cy="360" r="28"  fill="none" stroke="#BF7055" stroke-width="1" stroke-opacity="0.6"/>
+      <circle class="qg-dot"                cx="418.6" cy="360" r="5.5" fill="#BF7055" fill-opacity="0.9" filter="url(#qg-glow)"/>
+
+      <circle class="qg-outer"              cx="141.4" cy="360" r="20"  fill="#A28EC8" fill-opacity="0.07"/>
+      <circle class="qg-ring qg-ring-c"     cx="141.4" cy="360" r="28"  fill="none" stroke="#A28EC8" stroke-width="1" stroke-opacity="0.6"/>
+      <circle class="qg-dot"                cx="141.4" cy="360" r="5.5" fill="#A28EC8" fill-opacity="0.9" filter="url(#qg-glow)"/>
+
+      <g class="qg-text-group">
+        <text text-anchor="middle" font-family="Syne,sans-serif" font-weight="700" font-size="18" fill="#F0EFEC" fill-opacity="0.78" letter-spacing="-0.025em">
+          <tspan x="280" y="240">"Stories shape an agent,</tspan>
+          <tspan x="280" dy="25">an agent shapes the world,</tspan>
+          <tspan x="280" dy="25">the world shapes back."</tspan>
+        </text>
+        <text text-anchor="middle" x="280" y="322" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#7A7A76" letter-spacing="0.1em">— Ian Chang, Emissaries</text>
+      </g>
+    </svg>
+  </div>
+  <div class="qg-bio">
+    <p>I became interested in "conditions which sustain generative complexity" at the age of 21. I remember being struck by the almost surreal realisation that the complexity of organisation underlying a single tiny cell is so great that I could not fathom how I do not dissolve into a gooey blob right this instant. This great mystery of stable complexity led me to study principles of cellular organisation, resulting in my PhD in Theoretical Biophysics.</p>
+    <p>Over time, I became interested in how this complexity lives on the level of our un-, sub- and conscious levels of ourselves. From study of life, I entered the study of mind and culture and complex phenomena, but this time, interactively — through arts.</p>
+    <p>I create frameworks for embodying different states of being, through which I create art. I create frameworks to help me understand how artwork impacts me. I am interested in creating artwork which impacts the ill-charted parts of the human spirit.</p>
+  </div>
+  </div>
+</section>
+
+<!-- ═══ CONSTELLATION ═══ -->
+<section class="const-section snap-section">
+  <div class="const-header">
+    <h2 class="const-title">Research &amp; Projects</h2>
+  </div>
+
+  <div class="const-wrap" id="const-wrap">
+    <svg id="map" viewBox="-30 30 1100 560" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="g-sm" x="-120%" y="-120%" width="340%" height="340%">
+          <feGaussianBlur stdDeviation="3.5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="g-md" x="-200%" y="-200%" width="500%" height="500%">
+          <feGaussianBlur stdDeviation="8" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="bw" color-interpolation-filters="sRGB">
+          <feColorMatrix type="saturate" values="0"/>
+          <feComponentTransfer>
+            <feFuncR type="linear" slope="1.15" intercept="-0.07"/>
+            <feFuncG type="linear" slope="1.15" intercept="-0.07"/>
+            <feFuncB type="linear" slope="1.15" intercept="-0.07"/>
+          </feComponentTransfer>
+        </filter>
+        <clipPath id="cpn-still-flow">   <circle cx="72"  cy="298" r="18"/></clipPath>
+        <clipPath id="cpn-method-singer"><circle cx="140" cy="238" r="18"/></clipPath>
+        <clipPath id="cpn-sojourn">      <circle cx="200" cy="316" r="18"/></clipPath>
+        <clipPath id="cpn-arrivals">     <circle cx="272" cy="268" r="18"/></clipPath>
+        <clipPath id="cpn-frankenstein"> <circle cx="342" cy="192" r="18"/></clipPath>
+        <clipPath id="cpn-dimensions">   <circle cx="440" cy="238" r="18"/></clipPath>
+        <clipPath id="cpn-already">      <circle cx="486" cy="328" r="18"/></clipPath>
+        <clipPath id="cpn-proper-time">  <circle cx="590" cy="268" r="18"/></clipPath>
+        <clipPath id="cpn-unsichtbar">   <circle cx="706" cy="298" r="18"/></clipPath>
+        <clipPath id="cpn-on-growth">    <circle cx="808" cy="260" r="18"/></clipPath>
+        <clipPath id="cpn-world-scores"> <circle cx="926" cy="330" r="18"/></clipPath>
+      </defs>
+
+      <g id="stars-layer" aria-hidden="true" style="pointer-events:none"></g>
+
+      <!-- CONNECTION LINES -->
+      <line class="conn" data-w="inner" data-p="method-singer"   x1="152" y1="148" x2="140" y2="238" stroke="#A28EC8" stroke-width=".75" stroke-opacity=".18"/>
+      <line class="conn" data-w="inner" data-p="sojourn"         x1="152" y1="148" x2="200" y2="316" stroke="#A28EC8" stroke-width=".75" stroke-opacity=".18"/>
+      <line class="conn" data-w="inner" data-p="arrivals"        x1="152" y1="148" x2="272" y2="268" stroke="#A28EC8" stroke-width=".75" stroke-opacity=".18"/>
+      <line class="conn" data-w="inner" data-p="frankenstein"    x1="152" y1="148" x2="342" y2="192" stroke="#A28EC8" stroke-width=".75" stroke-opacity=".18"/>
+      <line class="conn" data-w="inner" data-p="still-flow"      x1="152" y1="148" x2="72" y2="298" stroke="#A28EC8" stroke-width=".75" stroke-opacity=".18"/>
+      <line class="conn" data-w="shared" data-p="dimensions"     x1="418" y1="104" x2="440" y2="238" stroke="#6FA09A" stroke-width=".75" stroke-opacity=".18"/>
+      <line class="conn" data-w="shared" data-p="proper-time"    x1="418" y1="104" x2="590" y2="268" stroke="#6FA09A" stroke-width=".75" stroke-opacity=".18"/>
+      <line class="conn" data-w="shared" data-p="world-scores"   x1="418" y1="104" x2="926" y2="330" stroke="#6FA09A" stroke-width=".75" stroke-opacity=".18"/>
+      <line class="conn" data-w="built" data-p="proper-time"     x1="648" y1="144" x2="590" y2="268" stroke="#BF7055" stroke-width=".75" stroke-opacity=".18"/>
+      <line class="conn" data-w="built" data-p="unsichtbar"      x1="648" y1="144" x2="706" y2="298" stroke="#BF7055" stroke-width=".75" stroke-opacity=".18"/>
+      <line class="conn" data-w="living" data-p="on-growth"      x1="868" y1="132" x2="808" y2="260" stroke="#C09A6A" stroke-width=".75" stroke-opacity=".18"/>
+      <line class="conn" data-w="living" data-p="world-scores"   x1="868" y1="132" x2="926" y2="330" stroke="#C09A6A" stroke-width=".75" stroke-opacity=".18"/>
+
+      <!-- WORLD NODES -->
+      <g class="w-node" data-id="inner">
+        <circle class="w-ring ring-inner" cx="152" cy="148" r="42" stroke="#A28EC8" stroke-width="1" stroke-opacity=".35"/>
+        <circle class="w-ring-2" cx="152" cy="148" r="62" stroke="#A28EC8" stroke-width="0.5" stroke-opacity=".32"/>
+        <circle class="w-ring-3" cx="152" cy="148" r="85" stroke="#A28EC8" stroke-width="0.35" stroke-opacity=".2" stroke-dasharray="3 10"/>
+        <circle class="orbit-dot" cx="214" cy="148" r="2.2" fill="#A28EC8" fill-opacity="0.65">
+          <animateTransform attributeName="transform" type="rotate" from="0 152 148" to="360 152 148" dur="13s" repeatCount="indefinite"/>
+        </circle>
+        <circle class="orbit-dot" cx="237" cy="148" r="1.4" fill="#A28EC8" fill-opacity="0.4">
+          <animateTransform attributeName="transform" type="rotate" from="360 152 148" to="0 152 148" dur="22s" repeatCount="indefinite"/>
+        </circle>
+        <circle class="w-outer" cx="152" cy="148" r="42" fill="#A28EC8" fill-opacity=".055"/>
+        <circle class="w-dot"   cx="152" cy="148" r="7"  fill="#A28EC8" fill-opacity=".8" filter="url(#g-sm)"/>
+        <text x="152" y="97"  text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11.5" font-weight="500" fill="#A28EC8" fill-opacity=".82" letter-spacing="1.5">INNER WORLDS</text>
+        <text x="152" y="112" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9.5"  font-weight="300" fill="#A28EC8" fill-opacity=".38" letter-spacing="1">states of being</text>
+      </g>
+      <g class="w-node" data-id="shared">
+        <circle class="w-ring ring-shared" cx="418" cy="104" r="42" stroke="#6FA09A" stroke-width="1" stroke-opacity=".35"/>
+        <circle class="w-ring-2" cx="418" cy="104" r="62" stroke="#6FA09A" stroke-width="0.5" stroke-opacity=".32"/>
+        <circle class="w-ring-3" cx="418" cy="104" r="85" stroke="#6FA09A" stroke-width="0.35" stroke-opacity=".2" stroke-dasharray="3 10"/>
+        <circle class="orbit-dot" cx="480" cy="104" r="2.2" fill="#6FA09A" fill-opacity="0.65">
+          <animateTransform attributeName="transform" type="rotate" from="0 418 104" to="360 418 104" dur="16s" repeatCount="indefinite"/>
+        </circle>
+        <circle class="orbit-dot" cx="503" cy="104" r="1.4" fill="#6FA09A" fill-opacity="0.4">
+          <animateTransform attributeName="transform" type="rotate" from="360 418 104" to="0 418 104" dur="27s" repeatCount="indefinite"/>
+        </circle>
+        <circle class="w-outer" cx="418" cy="104" r="42" fill="#6FA09A" fill-opacity=".055"/>
+        <circle class="w-dot"   cx="418" cy="104" r="7"  fill="#6FA09A" fill-opacity=".8" filter="url(#g-sm)"/>
+        <text x="418" y="53"  text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11.5" font-weight="500" fill="#6FA09A" fill-opacity=".82" letter-spacing="1.5">SHARED WORLDS</text>
+        <text x="418" y="68"  text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9.5"  font-weight="300" fill="#6FA09A" fill-opacity=".38" letter-spacing="1">worldviews &amp; cosmologies</text>
+      </g>
+      <g class="w-node" data-id="built">
+        <circle class="w-ring ring-built" cx="648" cy="144" r="42" stroke="#BF7055" stroke-width="1" stroke-opacity=".35"/>
+        <circle class="w-ring-2" cx="648" cy="144" r="62" stroke="#BF7055" stroke-width="0.5" stroke-opacity=".32"/>
+        <circle class="w-ring-3" cx="648" cy="144" r="85" stroke="#BF7055" stroke-width="0.35" stroke-opacity=".2" stroke-dasharray="3 10"/>
+        <circle class="orbit-dot" cx="710" cy="144" r="2.2" fill="#BF7055" fill-opacity="0.65">
+          <animateTransform attributeName="transform" type="rotate" from="0 648 144" to="360 648 144" dur="11s" repeatCount="indefinite"/>
+        </circle>
+        <circle class="orbit-dot" cx="733" cy="144" r="1.4" fill="#BF7055" fill-opacity="0.4">
+          <animateTransform attributeName="transform" type="rotate" from="360 648 144" to="0 648 144" dur="19s" repeatCount="indefinite"/>
+        </circle>
+        <circle class="w-outer" cx="648" cy="144" r="42" fill="#BF7055" fill-opacity=".055"/>
+        <circle class="w-dot"   cx="648" cy="144" r="7"  fill="#BF7055" fill-opacity=".8" filter="url(#g-sm)"/>
+        <text x="648" y="93"  text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11.5" font-weight="500" fill="#BF7055" fill-opacity=".82" letter-spacing="1.5">FELT WORLDS</text>
+        <text x="648" y="108" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9.5"  font-weight="300" fill="#BF7055" fill-opacity=".38" letter-spacing="1">perception &amp; immersion</text>
+      </g>
+      <g class="w-node" data-id="living">
+        <circle class="w-ring ring-living" cx="868" cy="132" r="42" stroke="#C09A6A" stroke-width="1" stroke-opacity=".35"/>
+        <circle class="w-ring-2" cx="868" cy="132" r="62" stroke="#C09A6A" stroke-width="0.5" stroke-opacity=".32"/>
+        <circle class="w-ring-3" cx="868" cy="132" r="85" stroke="#C09A6A" stroke-width="0.35" stroke-opacity=".2" stroke-dasharray="3 10"/>
+        <circle class="orbit-dot" cx="930" cy="132" r="2.2" fill="#C09A6A" fill-opacity="0.65">
+          <animateTransform attributeName="transform" type="rotate" from="0 868 132" to="360 868 132" dur="18s" repeatCount="indefinite"/>
+        </circle>
+        <circle class="orbit-dot" cx="953" cy="132" r="1.4" fill="#C09A6A" fill-opacity="0.4">
+          <animateTransform attributeName="transform" type="rotate" from="360 868 132" to="0 868 132" dur="29s" repeatCount="indefinite"/>
+        </circle>
+        <circle class="w-outer" cx="868" cy="132" r="42" fill="#C09A6A" fill-opacity=".055"/>
+        <circle class="w-dot"   cx="868" cy="132" r="7"  fill="#C09A6A" fill-opacity=".8" filter="url(#g-sm)"/>
+        <text x="868" y="81"  text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11.5" font-weight="500" fill="#C09A6A" fill-opacity=".82" letter-spacing="1.5">EMERGENT WORLDS</text>
+        <text x="868" y="96"  text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9.5"  font-weight="300" fill="#C09A6A" fill-opacity=".38" letter-spacing="1">generative self-organisation</text>
+      </g>
+
+      <!-- PROJECT NODES -->
+      <a href="project.html?id=still-flow"><g class="p-node" data-id="still-flow" data-worlds="inner">
+        <circle cx="72" cy="298" r="20" fill="transparent"/>
+        <image class="p-img" href="/demo-thumb.png" x="54" y="280" width="36" height="36" clip-path="url(#cpn-still-flow)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <circle class="p-dot p-ring" cx="72" cy="298" r="18" fill="none" stroke="#7A7A76" stroke-width="1" stroke-opacity=".3"/>
+        <text class="p-label" x="96" y="302" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".4">[ Still Flow ]</text>
+      </g></a>
+      <a href="project.html?id=method-singer"><g class="p-node" data-id="method-singer" data-worlds="inner">
+        <circle cx="140" cy="238" r="20" fill="transparent"/>
+        <image class="p-img" href="/demo-thumb.png" x="122" y="220" width="36" height="36" clip-path="url(#cpn-method-singer)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <circle class="p-dot p-ring" cx="140" cy="238" r="18" fill="none" stroke="#A28EC8" stroke-width="1" stroke-opacity=".4"/>
+        <text class="p-label" x="164" y="242" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".4">[ Method Singer ]</text>
+      </g></a>
+      <a href="project.html?id=sojourn"><g class="p-node" data-id="sojourn" data-worlds="inner">
+        <circle cx="200" cy="316" r="20" fill="transparent"/>
+        <image class="p-img" href="/demo-thumb.png" x="182" y="298" width="36" height="36" clip-path="url(#cpn-sojourn)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <circle class="p-dot p-ring" cx="200" cy="316" r="18" fill="none" stroke="#A28EC8" stroke-width="1" stroke-opacity=".4"/>
+        <text class="p-label" x="224" y="320" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".4">[ Sojourn ]</text>
+      </g></a>
+      <a href="project.html?id=arrivals"><g class="p-node" data-id="arrivals" data-worlds="inner">
+        <circle cx="272" cy="268" r="20" fill="transparent"/>
+        <image class="p-img" href="/demo-thumb.png" x="254" y="250" width="36" height="36" clip-path="url(#cpn-arrivals)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <circle class="p-dot p-ring" cx="272" cy="268" r="18" fill="none" stroke="#A28EC8" stroke-width="1" stroke-opacity=".4"/>
+        <text class="p-label" x="296" y="272" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".4">[ Arrivals ]</text>
+      </g></a>
+      <a href="project.html?id=frankenstein"><g class="p-node" data-id="frankenstein" data-worlds="inner">
+        <circle cx="342" cy="192" r="20" fill="transparent"/>
+        <image class="p-img" href="/demo-thumb.png" x="324" y="174" width="36" height="36" clip-path="url(#cpn-frankenstein)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <circle class="p-dot p-ring" cx="342" cy="192" r="18" fill="none" stroke="#A28EC8" stroke-width="1" stroke-opacity=".4"/>
+        <text class="p-label" x="366" y="196" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".4">[ FrankenstAIn ]</text>
+      </g></a>
+      <a href="project.html?id=dimensions"><g class="p-node" data-id="dimensions" data-worlds="shared">
+        <circle cx="440" cy="238" r="20" fill="transparent"/>
+        <image class="p-img" href="/demo-thumb.png" x="422" y="220" width="36" height="36" clip-path="url(#cpn-dimensions)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <circle class="p-dot p-ring" cx="440" cy="238" r="18" fill="none" stroke="#6FA09A" stroke-width="1" stroke-opacity=".4"/>
+        <text class="p-label" x="464" y="242" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".4">[ Dimensions ]</text>
+      </g></a>
+      <a href="project.html?id=already"><g class="p-node" data-id="already" data-worlds="">
+        <circle cx="486" cy="328" r="20" fill="transparent"/>
+        <image class="p-img" href="/demo-thumb.png" x="468" y="310" width="36" height="36" clip-path="url(#cpn-already)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <circle class="p-dot p-ring" cx="486" cy="328" r="18" fill="none" stroke="#7A7A76" stroke-width="1" stroke-opacity=".3"/>
+        <text class="p-label" x="510" y="332" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".4">[ Already Not Here ]</text>
+      </g></a>
+      <a href="project.html?id=proper-time"><g class="p-node" data-id="proper-time" data-worlds="built,shared">
+        <circle cx="590" cy="268" r="20" fill="transparent"/>
+        <image class="p-img" href="/demo-thumb.png" x="572" y="250" width="36" height="36" clip-path="url(#cpn-proper-time)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <circle class="p-dot p-ring" cx="590" cy="268" r="18" fill="none" stroke="#6FA09A" stroke-width=".8" stroke-opacity=".35"/>
+        <circle cx="590" cy="268" r="18" fill="none" stroke="#BF7055" stroke-width=".8" stroke-opacity=".35" stroke-dasharray="56.5 56.5" stroke-dashoffset="28.3"/>
+        <text class="p-label" x="614" y="272" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".4">[ Proper Time ]</text>
+      </g></a>
+      <a href="project.html?id=unsichtbar"><g class="p-node" data-id="unsichtbar" data-worlds="built">
+        <circle cx="706" cy="298" r="20" fill="transparent"/>
+        <image class="p-img" href="/demo-thumb.png" x="688" y="280" width="36" height="36" clip-path="url(#cpn-unsichtbar)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <circle class="p-dot p-ring" cx="706" cy="298" r="18" fill="none" stroke="#BF7055" stroke-width="1" stroke-opacity=".4"/>
+        <text class="p-label" x="730" y="302" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".4">[ Unsichtbar ]</text>
+      </g></a>
+      <a href="project.html?id=on-growth"><g class="p-node" data-id="on-growth" data-worlds="living">
+        <circle cx="808" cy="260" r="20" fill="transparent"/>
+        <image class="p-img" href="/demo-thumb.png" x="790" y="242" width="36" height="36" clip-path="url(#cpn-on-growth)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <circle class="p-dot p-ring" cx="808" cy="260" r="18" fill="none" stroke="#C09A6A" stroke-width="1" stroke-opacity=".4"/>
+        <text class="p-label" x="832" y="264" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".4">[ On Growth ]</text>
+      </g></a>
+      <a href="project.html?id=world-scores"><g class="p-node" data-id="world-scores" data-worlds="living,shared">
+        <circle cx="926" cy="330" r="20" fill="transparent"/>
+        <image class="p-img" href="/demo-thumb.png" x="908" y="312" width="36" height="36" clip-path="url(#cpn-world-scores)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <circle class="p-dot p-ring" cx="926" cy="330" r="18" fill="none" stroke="#C09A6A" stroke-width=".8" stroke-opacity=".35"/>
+        <circle cx="926" cy="330" r="18" fill="none" stroke="#6FA09A" stroke-width=".8" stroke-opacity=".35" stroke-dasharray="56.5 56.5" stroke-dashoffset="28.3"/>
+        <text class="p-label" x="900" y="368" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".4">[ World Scores ]</text>
+      </g></a>
+
+      <!-- CATEGORY CONNECTIONS -->
+      <line class="c-conn" data-c="cat-music" data-p="method-singer"  x1="140" y1="238" x2="200" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-music" data-p="sojourn"        x1="200" y1="316" x2="200" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-music" data-p="frankenstein"   x1="342" y1="192" x2="200" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-music" data-p="world-scores"   x1="926" y1="330" x2="200" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-theatre" data-p="arrivals"     x1="272" y1="268" x2="440" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-theatre" data-p="frankenstein" x1="342" y1="192" x2="440" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-theatre" data-p="proper-time"  x1="590" y1="268" x2="440" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-theatre" data-p="unsichtbar"   x1="706" y1="298" x2="440" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-research" data-p="still-flow"    x1="72"  y1="298" x2="660" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-research" data-p="method-singer" x1="140" y1="238" x2="660" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-research" data-p="dimensions"    x1="440" y1="238" x2="660" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-research" data-p="on-growth"     x1="808" y1="260" x2="660" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-research" data-p="world-scores"  x1="926" y1="330" x2="660" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-writing" data-p="sojourn"    x1="200" y1="316" x2="880" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-writing" data-p="already"    x1="486" y1="328" x2="880" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-writing" data-p="dimensions" x1="440" y1="238" x2="880" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+
+      <!-- CATEGORY NODES -->
+      <g class="c-node" data-id="cat-music">
+        <rect class="c-box" x="152" y="444" width="96" height="20" rx="10" fill="#111111" stroke="#1C1C1C" stroke-width=".75"/>
+        <text class="c-label" x="200" y="458" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="500" fill="#444444" letter-spacing="1.8">MUSIC</text>
+      </g>
+      <g class="c-node" data-id="cat-theatre">
+        <rect class="c-box" x="390" y="444" width="100" height="20" rx="10" fill="#111111" stroke="#1C1C1C" stroke-width=".75"/>
+        <text class="c-label" x="440" y="458" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="500" fill="#444444" letter-spacing="1.8">THEATRE</text>
+      </g>
+      <g class="c-node" data-id="cat-research">
+        <rect class="c-box" x="606" y="444" width="108" height="20" rx="10" fill="#111111" stroke="#1C1C1C" stroke-width=".75"/>
+        <text class="c-label" x="660" y="458" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="500" fill="#444444" letter-spacing="1.8">RESEARCH</text>
+      </g>
+      <g class="c-node" data-id="cat-writing">
+        <rect class="c-box" x="832" y="444" width="96" height="20" rx="10" fill="#111111" stroke="#1C1C1C" stroke-width=".75"/>
+        <text class="c-label" x="880" y="458" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="500" fill="#444444" letter-spacing="1.8">WRITING</text>
+      </g>
+
+    </svg>
+
+    <div class="h-card" id="h-card" role="tooltip">
+      <div class="h-card-body" id="h-card-body"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SELECTED WORK ═══ -->
+<section class="work-section snap-section">
+  <div class="work-header">
+    <div>
+      <p class="eyebrow">Selected Work</p>
+      <h2 class="const-title" style="margin-top:10px">Performance,<br>installation, sound</h2>
+    </div>
+  </div>
+  <div class="work-grid">
+    <div class="work-item work-item--tall">
+      <img src="https://placehold.co/700x860/1a1a1a/1a1a1a" alt="Proper Time"/>
+      <div class="work-item-overlay">
+        <div class="work-item-eye">Installation · Audience Award INSIGHT 2023</div>
+        <div class="work-item-title">Proper Time</div>
+      </div>
+    </div>
+    <div class="work-item">
+      <img src="https://placehold.co/500x400/141414/141414" alt="FrankenstAIn"/>
+      <div class="work-item-overlay">
+        <div class="work-item-eye">Music Theatre · Premiering Oct 2026</div>
+        <div class="work-item-title">FrankenstAIn</div>
+      </div>
+    </div>
+    <div class="work-item">
+      <img src="https://placehold.co/500x400/161616/161616" alt="Already Not Here"/>
+      <div class="work-item-overlay">
+        <div class="work-item-eye">Sound Installation · Schreibhain 2026</div>
+        <div class="work-item-title">Already Not Here</div>
+      </div>
+    </div>
+    <div class="work-item">
+      <img src="https://placehold.co/500x400/181818/181818" alt="Unsichtbar"/>
+      <div class="work-item-overlay">
+        <div class="work-item-eye">Theatre · Sensory</div>
+        <div class="work-item-title">Unsichtbar</div>
+      </div>
+    </div>
+    <div class="work-item">
+      <img src="https://placehold.co/500x400/121212/121212" alt="Arrivals"/>
+      <div class="work-item-overlay">
+        <div class="work-item-eye">Theatre · Berlin Art Week</div>
+        <div class="work-item-title">Arrivals</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section class="about-section snap-section">
+  <div>
+    <p class="eyebrow" style="margin-bottom:28px">About</p>
+    <p class="about-text">
+      Born in Yugoslavia in 1989, based in Berlin.<br><br>
+      I write, compose, and make theatre. My work moves at the intersection of <em>artistic practice and research</em> — searching for what remains untranslatable between body, language, and memory.<br><br>
+      I am a former academic with a doctorate in Theoretical Biophysics from Humboldt University, Berlin. I left academia to refocus my research on the questions that began it: the organizing principles of living systems, and what they reveal about how meaning is made.
+    </p>
+  </div>
+  <div>
+    <p class="eyebrow" style="margin-bottom:24px">Credentials</p>
+    <div class="creds">
+      <div class="cred">
+        <div>
+          <div class="cred-title">PhD in Theoretical Biophysics</div>
+          <div class="cred-sub">Humboldt University, Berlin — summa cum laude<br>Modelling growth and adaptation in bacteria</div>
+        </div>
+        <div class="cred-year">2022</div>
+      </div>
+      <div class="cred">
+        <div>
+          <div class="cred-title">Schreibhain XXIV Literary Stipend</div>
+          <div class="cred-sub">For literary work <em>Raum für die Wahrheit</em></div>
+        </div>
+        <div class="cred-year">2026</div>
+      </div>
+      <div class="cred">
+        <div>
+          <div class="cred-title">Session Chair</div>
+          <div class="cred-sub">International Conference on Systems Biology — Young Scientists Forum</div>
+        </div>
+        <div class="cred-year">2022</div>
+      </div>
+      <div class="cred">
+        <div>
+          <div class="cred-title">Audience Award — INSIGHT 2023</div>
+          <div class="cred-sub">For immersive installation <em>Room of Causality</em></div>
+        </div>
+        <div class="cred-year">2023</div>
+      </div>
+      <div class="cred">
+        <div>
+          <div class="cred-title">MusikFonds Grant</div>
+          <div class="cred-sub">For music theatre composition <em>FrankenstAIn</em>, premiering Theater Vorpommern 2026</div>
+        </div>
+        <div class="cred-year">2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TURTLE MAFIA ═══ -->
+<div class="turtle">
+  <span class="turtle-label">Initiative</span>
+  <p class="turtle-text">
+    I co-founded <strong><a href="https://tally.so/r/3E1Jqo" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--text3);transition:text-decoration-color .25s ease" onmouseover="this.style.textDecorationColor='var(--text2)'" onmouseout="this.style.textDecorationColor='var(--text3)'">Turtle Mafia</a></strong> — a support network for idiosyncratic researchers working outside conventional institutional frameworks. Slow, serious inquiry, without the performance of productivity.
+  </p>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-meta">
+    <span class="footer-tagline">Performance · Sound · Research · Berlin</span>
+    <a class="footer-mail" href="mailto:bulovic.ana@gmail.com">bulovic.ana@gmail.com</a>
+  </div>
+  <div class="footer-wordmark">
+    <span class="footer-wordmark-text">Ana <span class="accent">Bulović</span></span>
+  </div>
+</footer>
+
+<script>
+/* ── CONSTELLATION INTERACTIONS ─────────────────────────── */
+const worlds = {
+  inner:  { label:'Inner Worlds',    sublabel:'States of being', color:'#A28EC8',
+    desc:'How the state you\'re in changes what can be perceived, sung, expressed. Explored and developed through imaginative and meditative practice.', x:152, y:148 },
+  shared: { label:'Shared Worlds',   sublabel:'Worldviews & cosmologies', color:'#6FA09A',
+    desc:'Investigation into ways our assumptions about the world shape what is possible — in a culture, in science, in how we meet AI.', x:418, y:104 },
+  built:  { label:'Felt Worlds',     sublabel:'Perception & immersion', color:'#BF7055',
+    desc:'How reorganizing the senses or the apparent physics of a space changes experience directly.', x:648, y:144 },
+  living: { label:'Emergent Worlds', sublabel:'Generative self-organisation', color:'#C09A6A',
+    desc:'How minimal conditions let something alive compose itself.', x:868, y:132 },
+};
+
+const projects = {
+  'still-flow':    { label:'Still Flow',        worlds:['inner'],          type:'Movement research — ongoing',
+    desc:'A movement method that grants access to a non-dual state of being, developed through years of embodied practice research. It forms the perceptual foundation of the performance and composition work.',
+    thumb:'/demo-thumb.png', funding:['MIND Foundation'] },
+  'method-singer': { label:'Method Singer',     worlds:['inner'],          type:'Vocal research — ongoing',
+    desc:'An inquiry into how the singer\'s interior state shapes what becomes possible in composition and performance. A study of the threshold between technical mastery and genuine presence.',
+    thumb:'/demo-thumb.png' },
+  'sojourn':       { label:'Sojourn',           worlds:['inner'],          type:'Album — music theatre',
+    desc:'A concept album for the music theatre piece "The Call of the Sea," tracing a woman\'s journey through solitude, madness, and return. Composed as a direct record of states of inner transformation.',
+    thumb:'/demo-thumb.png', funding:['Culture Moves Europe', 'Bezirkskulturfond Berlin'] },
+  'arrivals':      { label:'Arrivals',          worlds:['inner'],          type:'Theatre — Berlin Art Week',
+    desc:'An experimental theatre of slowness, built from a single poetic text about secrets, birth, and what goes unnamed. Uses deliberate pacing as a method to shift the audience\'s perceptual state.',
+    thumb:'/demo-thumb.png' },
+  'frankenstein':  { label:'FrankenstAIn',      worlds:['inner','shared'], type:'Music theatre — premiering Oct 2026',
+    desc:'A new music theatre composition for inclusive ensemble DIE ECKIGEN, translating Shelley\'s creature into sound and AI. Live voice modulation and 3D audio make "the self that becomes strange to us" physically audible.',
+    thumb:'/demo-thumb.png', funding:['MusikFonds', 'Kreisdiakonisches Werk Stralsund e.V'] },
+  'dimensions':    { label:'Dimensions',        worlds:['shared'],         type:'Research framework — open to collaborators',
+    desc:'A systematic framework for analyzing what an artwork actually does to a human being, drawing on the eight-circuit model of consciousness. Being developed publicly — looking for people to think through it with.',
+    thumb:'/demo-thumb.png' },
+  'already':       { label:'Already Not Here',  worlds:['shared'],         type:'Sound installation — Schreibhain 2026',
+    desc:'An octophonic installation with eight simultaneous voices, each telling a story of a disappeared girl. The listener walks through the room, slowly building intimacy with someone who is no longer there.',
+    thumb:'/demo-thumb.png', funding:['Schreibhain Scholarship'] },
+  'proper-time':   { label:'Proper Time',       worlds:['built','shared'], type:'Installation — Audience Award INSIGHT 2023',
+    desc:'An immersive multi-sensory installation asking whether personal time and physical time are the same thing. Spatial design, sound, and video are composed to dissolve the stability of your sense of causality.',
+    thumb:'/demo-thumb.png', funding:['MIND Foundation'] },
+  'unsichtbar':    { label:'Unsichtbar',         worlds:['built'],          type:'Theatre — sensory',
+    desc:'A blindfolded, multi-sensory adaptation of The Little Prince for audiences of all ages. When vision is removed, touch, scent, and sound unlock dimensions of experience normally closed to us.',
+    thumb:'/demo-thumb.png', funding:['KiA Berlin'] },
+  'on-growth':     { label:'On Growth',         worlds:['living','shared'], type:'Scientific research — PhD',
+    desc:'Doctoral research in theoretical biophysics on how bacteria grow and adapt to their environment. A foundational study in how living systems generate organized complexity from simple principles.',
+    thumb:'/demo-thumb.png', funding:['Humboldt University Berlin'] },
+  'world-scores':  { label:'World Scores',      worlds:['living'],          type:'Research — ongoing',
+    desc:'A current research project writing "worlds" — conditions and constraints from which communities of AI agents compose music. What environment must you build for something alive to emerge?',
+    thumb:'/demo-thumb.png' },
+};
+
+const svg = document.getElementById('map');
+const card = document.getElementById('h-card');
+const cardBody = document.getElementById('h-card-body');
+
+function toScreen(x, y) {
+  const pt = svg.createSVGPoint();
+  pt.x = x; pt.y = y;
+  return pt.matrixTransform(svg.getScreenCTM());
+}
+
+function placeCard(sx, sy) {
+  const compact = card.classList.contains('h-compact');
+  const W = compact ? 290 : 520, H = card.offsetHeight || (compact ? 170 : 340);
+  const vw = window.innerWidth, vh = window.innerHeight;
+  let l = sx + 20, t = sy - 60;
+  if (l + W > vw - 12) l = sx - W - 20;
+  if (t + H > vh - 12) t = vh - H - 12;
+  if (t < 8) t = 8;
+  card.style.left = l + 'px';
+  card.style.top  = t + 'px';
+}
+
+function renderProjectCard(id) {
+  card.classList.remove('h-compact');
+  const p = projects[id];
+  const tags = p.worlds.map(w =>
+    `<span class="h-tag" style="color:${worlds[w].color};border-color:${worlds[w].color}44">${worlds[w].label}</span>`
+  ).join('');
+  const fundingCol = p.funding && p.funding.length ? `
+    <div class="h-card-divider"></div>
+    <div class="h-card-funding">
+      <div class="h-fund-label">Supported by</div>
+      <div class="h-fund-list">${p.funding.join('<br>')}</div>
+    </div>` : '';
+  cardBody.innerHTML = `
+    <div class="h-card-img"><img src="${p.thumb || '/demo-thumb.png'}" alt="${p.label}"/></div>
+    <div class="h-card-bottom">
+      <div class="h-card-main">
+        <div class="h-card-eye">${p.type}</div>
+        <a class="h-card-name" href="project.html?id=${id}">${p.label}</a>
+        <div class="h-card-desc">${p.desc}</div>
+        <div class="h-card-tags">${tags}</div>
+      </div>
+      ${fundingCol}
+    </div>`;
+}
+
+function renderWorldCard(id) {
+  const w = worlds[id];
+  card.classList.add('h-compact');
+  cardBody.innerHTML = `
+    <div class="h-card-eye" style="color:${w.color}">${w.sublabel}</div>
+    <div class="h-card-name" style="color:${w.color}">${w.label}</div>
+    <div class="h-card-desc">${w.desc}</div>`;
+}
+
+function dimAll() {
+  svg.querySelectorAll('.conn').forEach(l => { l.style.strokeOpacity = '.04'; l.style.strokeWidth = '.75'; });
+  svg.querySelectorAll('.c-conn').forEach(l => { l.style.strokeOpacity = '.04'; });
+  svg.querySelectorAll('.p-img').forEach(el => { el.style.opacity = '.12'; });
+  svg.querySelectorAll('.p-ring').forEach(el => { el.style.strokeOpacity = '.08'; });
+  svg.querySelectorAll('.p-label').forEach(el => { el.style.fillOpacity = '.1'; });
+  svg.querySelectorAll('.w-outer').forEach(c => c.style.fillOpacity = '.02');
+  svg.querySelectorAll('.w-dot').forEach(c => c.style.fillOpacity = '.2');
+  svg.querySelectorAll('.w-node text').forEach(t => t.style.fillOpacity = '.12');
+  svg.querySelectorAll('.w-ring').forEach(c => c.style.opacity = '.06');
+  svg.querySelectorAll('.c-box').forEach(r => { r.style.strokeOpacity = '.15'; r.style.fillOpacity = '.4'; });
+  svg.querySelectorAll('.c-label').forEach(t => t.style.fillOpacity = '.1');
+}
+
+function resetAll() {
+  svg.querySelectorAll('.conn').forEach(l => { l.style.strokeOpacity = '.18'; l.style.strokeWidth = '.75'; });
+  svg.querySelectorAll('.c-conn').forEach(l => { l.style.strokeOpacity = '.8'; });
+  svg.querySelectorAll('.p-img').forEach(el => { el.style.opacity = '1'; });
+  svg.querySelectorAll('.p-ring').forEach(el => { el.style.strokeOpacity = '.4'; });
+  svg.querySelectorAll('.p-label').forEach(t => { t.style.fillOpacity = '.48'; });
+  svg.querySelectorAll('.w-outer').forEach(c => c.style.fillOpacity = '.055');
+  svg.querySelectorAll('.w-dot').forEach(c => c.style.fillOpacity = '.8');
+  svg.querySelectorAll('.w-node text').forEach(t => t.style.fillOpacity = '');
+  svg.querySelectorAll('.w-ring').forEach(c => c.style.opacity = '');
+  svg.querySelectorAll('.c-box').forEach(r => { r.style.strokeOpacity = '1'; r.style.fillOpacity = '1'; });
+  svg.querySelectorAll('.c-label').forEach(t => t.style.fillOpacity = '1');
+}
+
+let hideTimeout = null;
+function scheduleHide() {
+  hideTimeout = setTimeout(() => { card.classList.remove('show'); resetAll(); }, 220);
+}
+card.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
+card.addEventListener('mouseleave', scheduleHide);
+
+svg.querySelectorAll('.p-node').forEach(node => {
+  const id = node.dataset.id;
+  const nodeWorlds = (node.dataset.worlds || '').split(',');
+
+  node.addEventListener('mouseenter', () => {
+    clearTimeout(hideTimeout);
+    const cx = parseFloat(node.querySelector('circle').getAttribute('cx'));
+    const cy = parseFloat(node.querySelector('circle').getAttribute('cy'));
+    const sc = toScreen(cx, cy);
+
+    dimAll();
+
+    const img = node.querySelector('.p-img');
+    if (img) img.style.opacity = '1';
+    node.querySelectorAll('.p-ring').forEach(c => { c.style.strokeOpacity = '.9'; });
+    const lbl = node.querySelector('text');
+    if (lbl) lbl.style.fillOpacity = '.95';
+
+    svg.querySelectorAll('.conn').forEach(l => {
+      if (l.dataset.p === id) { l.style.strokeOpacity = '.7'; l.style.strokeWidth = '1.5'; }
+    });
+
+    nodeWorlds.forEach(wId => {
+      const wn = svg.querySelector(`.w-node[data-id="${wId}"]`);
+      if (!wn) return;
+      wn.querySelector('.w-outer').style.fillOpacity = '.1';
+      wn.querySelector('.w-dot').style.fillOpacity = '.9';
+      wn.querySelectorAll('text').forEach(t => t.style.fillOpacity = '.7');
+      wn.querySelector('.w-ring').style.opacity = '.6';
+    });
+
+    renderProjectCard(id);
+    placeCard(sc.x, sc.y);
+    card.classList.add('show');
+  });
+
+  node.addEventListener('mouseleave', scheduleHide);
+});
+
+svg.querySelectorAll('.w-node').forEach(node => {
+  const id = node.dataset.id;
+
+  node.addEventListener('mouseenter', () => {
+    clearTimeout(hideTimeout);
+    const w = worlds[id];
+    const sc = toScreen(w.x, w.y);
+
+    dimAll();
+
+    node.querySelector('.w-outer').style.fillOpacity = '.14';
+    node.querySelector('.w-dot').style.fillOpacity = '.95';
+    node.querySelectorAll('text').forEach(t => t.style.fillOpacity = '.9');
+    node.querySelector('.w-ring').style.opacity = '1';
+
+    svg.querySelectorAll('.conn').forEach(l => {
+      if (l.dataset.w !== id) return;
+      l.style.strokeOpacity = '.65';
+      l.style.strokeWidth = '1.5';
+      const pn = svg.querySelector(`.p-node[data-id="${l.dataset.p}"]`);
+      if (!pn) return;
+      const pimg = pn.querySelector('.p-img');
+      if (pimg) pimg.style.opacity = '1';
+      pn.querySelectorAll('.p-ring').forEach(c => { c.style.strokeOpacity = '.8'; });
+      const lbl = pn.querySelector('text');
+      if (lbl) lbl.style.fillOpacity = '.85';
+    });
+
+    renderWorldCard(id);
+    placeCard(sc.x, sc.y);
+    card.classList.add('show');
+  });
+
+  node.addEventListener('mouseleave', scheduleHide);
+});
+
+const categories = {
+  'cat-music':    ['method-singer','sojourn','frankenstein','world-scores'],
+  'cat-theatre':  ['arrivals','frankenstein','proper-time','unsichtbar'],
+  'cat-research': ['still-flow','method-singer','dimensions','on-growth','world-scores'],
+  'cat-writing':  ['sojourn','already','dimensions'],
+};
+
+svg.querySelectorAll('.c-node').forEach(node => {
+  const id = node.dataset.id;
+
+  node.addEventListener('mouseenter', () => {
+    clearTimeout(hideTimeout);
+    dimAll();
+
+    node.querySelector('.c-box').style.strokeOpacity = '1';
+    node.querySelector('.c-box').style.fillOpacity = '1';
+    node.querySelector('.c-label').style.fillOpacity = '1';
+
+    svg.querySelectorAll('.c-conn').forEach(l => {
+      if (l.dataset.c !== id) return;
+      l.style.strokeOpacity = '.7';
+      const pn = svg.querySelector(`.p-node[data-id="${l.dataset.p}"]`);
+      if (!pn) return;
+      const pimg = pn.querySelector('.p-img');
+      if (pimg) pimg.style.opacity = '1';
+      pn.querySelectorAll('.p-ring').forEach(c => { c.style.strokeOpacity = '.8'; });
+      const lbl = pn.querySelector('text');
+      if (lbl) lbl.style.fillOpacity = '.85';
+    });
+  });
+
+  node.addEventListener('mouseleave', () => { resetAll(); });
+});
+</script>
+
+<script type="module">
+import { animate, inView } from "https://esm.sh/motion";
+
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ── HERO GEO SHAPE SCATTER ─────────────────────────────── */
+{
+  const heroGeo = document.getElementById('hero-geo');
+  const heroImg = document.getElementById('hero-photo-img');
+  if (heroGeo && !reduced) {
+    const shapes = heroGeo.querySelectorAll('.geo-scatter');
+    const maxDist = 90; // SVG user units
+
+    // Cache elements that need color interpolation
+    const geoColorEls = [];
+    heroGeo.querySelectorAll('.geo-scatter circle, .geo-scatter polygon, .geo-scatter line').forEach(el => {
+      const s = el.getAttribute('stroke'), f = el.getAttribute('fill');
+      geoColorEls.push({ el, doStroke: s && s !== 'none', doFill: f && f !== 'none' });
+    });
+
+    function updateGeo() {
+      const raw = Math.min(1, window.scrollY / 380);
+      const ease = raw < 0.5
+        ? 2 * raw * raw
+        : 1 - Math.pow(-2 * raw + 2, 2) / 2; // ease-in-out
+
+      // Interpolate color: #F0EFEC (240,239,236) → #090909 (9,9,9)
+      const cr = Math.round(240 + ease * (9 - 240));
+      const cg = Math.round(239 + ease * (9 - 239));
+      const cb = Math.round(236 + ease * (9 - 236));
+      const col = `rgb(${cr},${cg},${cb})`;
+      geoColorEls.forEach(({ el, doStroke, doFill }) => {
+        if (doStroke) el.style.stroke = col;
+        if (doFill)   el.style.fill   = col;
+      });
+
+      shapes.forEach(g => {
+        const dx  = parseFloat(g.dataset.dx  || 0);
+        const dy  = parseFloat(g.dataset.dy  || 0);
+        const rot = parseFloat(g.dataset.rot || 0);
+        const cx  = g.dataset.cx || 500;
+        const cy  = g.dataset.cy || 290;
+        const tx  = dx * maxDist * ease;
+        const ty  = dy * maxDist * ease;
+        const r   = rot * ease;
+        const xf  = r !== 0
+          ? `translate(${tx} ${ty}) rotate(${r} ${cx} ${cy})`
+          : `translate(${tx} ${ty})`;
+        g.setAttribute('transform', xf);
+      });
+
+      /* subtle photo parallax */
+      if (heroImg) {
+        heroImg.style.transform = `scale(1.06) translateY(${Math.min(window.scrollY * 0.22, 60)}px)`;
+      }
+    }
+
+    window.addEventListener('scroll', updateGeo, { passive: true });
+    updateGeo();
+  }
+}
+
+/* ── SECTION REVEALS ─────────────────────────────────────── */
+const revealSel = '.const-section, .work-section, .about-section, .turtle';
+if (!reduced) {
+  document.querySelectorAll(revealSel).forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.willChange = 'opacity, transform';
+  });
+}
+
+inView(revealSel, el => {
+  if (el.dataset.revealed) return;
+  el.dataset.revealed = '1';
+  if (reduced) { el.style.opacity = '1'; el.style.transform = ''; return; }
+  animate(el, { opacity: 1, y: 0 }, { duration: 0.75, easing: [0.25, 0.46, 0.45, 0.94] })
+    .then(() => { el.style.willChange = ''; });
+}, { amount: 0.08 });
+
+/* ── QUOTE GRAPH ─────────────────────────────────────────── */
+{
+  const qgSection  = document.getElementById('qg-section');
+  const qgArcs     = ['qg-arc-a','qg-arc-b','qg-arc-c'].map(id => document.getElementById(id));
+  const qgText     = qgSection.querySelector('.qg-text-group');
+  const ARC_LEN    = 302;
+  const arcWindows = [[0.05, 0.38], [0.12, 0.45], [0.19, 0.52]];
+
+  function clamp01(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
+
+  function qgUpdate() {
+    const rect  = qgSection.getBoundingClientRect();
+    const total = qgSection.offsetHeight + window.innerHeight;
+    const p     = clamp01((window.innerHeight - rect.top) / total);
+
+    if (p > 0.04) qgSection.classList.add('qg-active');
+    else           qgSection.classList.remove('qg-active');
+
+    qgArcs.forEach((arc, i) => {
+      const [s, e] = arcWindows[i];
+      arc.style.strokeDashoffset = ARC_LEN * (1 - clamp01((p - s) / (e - s)));
+    });
+
+    qgText.style.opacity = clamp01((p - 0.40) / 0.16);
+  }
+
+  if (reduced) {
+    qgSection.classList.add('qg-active');
+    qgArcs.forEach(a => { a.style.strokeDashoffset = '0'; });
+    qgText.style.opacity = '1';
+  } else {
+    window.addEventListener('scroll', qgUpdate, { passive: true });
+    qgUpdate();
+  }
+}
+
+/* ── SCROLL-DRIVEN CONSTELLATION RINGS ───────────────────── */
+if (!reduced) {
+  const mapSvg = document.getElementById('map');
+  const constSection = document.querySelector('.const-section');
+  if (mapSvg && constSection) {
+    const rings2    = mapSvg.querySelectorAll('.w-ring-2');
+    const rings3    = mapSvg.querySelectorAll('.w-ring-3');
+    const orbitDots = mapSvg.querySelectorAll('.orbit-dot');
+
+    const updateRings = () => {
+      const rect = constSection.getBoundingClientRect();
+      const vh   = window.innerHeight;
+      const progress = Math.min(1, Math.max(0, (vh - rect.top) / (vh * 0.85)));
+
+      rings2.forEach(r => {
+        r.style.opacity   = (progress * 0.5).toFixed(3);
+        r.style.transform = `scale(${(0.5 + progress * 0.55).toFixed(3)})`;
+      });
+      rings3.forEach(r => {
+        const p2 = Math.min(1, Math.max(0, progress * 1.5 - 0.4));
+        r.style.opacity   = (p2 * 0.28).toFixed(3);
+        r.style.transform = `scale(${(0.35 + p2 * 0.72).toFixed(3)})`;
+      });
+      orbitDots.forEach(d => {
+        d.style.opacity = Math.max(0, Math.min(1, progress * 1.6 - 0.3)).toFixed(3);
+      });
+    };
+
+    window.addEventListener('scroll', updateRings, { passive: true });
+    updateRings();
+  }
+
+  /* ── SHOOTING STARS ─────────────────────────────────────── */
+  const starsLayer = document.getElementById('stars-layer');
+  if (starsLayer) {
+    const starColors = ['#A28EC8', '#6FA09A', '#BF7055', '#C09A6A', '#F0EFEC'];
+
+    function spawnStar() {
+      const x1     = -20 + Math.random() * 1060;
+      const y1     = 40  + Math.random() * 510;
+      const angle  = (145 + (Math.random() - 0.5) * 80) * Math.PI / 180;
+      const length = 55  + Math.random() * 95;
+      const tailLen = 36;
+      const x2 = x1 + Math.cos(angle) * length;
+      const y2 = y1 + Math.sin(angle) * length;
+
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', x1);            line.setAttribute('y1', y1);
+      line.setAttribute('x2', x2);            line.setAttribute('y2', y2);
+      line.setAttribute('stroke', starColors[Math.floor(Math.random() * starColors.length)]);
+      line.setAttribute('stroke-width', '0.6');
+      line.setAttribute('stroke-linecap', 'round');
+      line.setAttribute('stroke-dasharray', `${tailLen} 9999`);
+      line.setAttribute('stroke-dashoffset', `${length + tailLen}`);
+      line.setAttribute('filter', 'url(#g-sm)');
+      starsLayer.appendChild(line);
+
+      const dur         = 550 + Math.random() * 650;
+      const startTime   = performance.now();
+      const startOffset = length + tailLen;
+      const travel      = startOffset + tailLen;
+
+      function tick(now) {
+        const t     = Math.min(1, (now - startTime) / dur);
+        const eased = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+        line.setAttribute('stroke-dashoffset', startOffset - eased * travel);
+        const op = t < 0.12 ? t / 0.12 : t > 0.76 ? (1 - (t - 0.76) / 0.24) : 1;
+        line.setAttribute('stroke-opacity', (Math.max(0, op) * 0.82).toFixed(3));
+        if (t < 1) requestAnimationFrame(tick);
+        else line.remove();
+      }
+      requestAnimationFrame(tick);
+    }
+
+    (function scheduleNext() {
+      setTimeout(() => { spawnStar(); scheduleNext(); }, 1400 + Math.random() * 3000);
+    })();
+  }
+}
+</script>
+</body>
+</html>
