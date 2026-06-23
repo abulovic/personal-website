@@ -31,7 +31,6 @@
 
     html {
       scroll-behavior: smooth;
-      scroll-snap-type: y proximity;
     }
     body {
       background: var(--bg);
@@ -41,8 +40,6 @@
       overflow-x: hidden;
     }
 
-    /* ─── SNAP ─── */
-    .snap-section { scroll-snap-align: start; }
 
     /* ─── HERO ─── */
     .hero {
@@ -845,7 +842,7 @@
 <section class="qg-section snap-section" id="qg-section">
   <div class="qg-split">
   <div class="qg-wrap">
-    <svg id="qg-map" viewBox="0 0 560 560" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+    <svg id="qg-map" viewBox="85 65 390 355" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <filter id="qg-glow" x="-150%" y="-150%" width="400%" height="400%">
           <feGaussianBlur stdDeviation="3" result="b"/>
@@ -1134,17 +1131,6 @@
             <feFuncB type="linear" slope="1.15" intercept="-0.07"/>
           </feComponentTransfer>
         </filter>
-        <clipPath id="m-cp-sf"><circle cx="36"  cy="270" r="16"/></clipPath>
-        <clipPath id="m-cp-ms"><circle cx="96"  cy="275" r="16"/></clipPath>
-        <clipPath id="m-cp-sj"><circle cx="155" cy="308" r="16"/></clipPath>
-        <clipPath id="m-cp-ar"><circle cx="44"  cy="185" r="16"/></clipPath>
-        <clipPath id="m-cp-fk"><circle cx="180" cy="112" r="16"/></clipPath>
-        <clipPath id="m-cp-di"><circle cx="262" cy="270" r="16"/></clipPath>
-        <clipPath id="m-cp-al"><circle cx="322" cy="200" r="16"/></clipPath>
-        <clipPath id="m-cp-pt"><circle cx="178" cy="368" r="16"/></clipPath>
-        <clipPath id="m-cp-ws"><circle cx="318" cy="382" r="16"/></clipPath>
-        <clipPath id="m-cp-og"><circle cx="268" cy="428" r="16"/></clipPath>
-        <clipPath id="m-cp-un"><circle cx="40"  cy="580" r="16"/></clipPath>
       </defs>
 
       <!-- world → project connections -->
@@ -1211,73 +1197,59 @@
 
       <!-- PROJECT NODES -->
       <a href="project.html?id=still-flow"><g class="p-node" data-id="still-flow" data-worlds="inner">
-        <circle cx="36" cy="270" r="22" fill="transparent"/>
-        <image class="p-img" href="/demo-thumb.png" x="20" y="254" width="32" height="32" clip-path="url(#m-cp-sf)" filter="url(#m-bw)" preserveAspectRatio="xMidYMid slice"/>
-        <circle class="p-dot p-ring" cx="36" cy="270" r="16" fill="none" stroke="#7A7A76" stroke-width="1" stroke-opacity=".3"/>
-        <text class="p-label" x="58" y="274" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Still Flow ]</text>
+        <circle cx="36" cy="270" r="16" fill="transparent"/>
+        <circle class="p-dot" cx="36" cy="270" r="4.5" fill="#A28EC8" fill-opacity=".8" filter="url(#m-g-sm)"/>
+        <text class="p-label" x="36" y="286" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Still Flow ]</text>
       </g></a>
       <a href="project.html?id=method-singer"><g class="p-node" data-id="method-singer" data-worlds="inner">
-        <circle cx="96" cy="275" r="22" fill="transparent"/>
-        <image class="p-img" href="/demo-thumb.png" x="80" y="259" width="32" height="32" clip-path="url(#m-cp-ms)" filter="url(#m-bw)" preserveAspectRatio="xMidYMid slice"/>
-        <circle class="p-dot p-ring" cx="96" cy="275" r="16" fill="none" stroke="#A28EC8" stroke-width="1" stroke-opacity=".4"/>
-        <text class="p-label" x="118" y="279" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Method Singer ]</text>
+        <circle cx="96" cy="275" r="16" fill="transparent"/>
+        <circle class="p-dot" cx="96" cy="275" r="4.5" fill="#A28EC8" fill-opacity=".8" filter="url(#m-g-sm)"/>
+        <text class="p-label" x="96" y="260" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Method Singer ]</text>
       </g></a>
       <a href="project.html?id=sojourn"><g class="p-node" data-id="sojourn" data-worlds="inner">
-        <circle cx="155" cy="308" r="22" fill="transparent"/>
-        <image class="p-img" href="/demo-thumb.png" x="139" y="292" width="32" height="32" clip-path="url(#m-cp-sj)" filter="url(#m-bw)" preserveAspectRatio="xMidYMid slice"/>
-        <circle class="p-dot p-ring" cx="155" cy="308" r="16" fill="none" stroke="#A28EC8" stroke-width="1" stroke-opacity=".4"/>
-        <text class="p-label" x="133" y="340" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Sojourn ]</text>
+        <circle cx="155" cy="308" r="16" fill="transparent"/>
+        <circle class="p-dot" cx="155" cy="308" r="4.5" fill="#A28EC8" fill-opacity=".8" filter="url(#m-g-sm)"/>
+        <text class="p-label" x="155" y="324" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Sojourn ]</text>
       </g></a>
       <a href="project.html?id=arrivals"><g class="p-node" data-id="arrivals" data-worlds="inner">
-        <circle cx="44" cy="185" r="22" fill="transparent"/>
-        <image class="p-img" href="/demo-thumb.png" x="28" y="169" width="32" height="32" clip-path="url(#m-cp-ar)" filter="url(#m-bw)" preserveAspectRatio="xMidYMid slice"/>
-        <circle class="p-dot p-ring" cx="44" cy="185" r="16" fill="none" stroke="#A28EC8" stroke-width="1" stroke-opacity=".4"/>
-        <text class="p-label" x="22" y="215" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Arrivals ]</text>
+        <circle cx="44" cy="185" r="16" fill="transparent"/>
+        <circle class="p-dot" cx="44" cy="185" r="4.5" fill="#A28EC8" fill-opacity=".8" filter="url(#m-g-sm)"/>
+        <text class="p-label" x="44" y="200" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Arrivals ]</text>
       </g></a>
       <a href="project.html?id=frankenstein"><g class="p-node" data-id="frankenstein" data-worlds="inner,shared">
-        <circle cx="180" cy="112" r="22" fill="transparent"/>
-        <image class="p-img" href="/demo-thumb.png" x="164" y="96" width="32" height="32" clip-path="url(#m-cp-fk)" filter="url(#m-bw)" preserveAspectRatio="xMidYMid slice"/>
-        <circle class="p-dot p-ring" cx="180" cy="112" r="16" fill="none" stroke="#A28EC8" stroke-width=".8" stroke-opacity=".35"/>
-        <circle cx="180" cy="112" r="16" fill="none" stroke="#6FA09A" stroke-width=".8" stroke-opacity=".35" stroke-dasharray="50.3 50.3" stroke-dashoffset="25.1"/>
-        <text class="p-label" x="180" y="79" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ FrankenstAIn ]</text>
+        <circle cx="180" cy="112" r="16" fill="transparent"/>
+        <circle class="p-dot" cx="180" cy="112" r="4.5" fill="#A28EC8" fill-opacity=".8" filter="url(#m-g-sm)"/>
+        <text class="p-label" x="180" y="128" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ FrankenstAIn ]</text>
       </g></a>
       <a href="project.html?id=dimensions"><g class="p-node" data-id="dimensions" data-worlds="shared">
-        <circle cx="262" cy="270" r="22" fill="transparent"/>
-        <image class="p-img" href="/demo-thumb.png" x="246" y="254" width="32" height="32" clip-path="url(#m-cp-di)" filter="url(#m-bw)" preserveAspectRatio="xMidYMid slice"/>
-        <circle class="p-dot p-ring" cx="262" cy="270" r="16" fill="none" stroke="#6FA09A" stroke-width="1" stroke-opacity=".4"/>
-        <text class="p-label" x="240" y="274" text-anchor="end" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Dimensions ]</text>
+        <circle cx="262" cy="270" r="16" fill="transparent"/>
+        <circle class="p-dot" cx="262" cy="270" r="4.5" fill="#6FA09A" fill-opacity=".8" filter="url(#m-g-sm)"/>
+        <text class="p-label" x="262" y="286" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Dimensions ]</text>
       </g></a>
       <a href="project.html?id=already"><g class="p-node" data-id="already" data-worlds="">
-        <circle cx="322" cy="200" r="22" fill="transparent"/>
-        <image class="p-img" href="/demo-thumb.png" x="306" y="184" width="32" height="32" clip-path="url(#m-cp-al)" filter="url(#m-bw)" preserveAspectRatio="xMidYMid slice"/>
-        <circle class="p-dot p-ring" cx="322" cy="200" r="16" fill="none" stroke="#7A7A76" stroke-width="1" stroke-opacity=".3"/>
-        <text class="p-label" x="300" y="230" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Already Not Here ]</text>
+        <circle cx="322" cy="200" r="16" fill="transparent"/>
+        <circle class="p-dot" cx="322" cy="200" r="4.5" fill="#7A7A76" fill-opacity=".8" filter="url(#m-g-sm)"/>
+        <text class="p-label" x="304" y="214" text-anchor="end" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Already Not Here ]</text>
       </g></a>
       <a href="project.html?id=proper-time"><g class="p-node" data-id="proper-time" data-worlds="built,shared">
-        <circle cx="178" cy="368" r="22" fill="transparent"/>
-        <image class="p-img" href="/demo-thumb.png" x="162" y="352" width="32" height="32" clip-path="url(#m-cp-pt)" filter="url(#m-bw)" preserveAspectRatio="xMidYMid slice"/>
-        <circle class="p-dot p-ring" cx="178" cy="368" r="16" fill="none" stroke="#6FA09A" stroke-width=".8" stroke-opacity=".35"/>
-        <circle cx="178" cy="368" r="16" fill="none" stroke="#BF7055" stroke-width=".8" stroke-opacity=".35" stroke-dasharray="50.3 50.3" stroke-dashoffset="25.1"/>
-        <text class="p-label" x="156" y="398" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Proper Time ]</text>
+        <circle cx="178" cy="368" r="16" fill="transparent"/>
+        <circle class="p-dot" cx="178" cy="368" r="4.5" fill="#6FA09A" fill-opacity=".8" filter="url(#m-g-sm)"/>
+        <text class="p-label" x="178" y="384" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Proper Time ]</text>
       </g></a>
       <a href="project.html?id=world-scores"><g class="p-node" data-id="world-scores" data-worlds="living,shared">
-        <circle cx="318" cy="382" r="22" fill="transparent"/>
-        <image class="p-img" href="/demo-thumb.png" x="302" y="366" width="32" height="32" clip-path="url(#m-cp-ws)" filter="url(#m-bw)" preserveAspectRatio="xMidYMid slice"/>
-        <circle class="p-dot p-ring" cx="318" cy="382" r="16" fill="none" stroke="#C09A6A" stroke-width=".8" stroke-opacity=".35"/>
-        <circle cx="318" cy="382" r="16" fill="none" stroke="#6FA09A" stroke-width=".8" stroke-opacity=".35" stroke-dasharray="50.3 50.3" stroke-dashoffset="25.1"/>
-        <text class="p-label" x="296" y="414" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ World Scores ]</text>
+        <circle cx="318" cy="382" r="16" fill="transparent"/>
+        <circle class="p-dot" cx="318" cy="382" r="4.5" fill="#C09A6A" fill-opacity=".8" filter="url(#m-g-sm)"/>
+        <text class="p-label" x="302" y="370" text-anchor="end" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ World Scores ]</text>
       </g></a>
       <a href="project.html?id=on-growth"><g class="p-node" data-id="on-growth" data-worlds="living">
-        <circle cx="268" cy="428" r="22" fill="transparent"/>
-        <image class="p-img" href="/demo-thumb.png" x="252" y="412" width="32" height="32" clip-path="url(#m-cp-og)" filter="url(#m-bw)" preserveAspectRatio="xMidYMid slice"/>
-        <circle class="p-dot p-ring" cx="268" cy="428" r="16" fill="none" stroke="#C09A6A" stroke-width="1" stroke-opacity=".4"/>
-        <text class="p-label" x="246" y="458" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ On Growth ]</text>
+        <circle cx="268" cy="428" r="16" fill="transparent"/>
+        <circle class="p-dot" cx="268" cy="428" r="4.5" fill="#C09A6A" fill-opacity=".8" filter="url(#m-g-sm)"/>
+        <text class="p-label" x="252" y="422" text-anchor="end" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ On Growth ]</text>
       </g></a>
       <a href="project.html?id=unsichtbar"><g class="p-node" data-id="unsichtbar" data-worlds="built">
-        <circle cx="40" cy="580" r="22" fill="transparent"/>
-        <image class="p-img" href="/demo-thumb.png" x="24" y="564" width="32" height="32" clip-path="url(#m-cp-un)" filter="url(#m-bw)" preserveAspectRatio="xMidYMid slice"/>
-        <circle class="p-dot p-ring" cx="40" cy="580" r="16" fill="none" stroke="#BF7055" stroke-width="1" stroke-opacity=".4"/>
-        <text class="p-label" x="62" y="584" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Unsichtbar ]</text>
+        <circle cx="40" cy="580" r="16" fill="transparent"/>
+        <circle class="p-dot" cx="40" cy="580" r="4.5" fill="#BF7055" fill-opacity=".8" filter="url(#m-g-sm)"/>
+        <text class="p-label" x="54" y="584" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Unsichtbar ]</text>
       </g></a>
 
       <!-- CATEGORY NODES -->
@@ -1966,7 +1938,12 @@ inView(revealSel, el => {
   const qgArcs     = ['qg-arc-a','qg-arc-b','qg-arc-c'].map(id => document.getElementById(id));
   const qgText     = qgSection.querySelector('.qg-text-group');
   const ARC_LEN    = 302;
-  const arcWindows = [[0.05, 0.38], [0.12, 0.45], [0.19, 0.52]];
+  const isMobile   = window.innerWidth < 720;
+  const arcWindows = isMobile
+    ? [[0.03, 0.16], [0.07, 0.20], [0.11, 0.24]]
+    : [[0.05, 0.38], [0.12, 0.45], [0.19, 0.52]];
+  const textStart  = isMobile ? 0.15 : 0.40;
+  const textLen    = isMobile ? 0.12 : 0.16;
 
   function clamp01(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
 
@@ -1975,7 +1952,7 @@ inView(revealSel, el => {
     const total = qgSection.offsetHeight + window.innerHeight;
     const p     = clamp01((window.innerHeight - rect.top) / total);
 
-    if (p > 0.04) qgSection.classList.add('qg-active');
+    if (p > 0.02) qgSection.classList.add('qg-active');
     else           qgSection.classList.remove('qg-active');
 
     qgArcs.forEach((arc, i) => {
@@ -1983,7 +1960,7 @@ inView(revealSel, el => {
       arc.style.strokeDashoffset = ARC_LEN * (1 - clamp01((p - s) / (e - s)));
     });
 
-    qgText.style.opacity = clamp01((p - 0.40) / 0.16);
+    qgText.style.opacity = clamp01((p - textStart) / textLen);
   }
 
   if (reduced) {
