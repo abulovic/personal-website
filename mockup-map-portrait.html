@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=375, initial-scale=1">
+<title>Mobile Map — Portrait Layout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #090909; --surface: #111; --surface2: #181818;
+    --border: #1C1C1C; --text: #F0EFEC; --text2: #7A7A76;
+    --text3: #363636; --accent: #BF2318;
+    --font-d: 'Syne', system-ui, sans-serif;
+    --font-b: 'DM Sans', system-ui, sans-serif;
+  }
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-b);
+    width: 375px;
+  }
+
+  .const-section {
+    padding: 0;
+  }
+
+  .const-header {
+    padding: 32px 22px 22px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .const-eyebrow {
+    font-size: 9px; font-weight: 500; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--text3); margin-bottom: 6px;
+  }
+  .const-title {
+    font-family: var(--font-d);
+    font-size: 20px; font-weight: 700; letter-spacing: -.02em;
+    color: var(--text); line-height: 1.1;
+  }
+  .const-hint {
+    font-size: 9px; letter-spacing: .05em; color: var(--text3);
+    text-align: right; line-height: 1.5;
+  }
+
+  .map-wrap {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  #map-mobile {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+  }
+
+  .w-node, .p-node { cursor: pointer; }
+  .w-ring {
+    fill: none;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  @keyframes breathe { 0%,100%{opacity:.18;transform:scale(1)} 55%{opacity:.07;transform:scale(1.12)} }
+  .ring-inner  { animation: breathe 5.2s ease-in-out infinite; }
+  .ring-shared { animation: breathe 6.1s ease-in-out infinite 1.3s; }
+  .ring-built  { animation: breathe 5.7s ease-in-out infinite 0.7s; }
+  .ring-living { animation: breathe 6.5s ease-in-out infinite 2.1s; }
+</style>
+</head>
+<body>
+
+<section class="const-section">
+  <div class="const-header">
+    <div>
+      <div class="const-eyebrow">Constellation</div>
+      <div class="const-title">Projects &<br>Worlds</div>
+    </div>
+    <div class="const-hint">tap any node<br>to explore</div>
+  </div>
+
+  <div class="map-wrap">
+
+    <!--
+      Portrait viewBox: 0 0 360 740
+      World positions (2x2 grid):
+        inner  (100, 150)   shared (260, 150)
+        built  (100, 510)   living (260, 510)
+
+      Project positions:
+        still-flow     inner            (36, 270)
+        method-singer  inner            (96, 275)
+        sojourn        inner            (155, 308)
+        arrivals       inner            (44, 185)
+        frankenstein   inner+shared     (180, 112)
+        dimensions     shared           (262, 270)
+        already        shared           (322, 200)
+        proper-time    built+shared     (178, 368)
+        world-scores   living+shared    (318, 382)
+        on-growth      living           (268, 428)
+        unsichtbar     built            (40, 580)
+
+      Categories (bottom):
+        music    (68,  672)
+        theatre  (168, 692)
+        research (256, 672)
+        writing  (330, 692)
+    -->
+
+    <svg id="map-mobile" viewBox="0 0 360 740" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="g-sm" x="-120%" y="-120%" width="340%" height="340%">
+          <feGaussianBlur stdDeviation="3" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="bw" color-interpolation-filters="sRGB">
+          <feColorMatrix type="saturate" values="0"/>
+          <feComponentTransfer>
+            <feFuncR type="linear" slope="1.15" intercept="-0.07"/>
+            <feFuncG type="linear" slope="1.15" intercept="-0.07"/>
+            <feFuncB type="linear" slope="1.15" intercept="-0.07"/>
+          </feComponentTransfer>
+        </filter>
+        <!-- clip paths r=16 for each project -->
+        <clipPath id="cp-sf">  <circle cx="36"  cy="270" r="16"/></clipPath>
+        <clipPath id="cp-ms">  <circle cx="96"  cy="275" r="16"/></clipPath>
+        <clipPath id="cp-sj">  <circle cx="155" cy="308" r="16"/></clipPath>
+        <clipPath id="cp-ar">  <circle cx="44"  cy="185" r="16"/></clipPath>
+        <clipPath id="cp-fk">  <circle cx="180" cy="112" r="16"/></clipPath>
+        <clipPath id="cp-di">  <circle cx="262" cy="270" r="16"/></clipPath>
+        <clipPath id="cp-al">  <circle cx="322" cy="200" r="16"/></clipPath>
+        <clipPath id="cp-pt">  <circle cx="178" cy="368" r="16"/></clipPath>
+        <clipPath id="cp-ws">  <circle cx="318" cy="382" r="16"/></clipPath>
+        <clipPath id="cp-og">  <circle cx="268" cy="428" r="16"/></clipPath>
+        <clipPath id="cp-un">  <circle cx="40"  cy="580" r="16"/></clipPath>
+      </defs>
+
+      <!-- ── WORLD → PROJECT CONNECTIONS ── -->
+      <line class="conn" data-w="inner"  data-p="still-flow"    x1="100" y1="150" x2="36"  y2="270" stroke="#A28EC8" stroke-width=".7" stroke-opacity=".18"/>
+      <line class="conn" data-w="inner"  data-p="method-singer" x1="100" y1="150" x2="96"  y2="275" stroke="#A28EC8" stroke-width=".7" stroke-opacity=".18"/>
+      <line class="conn" data-w="inner"  data-p="sojourn"       x1="100" y1="150" x2="155" y2="308" stroke="#A28EC8" stroke-width=".7" stroke-opacity=".18"/>
+      <line class="conn" data-w="inner"  data-p="arrivals"      x1="100" y1="150" x2="44"  y2="185" stroke="#A28EC8" stroke-width=".7" stroke-opacity=".18"/>
+      <line class="conn" data-w="inner"  data-p="frankenstein"  x1="100" y1="150" x2="180" y2="112" stroke="#A28EC8" stroke-width=".7" stroke-opacity=".18"/>
+      <line class="conn" data-w="shared" data-p="dimensions"    x1="260" y1="150" x2="262" y2="270" stroke="#6FA09A" stroke-width=".7" stroke-opacity=".18"/>
+      <line class="conn" data-w="shared" data-p="proper-time"   x1="260" y1="150" x2="178" y2="368" stroke="#6FA09A" stroke-width=".7" stroke-opacity=".18"/>
+      <line class="conn" data-w="shared" data-p="world-scores"  x1="260" y1="150" x2="318" y2="382" stroke="#6FA09A" stroke-width=".7" stroke-opacity=".18"/>
+      <line class="conn" data-w="built"  data-p="proper-time"   x1="100" y1="510" x2="178" y2="368" stroke="#BF7055" stroke-width=".7" stroke-opacity=".18"/>
+      <line class="conn" data-w="built"  data-p="unsichtbar"    x1="100" y1="510" x2="40"  y2="580" stroke="#BF7055" stroke-width=".7" stroke-opacity=".18"/>
+      <line class="conn" data-w="living" data-p="on-growth"     x1="260" y1="510" x2="268" y2="428" stroke="#C09A6A" stroke-width=".7" stroke-opacity=".18"/>
+      <line class="conn" data-w="living" data-p="world-scores"  x1="260" y1="510" x2="318" y2="382" stroke="#C09A6A" stroke-width=".7" stroke-opacity=".18"/>
+
+      <!-- ── CATEGORY → PROJECT CONNECTIONS ── -->
+      <line class="c-conn" data-c="cat-music"    data-p="method-singer"  x1="96"  y1="275" x2="68"  y2="672" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-music"    data-p="sojourn"        x1="155" y1="308" x2="68"  y2="672" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-music"    data-p="frankenstein"   x1="180" y1="112" x2="68"  y2="672" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-music"    data-p="world-scores"   x1="318" y1="382" x2="68"  y2="672" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-theatre"  data-p="arrivals"       x1="44"  y1="185" x2="168" y2="692" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-theatre"  data-p="frankenstein"   x1="180" y1="112" x2="168" y2="692" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-theatre"  data-p="proper-time"    x1="178" y1="368" x2="168" y2="692" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-theatre"  data-p="unsichtbar"     x1="40"  y1="580" x2="168" y2="692" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-research" data-p="still-flow"     x1="36"  y1="270" x2="256" y2="672" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-research" data-p="method-singer"  x1="96"  y1="275" x2="256" y2="672" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-research" data-p="dimensions"     x1="262" y1="270" x2="256" y2="672" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-research" data-p="on-growth"      x1="268" y1="428" x2="256" y2="672" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-research" data-p="world-scores"   x1="318" y1="382" x2="256" y2="672" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-writing"  data-p="sojourn"        x1="155" y1="308" x2="330" y2="692" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-writing"  data-p="already"        x1="322" y1="200" x2="330" y2="692" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-writing"  data-p="dimensions"     x1="262" y1="270" x2="330" y2="692" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+
+      <!-- ══ WORLD NODES ══ -->
+
+      <!-- INNER WORLDS (100, 150) -->
+      <g class="w-node" data-id="inner">
+        <circle class="w-ring ring-inner" cx="100" cy="150" r="36" stroke="#A28EC8" stroke-width="1" stroke-opacity=".35"/>
+        <circle class="w-outer" cx="100" cy="150" r="36" fill="#A28EC8" fill-opacity=".055"/>
+        <circle class="w-dot"   cx="100" cy="150" r="6"  fill="#A28EC8" fill-opacity=".8" filter="url(#g-sm)"/>
+        <text x="100" y="100" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9.5" font-weight="500" fill="#A28EC8" fill-opacity=".82" letter-spacing="1.4">INNER WORLDS</text>
+        <text x="100" y="113" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8"   font-weight="300" fill="#A28EC8" fill-opacity=".38" letter-spacing=".9">states of being</text>
+      </g>
+
+      <!-- SHARED WORLDS (260, 150) -->
+      <g class="w-node" data-id="shared">
+        <circle class="w-ring ring-shared" cx="260" cy="150" r="36" stroke="#6FA09A" stroke-width="1" stroke-opacity=".35"/>
+        <circle class="w-outer" cx="260" cy="150" r="36" fill="#6FA09A" fill-opacity=".055"/>
+        <circle class="w-dot"   cx="260" cy="150" r="6"  fill="#6FA09A" fill-opacity=".8" filter="url(#g-sm)"/>
+        <text x="260" y="100" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9.5" font-weight="500" fill="#6FA09A" fill-opacity=".82" letter-spacing="1.4">SHARED WORLDS</text>
+        <text x="260" y="113" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8"   font-weight="300" fill="#6FA09A" fill-opacity=".38" letter-spacing=".9">worldviews &amp; cosmologies</text>
+      </g>
+
+      <!-- FELT WORLDS / BUILT (100, 510) -->
+      <g class="w-node" data-id="built">
+        <circle class="w-ring ring-built" cx="100" cy="510" r="36" stroke="#BF7055" stroke-width="1" stroke-opacity=".35"/>
+        <circle class="w-outer" cx="100" cy="510" r="36" fill="#BF7055" fill-opacity=".055"/>
+        <circle class="w-dot"   cx="100" cy="510" r="6"  fill="#BF7055" fill-opacity=".8" filter="url(#g-sm)"/>
+        <text x="100" y="462" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9.5" font-weight="500" fill="#BF7055" fill-opacity=".82" letter-spacing="1.4">FELT WORLDS</text>
+        <text x="100" y="475" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8"   font-weight="300" fill="#BF7055" fill-opacity=".38" letter-spacing=".9">perception &amp; immersion</text>
+      </g>
+
+      <!-- EMERGENT WORLDS / LIVING (260, 510) -->
+      <g class="w-node" data-id="living">
+        <circle class="w-ring ring-living" cx="260" cy="510" r="36" stroke="#C09A6A" stroke-width="1" stroke-opacity=".35"/>
+        <circle class="w-outer" cx="260" cy="510" r="36" fill="#C09A6A" fill-opacity=".055"/>
+        <circle class="w-dot"   cx="260" cy="510" r="6"  fill="#C09A6A" fill-opacity=".8" filter="url(#g-sm)"/>
+        <text x="260" y="462" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9.5" font-weight="500" fill="#C09A6A" fill-opacity=".82" letter-spacing="1.4">EMERGENT WORLDS</text>
+        <text x="260" y="475" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8"   font-weight="300" fill="#C09A6A" fill-opacity=".38" letter-spacing=".9">generative self-organisation</text>
+      </g>
+
+      <!-- ══ PROJECT NODES ══ -->
+
+      <!-- still-flow (36, 270) — inner -->
+      <a href="project.html?id=still-flow"><g class="p-node" data-id="still-flow" data-worlds="inner">
+        <circle cx="36" cy="270" r="20" fill="transparent"/>
+        <image class="p-img" href="/demo-thumb.png" x="20" y="254" width="32" height="32" clip-path="url(#cp-sf)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <circle class="p-dot p-ring" cx="36" cy="270" r="16" fill="none" stroke="#7A7A76" stroke-width="1" stroke-opacity=".3"/>
+        <text class="p-label" x="58" y="274" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Still Flow ]</text>
+      </g></a>
+
+      <!-- method-singer (96, 275) — inner -->
+      <a href="project.html?id=method-singer"><g class="p-node" data-id="method-singer" data-worlds="inner">
+        <circle cx="96" cy="275" r="20" fill="transparent"/>
+        <image class="p-img" href="/demo-thumb.png" x="80" y="259" width="32" height="32" clip-path="url(#cp-ms)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <circle class="p-dot p-ring" cx="96" cy="275" r="16" fill="none" stroke="#A28EC8" stroke-width="1" stroke-opacity=".4"/>
+        <text class="p-label" x="118" y="279" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Method Singer ]</text>
+      </g></a>
+
+      <!-- sojourn (155, 308) — inner -->
+      <a href="project.html?id=sojourn"><g class="p-node" data-id="sojourn" data-worlds="inner">
+        <circle cx="155" cy="308" r="20" fill="transparent"/>
+        <image class="p-img" href="/demo-thumb.png" x="139" y="292" width="32" height="32" clip-path="url(#cp-sj)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <circle class="p-dot p-ring" cx="155" cy="308" r="16" fill="none" stroke="#A28EC8" stroke-width="1" stroke-opacity=".4"/>
+        <text class="p-label" x="133" y="340" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Sojourn ]</text>
+      </g></a>
+
+      <!-- arrivals (44, 185) — inner -->
+      <a href="project.html?id=arrivals"><g class="p-node" data-id="arrivals" data-worlds="inner">
+        <circle cx="44" cy="185" r="20" fill="transparent"/>
+        <image class="p-img" href="/demo-thumb.png" x="28" y="169" width="32" height="32" clip-path="url(#cp-ar)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <circle class="p-dot p-ring" cx="44" cy="185" r="16" fill="none" stroke="#A28EC8" stroke-width="1" stroke-opacity=".4"/>
+        <text class="p-label" x="22" y="215" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Arrivals ]</text>
+      </g></a>
+
+      <!-- frankenstein (180, 112) — inner+shared -->
+      <a href="project.html?id=frankenstein"><g class="p-node" data-id="frankenstein" data-worlds="inner,shared">
+        <circle cx="180" cy="112" r="20" fill="transparent"/>
+        <image class="p-img" href="/demo-thumb.png" x="164" y="96" width="32" height="32" clip-path="url(#cp-fk)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <circle class="p-dot p-ring" cx="180" cy="112" r="16" fill="none" stroke="#A28EC8" stroke-width=".8" stroke-opacity=".35"/>
+        <circle cx="180" cy="112" r="16" fill="none" stroke="#6FA09A" stroke-width=".8" stroke-opacity=".35" stroke-dasharray="50.3 50.3" stroke-dashoffset="25.1"/>
+        <text class="p-label" x="180" y="79" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ FrankenstAIn ]</text>
+      </g></a>
+
+      <!-- dimensions (262, 270) — shared -->
+      <a href="project.html?id=dimensions"><g class="p-node" data-id="dimensions" data-worlds="shared">
+        <circle cx="262" cy="270" r="20" fill="transparent"/>
+        <image class="p-img" href="/demo-thumb.png" x="246" y="254" width="32" height="32" clip-path="url(#cp-di)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <circle class="p-dot p-ring" cx="262" cy="270" r="16" fill="none" stroke="#6FA09A" stroke-width="1" stroke-opacity=".4"/>
+        <text class="p-label" x="240" y="274" text-anchor="end" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Dimensions ]</text>
+      </g></a>
+
+      <!-- already (322, 200) — shared -->
+      <a href="project.html?id=already"><g class="p-node" data-id="already" data-worlds="shared">
+        <circle cx="322" cy="200" r="20" fill="transparent"/>
+        <image class="p-img" href="/demo-thumb.png" x="306" y="184" width="32" height="32" clip-path="url(#cp-al)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <circle class="p-dot p-ring" cx="322" cy="200" r="16" fill="none" stroke="#7A7A76" stroke-width="1" stroke-opacity=".3"/>
+        <text class="p-label" x="300" y="230" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Already Not Here ]</text>
+      </g></a>
+
+      <!-- proper-time (178, 368) — built+shared -->
+      <a href="project.html?id=proper-time"><g class="p-node" data-id="proper-time" data-worlds="built,shared">
+        <circle cx="178" cy="368" r="20" fill="transparent"/>
+        <image class="p-img" href="/demo-thumb.png" x="162" y="352" width="32" height="32" clip-path="url(#cp-pt)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <circle class="p-dot p-ring" cx="178" cy="368" r="16" fill="none" stroke="#6FA09A" stroke-width=".8" stroke-opacity=".35"/>
+        <circle cx="178" cy="368" r="16" fill="none" stroke="#BF7055" stroke-width=".8" stroke-opacity=".35" stroke-dasharray="50.3 50.3" stroke-dashoffset="25.1"/>
+        <text class="p-label" x="156" y="398" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Proper Time ]</text>
+      </g></a>
+
+      <!-- world-scores (318, 382) — living+shared -->
+      <a href="project.html?id=world-scores"><g class="p-node" data-id="world-scores" data-worlds="living,shared">
+        <circle cx="318" cy="382" r="20" fill="transparent"/>
+        <image class="p-img" href="/demo-thumb.png" x="302" y="366" width="32" height="32" clip-path="url(#cp-ws)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <circle class="p-dot p-ring" cx="318" cy="382" r="16" fill="none" stroke="#C09A6A" stroke-width=".8" stroke-opacity=".35"/>
+        <circle cx="318" cy="382" r="16" fill="none" stroke="#6FA09A" stroke-width=".8" stroke-opacity=".35" stroke-dasharray="50.3 50.3" stroke-dashoffset="25.1"/>
+        <text class="p-label" x="296" y="414" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ World Scores ]</text>
+      </g></a>
+
+      <!-- on-growth (268, 428) — living -->
+      <a href="project.html?id=on-growth"><g class="p-node" data-id="on-growth" data-worlds="living">
+        <circle cx="268" cy="428" r="20" fill="transparent"/>
+        <image class="p-img" href="/demo-thumb.png" x="252" y="412" width="32" height="32" clip-path="url(#cp-og)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <circle class="p-dot p-ring" cx="268" cy="428" r="16" fill="none" stroke="#C09A6A" stroke-width="1" stroke-opacity=".4"/>
+        <text class="p-label" x="246" y="458" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ On Growth ]</text>
+      </g></a>
+
+      <!-- unsichtbar (40, 580) — built -->
+      <a href="project.html?id=unsichtbar"><g class="p-node" data-id="unsichtbar" data-worlds="built">
+        <circle cx="40" cy="580" r="20" fill="transparent"/>
+        <image class="p-img" href="/demo-thumb.png" x="24" y="564" width="32" height="32" clip-path="url(#cp-un)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <circle class="p-dot p-ring" cx="40" cy="580" r="16" fill="none" stroke="#BF7055" stroke-width="1" stroke-opacity=".4"/>
+        <text class="p-label" x="62" y="584" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".48" letter-spacing=".3">[ Unsichtbar ]</text>
+      </g></a>
+
+      <!-- ══ CATEGORY NODES ══ -->
+      <g class="c-node" data-id="cat-music">
+        <rect class="c-box" x="24"  y="662" width="88" height="19" rx="9.5" fill="#111" stroke="#1C1C1C" stroke-width=".75"/>
+        <text class="c-label" x="68"  y="675" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" font-weight="500" fill="#444" letter-spacing="1.8">MUSIC</text>
+      </g>
+      <g class="c-node" data-id="cat-theatre">
+        <rect class="c-box" x="120" y="682" width="96" height="19" rx="9.5" fill="#111" stroke="#1C1C1C" stroke-width=".75"/>
+        <text class="c-label" x="168" y="695" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" font-weight="500" fill="#444" letter-spacing="1.8">THEATRE</text>
+      </g>
+      <g class="c-node" data-id="cat-research">
+        <rect class="c-box" x="210" y="662" width="92" height="19" rx="9.5" fill="#111" stroke="#1C1C1C" stroke-width=".75"/>
+        <text class="c-label" x="256" y="675" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" font-weight="500" fill="#444" letter-spacing="1.8">RESEARCH</text>
+      </g>
+      <g class="c-node" data-id="cat-writing">
+        <rect class="c-box" x="284" y="682" width="70" height="19" rx="9.5" fill="#111" stroke="#1C1C1C" stroke-width=".75"/>
+        <text class="c-label" x="319" y="695" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" font-weight="500" fill="#444" letter-spacing="1.8">WRITING</text>
+      </g>
+
+    </svg>
+  </div>
+</section>
+
+</body>
+</html>

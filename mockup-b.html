@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=375, initial-scale=1">
+<title>Mockup B – Inline Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #090909; --surface: #111; --surface2: #181818;
+    --border: #1C1C1C; --text: #F0EFEC; --text2: #7A7A76;
+    --text3: #363636; --accent: #BF2318;
+    --font-d: 'Syne', system-ui, sans-serif;
+    --font-b: 'DM Sans', system-ui, sans-serif;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-b);
+    width: 375px;
+    height: 812px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .approach-label {
+    position: absolute;
+    top: 12px; left: 50%;
+    transform: translateX(-50%);
+    background: #222;
+    border: 1px solid #333;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--text2);
+    padding: 5px 14px;
+    z-index: 300;
+    white-space: nowrap;
+  }
+
+  .section-header {
+    padding: 48px 20px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-eyebrow {
+    font-size: 9px; font-weight: 500; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--text3); margin-bottom: 6px;
+  }
+  .section-title {
+    font-family: var(--font-d);
+    font-size: 20px; font-weight: 700; letter-spacing: -.02em;
+    color: var(--text);
+  }
+
+  .map-area {
+    padding: 14px 12px 10px;
+  }
+  .map-svg-wrap {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    aspect-ratio: 16/9;
+    position: relative;
+    overflow: hidden;
+  }
+  .map-placeholder {
+    width: 100%; height: 100%;
+    position: relative;
+  }
+  .node {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .node-world { width: 38px; height: 38px; }
+  .node-project { width: 22px; height: 22px; }
+  .node-label {
+    position: absolute;
+    font-size: 7px; font-weight: 500; letter-spacing: .06em;
+    white-space: nowrap;
+    top: calc(100% + 4px);
+    left: 50%; transform: translateX(-50%);
+    color: var(--text2);
+  }
+  .node-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .node-project .node-dot { width: 4px; height: 4px; }
+  .conn-line { position: absolute; background: #2a2a2a; transform-origin: left center; }
+
+  .w-inner  { color: #7BA7E0; top: 24%; left: 46%; }
+  .w-shared { color: #C4956A; top: 55%; left: 62%; }
+  .w-built  { color: #7BBF92; top: 62%; left: 28%; }
+  .w-living { color: #A07BC4; top: 28%; left: 72%; }
+
+  .p1 { color: #555; top: 18%; left: 28%; }
+  .p2 { color: #555; top: 38%; left: 18%; }
+  .p3 { color: #555; top: 70%; left: 48%; }
+  .p4 { color: #555; top: 42%; left: 52%; }
+  .p5 { color: var(--accent); top: 34%; left: 36%; }
+  .p6 { color: #555; top: 52%; left: 76%; }
+  .p7 { color: #555; top: 76%; left: 66%; }
+
+  .tap-ring {
+    position: absolute;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid var(--accent);
+    top: 34%; left: 36%;
+    transform: translate(-50%, -50%) translate(11px, 11px) scale(1.6);
+    opacity: .35;
+  }
+  .tap-cursor {
+    position: absolute;
+    top: 34%; left: 36%;
+    transform: translate(18px, 16px);
+    font-size: 16px;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,.8));
+    z-index: 10;
+  }
+
+  /* connector arrow from map to panel */
+  .connector-arrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 16px;
+    margin-bottom: 2px;
+  }
+  .arrow-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+  .arrow-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--accent), transparent);
+  }
+  .arrow-label {
+    font-size: 8.5px; font-weight: 500; letter-spacing: .15em;
+    text-transform: uppercase; color: var(--accent);
+  }
+
+  /* inline detail panel */
+  .inline-panel {
+    margin: 0 12px;
+    background: var(--surface2);
+    border: 1px solid #222;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .panel-img-wrap { position: relative; overflow: hidden; }
+  .panel-img {
+    width: 100%; height: 90px;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(1) contrast(1.08) brightness(.7);
+  }
+  .panel-img-wrap::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(24,24,24,.9) 0%, transparent 65%);
+  }
+  .panel-body { padding: 14px 16px 16px; }
+  .panel-eye {
+    font-size: 8.5px; font-weight: 500; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--text3); margin-bottom: 5px;
+  }
+  .panel-name {
+    font-family: var(--font-d);
+    font-size: 16px; font-weight: 700; letter-spacing: -.02em;
+    color: var(--text); margin-bottom: 7px; line-height: 1.1;
+  }
+  .panel-desc {
+    font-size: 10.5px; font-weight: 300; line-height: 1.62;
+    color: var(--text2); margin-bottom: 12px;
+  }
+  .panel-footer {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .panel-tags { display: flex; gap: 5px; }
+  .panel-tag {
+    font-size: 8px; font-weight: 500; letter-spacing: .1em;
+    text-transform: uppercase; padding: 2px 7px;
+    border-radius: 1px; border: 1px solid;
+  }
+  .panel-link {
+    font-size: 9px; font-weight: 500; letter-spacing: .15em;
+    text-transform: uppercase; color: var(--text3);
+    text-decoration: none;
+  }
+
+  /* scroll hint */
+  .scroll-hint {
+    text-align: center;
+    padding: 10px;
+    font-size: 8.5px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--text3);
+  }
+  .scroll-arrow { display: block; font-size: 11px; margin-top: 3px; opacity: .4; }
+</style>
+</head>
+<body>
+
+<div class="approach-label">B — Inline Panel Below Map</div>
+
+<div class="section-header">
+  <div class="section-eyebrow">Constellation</div>
+  <div class="section-title">Projects & Worlds</div>
+</div>
+
+<div class="map-area">
+  <div class="map-svg-wrap">
+    <div class="map-placeholder">
+      <div class="conn-line" style="width:52px;height:1px;top:40%;left:29%;transform:rotate(-18deg);opacity:.3"></div>
+      <div class="conn-line" style="width:40px;height:1px;top:37%;left:37%;transform:rotate(8deg);opacity:.5;background:#BF2318"></div>
+      <div class="conn-line" style="width:60px;height:1px;top:52%;left:42%;transform:rotate(22deg);opacity:.3"></div>
+      <div class="conn-line" style="width:44px;height:1px;top:45%;left:56%;transform:rotate(-30deg);opacity:.3"></div>
+      <div class="conn-line" style="width:55px;height:1px;top:60%;left:32%;transform:rotate(-8deg);opacity:.3"></div>
+
+      <div class="node node-world w-inner"><div class="node-dot"></div><span class="node-label">Inner</span></div>
+      <div class="node node-world w-shared"><div class="node-dot"></div><span class="node-label">Shared</span></div>
+      <div class="node node-world w-built"><div class="node-dot"></div><span class="node-label">Built</span></div>
+      <div class="node node-world w-living"><div class="node-dot"></div><span class="node-label">Living</span></div>
+
+      <div class="node node-project p1"><div class="node-dot"></div></div>
+      <div class="node node-project p2"><div class="node-dot"></div></div>
+      <div class="node node-project p3"><div class="node-dot"></div></div>
+      <div class="node node-project p4"><div class="node-dot"></div></div>
+      <div class="node node-project p5" style="width:26px;height:26px"><div class="node-dot" style="width:5px;height:5px"></div></div>
+      <div class="node node-project p6"><div class="node-dot"></div></div>
+      <div class="node node-project p7"><div class="node-dot"></div></div>
+
+      <div class="tap-ring"></div>
+      <div class="tap-cursor">👆</div>
+    </div>
+  </div>
+</div>
+
+<!-- connector between map and panel -->
+<div class="connector-arrow">
+  <div class="arrow-dot"></div>
+  <div class="arrow-line"></div>
+  <div class="arrow-label">Selected</div>
+</div>
+
+<!-- inline detail panel -->
+<div class="inline-panel">
+  <div class="panel-img-wrap">
+    <img class="panel-img" src="https://placehold.co/375x90/111111/222222?text=." alt="">
+  </div>
+  <div class="panel-body">
+    <div class="panel-eye">Performance · Research</div>
+    <div class="panel-name">The Method of the Singer</div>
+    <div class="panel-desc">An investigation into vocal embodiment — how a performer's inner state becomes audible texture in the voice.</div>
+    <div class="panel-footer">
+      <div class="panel-tags">
+        <span class="panel-tag" style="color:#7BA7E0;border-color:#7BA7E044">Inner</span>
+        <span class="panel-tag" style="color:#C4956A;border-color:#C4956A44">Shared</span>
+      </div>
+      <a class="panel-link" href="#">View →</a>
+    </div>
+  </div>
+</div>
+
+<div class="scroll-hint">
+  Scroll down to see full detail
+  <span class="scroll-arrow">↓</span>
+</div>
+
+</body>
+</html>
