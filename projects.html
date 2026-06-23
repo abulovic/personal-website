@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — Ana Bulović</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:       #090909;
+      --surface:  #111111;
+      --surface2: #181818;
+      --border:   #1C1C1C;
+      --text:     #F0EFEC;
+      --text2:    #7A7A76;
+      --text3:    #363636;
+      --inner:    #A28EC8;
+      --shared:   #6FA09A;
+      --built:    #BF7055;
+      --living:   #C09A6A;
+      --font-d: 'Syne', system-ui, sans-serif;
+      --font-b: 'DM Sans', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-b);
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: clamp(20px, 3vh, 40px) clamp(24px, 7vw, 110px);
+      display: flex; justify-content: space-between; align-items: center;
+      background: linear-gradient(to bottom, var(--bg) 60%, transparent 100%);
+    }
+    .nav-name {
+      font-size: 11px; font-weight: 500; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--text2);
+      text-decoration: none; transition: color .25s ease;
+    }
+    .nav-name:hover { color: var(--text); }
+    .nav-back {
+      font-size: 11px; font-weight: 400; letter-spacing: .1em;
+      color: var(--text2); text-decoration: none;
+      transition: color .25s ease;
+    }
+    .nav-back:hover { color: var(--text); }
+
+    /* PAGE HEADER */
+    .page-header {
+      padding: clamp(100px, 16vh, 160px) clamp(24px, 7vw, 110px) clamp(32px, 5vh, 52px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    .page-title {
+      font-family: var(--font-d);
+      font-size: clamp(28px, 4vw, 52px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: var(--text);
+    }
+    .page-count {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--text3);
+    }
+
+    /* FILTERS */
+    .filters {
+      padding: clamp(20px, 3vh, 32px) clamp(24px, 7vw, 110px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+    .filter-divider {
+      width: 1px;
+      height: 16px;
+      background: var(--border);
+      margin: 0 4px;
+      flex-shrink: 0;
+    }
+    .filter-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 11px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: transparent;
+      font-family: var(--font-b);
+      font-size: 9.5px;
+      font-weight: 500;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: var(--text3);
+      cursor: pointer;
+      transition: border-color .2s ease, color .2s ease, background .2s ease;
+      -webkit-tap-highlight-color: transparent;
+      white-space: nowrap;
+    }
+    .filter-pill:hover {
+      color: var(--text2);
+      border-color: var(--text3);
+    }
+    .filter-pill.active {
+      color: var(--text);
+      border-color: var(--text2);
+      background: var(--surface);
+    }
+    .filter-pill.active[data-world="inner"]  { color: var(--inner);  border-color: var(--inner); }
+    .filter-pill.active[data-world="shared"] { color: var(--shared); border-color: var(--shared); }
+    .filter-pill.active[data-world="built"]  { color: var(--built);  border-color: var(--built); }
+    .filter-pill.active[data-world="living"] { color: var(--living); border-color: var(--living); }
+    .filter-pill[data-world="inner"]:not(.active):hover  { color: var(--inner);  border-color: #A28EC844; }
+    .filter-pill[data-world="shared"]:not(.active):hover { color: var(--shared); border-color: #6FA09A44; }
+    .filter-pill[data-world="built"]:not(.active):hover  { color: var(--built);  border-color: #BF705544; }
+    .filter-pill[data-world="living"]:not(.active):hover { color: var(--living); border-color: #C09A6A44; }
+
+    /* PROJECT LIST */
+    .project-list {
+      padding: 0 0 clamp(80px, 12vh, 140px);
+    }
+
+    .project-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px 32px;
+      align-items: center;
+      padding: clamp(20px, 3vh, 30px) clamp(24px, 7vw, 110px);
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      transition: background .2s ease;
+    }
+    .project-row:hover { background: var(--surface); }
+    .project-row:focus-visible { outline: 1px solid var(--text3); outline-offset: -1px; }
+    .project-row.hidden { display: none; }
+
+    .row-left { min-width: 0; }
+    .row-name {
+      font-family: var(--font-d);
+      font-size: clamp(16px, 2vw, 22px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      line-height: 1.15;
+      margin-bottom: 5px;
+      transition: color .2s ease;
+    }
+    .project-row:hover .row-name { color: var(--text); }
+    .row-type {
+      font-size: 11.5px;
+      font-weight: 300;
+      color: var(--text2);
+      letter-spacing: .01em;
+    }
+
+    .row-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .r-tag {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 1px;
+      border: 1px solid;
+    }
+    .r-tag-world {
+      /* color and border set inline */
+    }
+    .r-tag-cat {
+      color: var(--text3);
+      border-color: var(--border);
+    }
+
+    /* EMPTY STATE */
+    .no-results {
+      display: none;
+      padding: clamp(60px, 10vh, 100px) clamp(24px, 7vw, 110px);
+      font-size: 13px;
+      color: var(--text3);
+      letter-spacing: .08em;
+    }
+    .no-results.visible { display: block; }
+
+    @media (max-width: 600px) {
+      .project-row {
+        grid-template-columns: 1fr;
+      }
+      .row-tags { justify-content: flex-start; }
+      .filter-divider { display: none; }
+    }
+
+    ::selection { background: rgba(162,142,200,0.38); color: #F0EFEC; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-name" href="index.html">Ana Bulović</a>
+  <a class="nav-back" href="index.html">← Back</a>
+</nav>
+
+<div class="page-header">
+  <h1 class="page-title">All Projects</h1>
+  <span class="page-count" id="visible-count">11 projects</span>
+</div>
+
+<div class="filters" id="filters">
+  <!-- World type filters -->
+  <div class="filter-group">
+    <button class="filter-pill" data-filter="world" data-world="inner">Inner Worlds</button>
+    <button class="filter-pill" data-filter="world" data-world="shared">Shared Worlds</button>
+    <button class="filter-pill" data-filter="world" data-world="built">Felt Worlds</button>
+    <button class="filter-pill" data-filter="world" data-world="living">Emergent Worlds</button>
+  </div>
+  <div class="filter-divider"></div>
+  <!-- Category filters -->
+  <div class="filter-group">
+    <button class="filter-pill" data-filter="cat" data-cat="Music">Music</button>
+    <button class="filter-pill" data-filter="cat" data-cat="Theatre">Theatre</button>
+    <button class="filter-pill" data-filter="cat" data-cat="Research">Research</button>
+    <button class="filter-pill" data-filter="cat" data-cat="Writing">Writing</button>
+    <button class="filter-pill" data-filter="cat" data-cat="Science">Science</button>
+  </div>
+</div>
+
+<div class="project-list" id="project-list"></div>
+<div class="no-results" id="no-results">No projects match the selected filters.</div>
+
+<script>
+const worldColors = {
+  inner:  '#A28EC8',
+  shared: '#6FA09A',
+  built:  '#BF7055',
+  living: '#C09A6A',
+};
+const worldLabels = {
+  inner:  'Inner Worlds',
+  shared: 'Shared Worlds',
+  built:  'Felt Worlds',
+  living: 'Emergent Worlds',
+};
+
+const projects = [
+  { id:'still-flow',    label:'Still Flow',          type:'Movement Research — ongoing',                          worlds:['inner'],          cats:['Research'] },
+  { id:'method-singer', label:'Method Singer',        type:'Vocal Research — Ongoing',                            worlds:['inner'],          cats:['Music','Research'] },
+  { id:'sojourn',       label:'Sojourn',              type:'Music Theatre',                                       worlds:['inner'],          cats:['Music','Writing','Theatre'] },
+  { id:'arrivals',      label:'Arrivals',             type:'Movement Research',                                   worlds:['inner'],          cats:['Theatre','Research'] },
+  { id:'frankenstein',  label:'FrankenstAIn',         type:'Music Theatre',                                       worlds:['inner','shared'], cats:['Music','Theatre','Research'] },
+  { id:'dimensions',    label:'Dimensions',           type:'Research framework — open to collaborators',          worlds:['shared'],         cats:['Research','Writing'] },
+  { id:'already',       label:'Already Not Here',     type:'Sound Installation',                                  worlds:['shared'],         cats:['Writing','Music'] },
+  { id:'proper-time',   label:'Proper Time',          type:'Multi-room experience — Audience Award INSIGHT 2023', worlds:['built','shared'], cats:['Theatre','Research'] },
+  { id:'unsichtbar',    label:'Unsichtbar',            type:'Sensory Theatre',                                     worlds:['built'],          cats:['Theatre'] },
+  { id:'on-growth',     label:'On Growth',            type:'Doctoral Thesis',                                     worlds:['living'],         cats:['Science','Research'] },
+  { id:'world-scores',  label:'World Scores',         type:'Music for artificial societies',                      worlds:['living','shared'], cats:['Music','Research'] },
+];
+
+const list = document.getElementById('project-list');
+const noResults = document.getElementById('no-results');
+const countEl = document.getElementById('visible-count');
+
+projects.forEach(p => {
+  const worldTagsHtml = p.worlds.map(w =>
+    `<span class="r-tag r-tag-world" style="color:${worldColors[w]};border-color:${worldColors[w]}44">${worldLabels[w]}</span>`
+  ).join('');
+  const catTagsHtml = p.cats.map(c =>
+    `<span class="r-tag r-tag-cat">${c}</span>`
+  ).join('');
+
+  const row = document.createElement('a');
+  row.className = 'project-row';
+  row.href = `project.html?id=${p.id}`;
+  row.dataset.worlds = p.worlds.join(',');
+  row.dataset.cats = p.cats.join(',');
+  row.innerHTML = `
+    <div class="row-left">
+      <div class="row-name">${p.label}</div>
+      <div class="row-type">${p.type}</div>
+    </div>
+    <div class="row-tags">${worldTagsHtml}${catTagsHtml}</div>`;
+  list.appendChild(row);
+});
+
+/* ── FILTERING ── */
+let activeWorlds = new Set();
+let activeCats   = new Set();
+
+function applyFilters() {
+  const rows = list.querySelectorAll('.project-row');
+  let visible = 0;
+
+  rows.forEach(row => {
+    const rowWorlds = new Set(row.dataset.worlds ? row.dataset.worlds.split(',') : []);
+    const rowCats   = new Set(row.dataset.cats   ? row.dataset.cats.split(',')   : []);
+
+    const worldMatch = activeWorlds.size === 0 || [...activeWorlds].some(w => rowWorlds.has(w));
+    const catMatch   = activeCats.size === 0   || [...activeCats].some(c => rowCats.has(c));
+
+    if (worldMatch && catMatch) {
+      row.classList.remove('hidden');
+      visible++;
+    } else {
+      row.classList.add('hidden');
+    }
+  });
+
+  countEl.textContent = `${visible} project${visible !== 1 ? 's' : ''}`;
+  noResults.classList.toggle('visible', visible === 0);
+}
+
+document.getElementById('filters').addEventListener('click', e => {
+  const pill = e.target.closest('.filter-pill');
+  if (!pill) return;
+
+  const filterType = pill.dataset.filter;
+
+  if (filterType === 'world') {
+    const w = pill.dataset.world;
+    if (activeWorlds.has(w)) { activeWorlds.delete(w); pill.classList.remove('active'); }
+    else                      { activeWorlds.add(w);    pill.classList.add('active'); }
+  } else {
+    const c = pill.dataset.cat;
+    if (activeCats.has(c)) { activeCats.delete(c); pill.classList.remove('active'); }
+    else                    { activeCats.add(c);    pill.classList.add('active'); }
+  }
+
+  applyFilters();
+});
+</script>
+</body>
+</html>

@@ -192,7 +192,7 @@
       font-weight: 500;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--text3);
+      color: var(--text2);
       margin-bottom: 14px;
     }
 
@@ -435,7 +435,7 @@
 
     .about-text {
       font-family: var(--font-b);
-      font-size: clamp(15px, 1.6vw, 19px);
+      font-size: clamp(13px, 1.35vw, 17px);
       font-weight: 300;
       line-height: 1.78;
       color: var(--text2);
@@ -557,7 +557,7 @@
     .qg-bio {
       flex: 1;
       font-family: var(--font-b);
-      font-size: clamp(15px, 1.5vw, 18px);
+      font-size: clamp(12px, 1.0vw, 14px);
       font-weight: 300;
       line-height: 1.82;
       color: var(--text2);
@@ -633,8 +633,8 @@
 
     /* ─── CONSTELLATION INTRO ─── */
     .const-intro {
-      padding: clamp(20px, 3vh, 32px) clamp(24px, 7vw, 110px) 0;
-      font-size: clamp(13px, 1.15vw, 15.5px);
+      padding: clamp(20px, 3vh, 32px) clamp(24px, 7vw, 110px) clamp(32px, 5vh, 56px);
+      font-size: clamp(12px, 1.0vw, 14px);
       font-weight: 300;
       line-height: 1.75;
       color: var(--text2);
@@ -642,10 +642,50 @@
     }
     @media (max-width: 768px) {
       .const-intro {
-        padding: 16px 22px 0;
-        font-size: 13px;
+        padding: 16px 22px 24px;
+        font-size: 12px;
       }
     }
+
+    /* ─── PERFORMANCES ─── */
+    .h-perf-label { font-size: 8.5px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--text3); margin-top: 12px; margin-bottom: 5px; }
+    .h-perf-list  { font-size: 11px; font-weight: 300; line-height: 1.72; color: var(--text2); }
+    .h-perf-item  { display: flex; gap: 7px; }
+    .h-perf-item::before { content: '—'; color: var(--text3); flex-shrink: 0; }
+    .pm-perf { margin-bottom: 18px; }
+    .pm-perf-label { font-size: 9px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--text3); margin-bottom: 5px; }
+    .pm-perf-list  { font-size: 12px; font-weight: 300; line-height: 1.65; color: var(--text2); }
+    .pm-perf-item  { display: flex; gap: 7px; }
+    .pm-perf-item::before { content: '—'; color: var(--text3); flex-shrink: 0; }
+
+    /* Selection color */
+    ::selection { background: rgba(162,142,200,0.38); color: #F0EFEC; }
+
+    .h-tag-cat {
+      color: var(--text3);
+      border-color: var(--border);
+    }
+
+    /* ─── ALL PROJECTS LINK ─── */
+    .const-all-link {
+      padding: clamp(14px, 2vh, 22px) clamp(24px, 7vw, 110px) clamp(24px, 4vh, 40px);
+    }
+    .const-all-link a {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--text2);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      transition: color .25s ease, border-color .25s ease;
+    }
+    .const-all-link a:hover,
+    .const-all-link a:focus-visible { color: var(--text); border-color: var(--text2); outline: none; }
+
+    /* Hide mobile-only modal on desktop */
+    #project-modal { display: none; }
 
     /* ─── MOBILE MAP ─── */
     #map-mobile { display: none; }
@@ -910,10 +950,14 @@
     <span class="const-tap-hint">tap a node<br>to explore</span>
   </div>
 
+  <div class="const-all-link">
+    <a href="projects.html">View all projects →</a>
+  </div>
+
   <p class="const-intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
 
   <div class="const-wrap" id="const-wrap">
-    <svg id="map" viewBox="-30 30 1100 560" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+    <svg id="map" viewBox="-30 30 1100 450" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <filter id="g-sm" x="-120%" y="-120%" width="340%" height="340%">
           <feGaussianBlur stdDeviation="3.5" result="b"/>
@@ -1025,25 +1069,25 @@
       <!-- PROJECT NODES -->
       <a href="project.html?id=still-flow"><g class="p-node" data-id="still-flow" data-worlds="inner">
         <circle cx="72" cy="298" r="20" fill="transparent"/>
-        <image class="p-img" href="/demo-thumb.png" x="54" y="280" width="36" height="36" clip-path="url(#cpn-still-flow)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <image class="p-img" href="/brand_assets/Still-Flow.png" x="54" y="280" width="36" height="36" clip-path="url(#cpn-still-flow)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
         <circle class="p-dot p-ring" cx="72" cy="298" r="18" fill="none" stroke="#7A7A76" stroke-width="1" stroke-opacity=".52"/>
         <text class="p-label" x="96" y="302" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".75" letter-spacing=".4">[ Still Flow ]</text>
       </g></a>
       <a href="project.html?id=method-singer"><g class="p-node" data-id="method-singer" data-worlds="inner">
         <circle cx="140" cy="238" r="20" fill="transparent"/>
-        <image class="p-img" href="/demo-thumb.png" x="122" y="220" width="36" height="36" clip-path="url(#cpn-method-singer)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <image class="p-img" href="/brand_assets/Method-Singer.jpg" x="122" y="220" width="36" height="36" clip-path="url(#cpn-method-singer)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
         <circle class="p-dot p-ring" cx="140" cy="238" r="18" fill="none" stroke="#A28EC8" stroke-width="1" stroke-opacity=".64"/>
         <text class="p-label" x="164" y="242" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".75" letter-spacing=".4">[ Method Singer ]</text>
       </g></a>
       <a href="project.html?id=sojourn"><g class="p-node" data-id="sojourn" data-worlds="inner">
         <circle cx="200" cy="316" r="20" fill="transparent"/>
-        <image class="p-img" href="/demo-thumb.png" x="182" y="298" width="36" height="36" clip-path="url(#cpn-sojourn)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <image class="p-img" href="/brand_assets/Sojourn.png" x="182" y="298" width="36" height="36" clip-path="url(#cpn-sojourn)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
         <circle class="p-dot p-ring" cx="200" cy="316" r="18" fill="none" stroke="#A28EC8" stroke-width="1" stroke-opacity=".64"/>
         <text class="p-label" x="224" y="320" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".75" letter-spacing=".4">[ Sojourn ]</text>
       </g></a>
       <a href="project.html?id=arrivals"><g class="p-node" data-id="arrivals" data-worlds="inner">
         <circle cx="272" cy="268" r="20" fill="transparent"/>
-        <image class="p-img" href="/demo-thumb.png" x="254" y="250" width="36" height="36" clip-path="url(#cpn-arrivals)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <image class="p-img" href="/brand_assets/arrivals.png" x="254" y="250" width="36" height="36" clip-path="url(#cpn-arrivals)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
         <circle class="p-dot p-ring" cx="272" cy="268" r="18" fill="none" stroke="#A28EC8" stroke-width="1" stroke-opacity=".64"/>
         <text class="p-label" x="296" y="272" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".75" letter-spacing=".4">[ Arrivals ]</text>
       </g></a>
@@ -1055,19 +1099,19 @@
       </g></a>
       <a href="project.html?id=dimensions"><g class="p-node" data-id="dimensions" data-worlds="shared">
         <circle cx="440" cy="238" r="20" fill="transparent"/>
-        <image class="p-img" href="/demo-thumb.png" x="422" y="220" width="36" height="36" clip-path="url(#cpn-dimensions)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <image class="p-img" href="/brand_assets/Dimensions.png" x="422" y="220" width="36" height="36" clip-path="url(#cpn-dimensions)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
         <circle class="p-dot p-ring" cx="440" cy="238" r="18" fill="none" stroke="#6FA09A" stroke-width="1" stroke-opacity=".64"/>
         <text class="p-label" x="464" y="242" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".75" letter-spacing=".4">[ Dimensions ]</text>
       </g></a>
       <a href="project.html?id=already"><g class="p-node" data-id="already" data-worlds="">
         <circle cx="486" cy="328" r="20" fill="transparent"/>
-        <image class="p-img" href="/demo-thumb.png" x="468" y="310" width="36" height="36" clip-path="url(#cpn-already)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <image class="p-img" href="/brand_assets/already-not-here.png" x="468" y="310" width="36" height="36" clip-path="url(#cpn-already)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
         <circle class="p-dot p-ring" cx="486" cy="328" r="18" fill="none" stroke="#7A7A76" stroke-width="1" stroke-opacity=".52"/>
         <text class="p-label" x="510" y="332" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".75" letter-spacing=".4">[ Already Not Here ]</text>
       </g></a>
       <a href="project.html?id=proper-time"><g class="p-node" data-id="proper-time" data-worlds="built,shared">
         <circle cx="590" cy="268" r="20" fill="transparent"/>
-        <image class="p-img" href="/demo-thumb.png" x="572" y="250" width="36" height="36" clip-path="url(#cpn-proper-time)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <image class="p-img" href="/brand_assets/proper-time.png" x="572" y="250" width="36" height="36" clip-path="url(#cpn-proper-time)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
         <circle class="p-dot p-ring" cx="590" cy="268" r="18" fill="none" stroke="#6FA09A" stroke-width=".8" stroke-opacity=".58"/>
         <circle cx="590" cy="268" r="18" fill="none" stroke="#BF7055" stroke-width=".8" stroke-opacity=".58" stroke-dasharray="56.5 56.5" stroke-dashoffset="28.3"/>
         <text class="p-label" x="614" y="272" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".75" letter-spacing=".4">[ Proper Time ]</text>
@@ -1086,7 +1130,7 @@
       </g></a>
       <a href="project.html?id=world-scores"><g class="p-node" data-id="world-scores" data-worlds="living,shared">
         <circle cx="926" cy="330" r="20" fill="transparent"/>
-        <image class="p-img" href="/demo-thumb.png" x="908" y="312" width="36" height="36" clip-path="url(#cpn-world-scores)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <image class="p-img" href="/brand_assets/world-scores.png" x="908" y="312" width="36" height="36" clip-path="url(#cpn-world-scores)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
         <circle class="p-dot p-ring" cx="926" cy="330" r="18" fill="none" stroke="#C09A6A" stroke-width=".8" stroke-opacity=".58"/>
         <circle cx="926" cy="330" r="18" fill="none" stroke="#6FA09A" stroke-width=".8" stroke-opacity=".58" stroke-dasharray="56.5 56.5" stroke-dashoffset="28.3"/>
         <text class="p-label" x="900" y="368" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".75" letter-spacing=".4">[ World Scores ]</text>
@@ -1109,23 +1153,33 @@
       <line class="c-conn" data-c="cat-writing" data-p="sojourn"    x1="200" y1="316" x2="880" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
       <line class="c-conn" data-c="cat-writing" data-p="already"    x1="486" y1="328" x2="880" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
       <line class="c-conn" data-c="cat-writing" data-p="dimensions" x1="440" y1="238" x2="880" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-music"    data-p="already"       x1="486" y1="328" x2="200" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-theatre"  data-p="sojourn"       x1="200" y1="316" x2="440" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-research" data-p="arrivals"      x1="272" y1="268" x2="660" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-research" data-p="frankenstein"  x1="342" y1="192" x2="660" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-research" data-p="proper-time"   x1="590" y1="268" x2="660" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-science"  data-p="on-growth"     x1="808" y1="260" x2="770" y2="454" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
 
       <!-- CATEGORY NODES -->
       <g class="c-node" data-id="cat-music">
-        <rect class="c-box" x="152" y="444" width="96" height="20" rx="10" fill="#111111" stroke="#1C1C1C" stroke-width=".75"/>
-        <text class="c-label" x="200" y="458" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="500" fill="#444444" letter-spacing="1.8">MUSIC</text>
+        <rect class="c-box" x="152" y="444" width="96" height="20" rx="10" fill="#1A1A1A" stroke="#3C3C3C" stroke-width=".75"/>
+        <text class="c-label" x="200" y="458" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="500" fill="#888888" letter-spacing="1.8">MUSIC</text>
       </g>
       <g class="c-node" data-id="cat-theatre">
-        <rect class="c-box" x="390" y="444" width="100" height="20" rx="10" fill="#111111" stroke="#1C1C1C" stroke-width=".75"/>
-        <text class="c-label" x="440" y="458" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="500" fill="#444444" letter-spacing="1.8">THEATRE</text>
+        <rect class="c-box" x="390" y="444" width="100" height="20" rx="10" fill="#1A1A1A" stroke="#3C3C3C" stroke-width=".75"/>
+        <text class="c-label" x="440" y="458" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="500" fill="#888888" letter-spacing="1.8">THEATRE</text>
       </g>
       <g class="c-node" data-id="cat-research">
-        <rect class="c-box" x="606" y="444" width="108" height="20" rx="10" fill="#111111" stroke="#1C1C1C" stroke-width=".75"/>
-        <text class="c-label" x="660" y="458" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="500" fill="#444444" letter-spacing="1.8">RESEARCH</text>
+        <rect class="c-box" x="606" y="444" width="108" height="20" rx="10" fill="#1A1A1A" stroke="#3C3C3C" stroke-width=".75"/>
+        <text class="c-label" x="660" y="458" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="500" fill="#888888" letter-spacing="1.8">RESEARCH</text>
       </g>
       <g class="c-node" data-id="cat-writing">
-        <rect class="c-box" x="832" y="444" width="96" height="20" rx="10" fill="#111111" stroke="#1C1C1C" stroke-width=".75"/>
-        <text class="c-label" x="880" y="458" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="500" fill="#444444" letter-spacing="1.8">WRITING</text>
+        <rect class="c-box" x="832" y="444" width="96" height="20" rx="10" fill="#1A1A1A" stroke="#3C3C3C" stroke-width=".75"/>
+        <text class="c-label" x="880" y="458" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="500" fill="#888888" letter-spacing="1.8">WRITING</text>
+      </g>
+      <g class="c-node" data-id="cat-science">
+        <rect class="c-box" x="722" y="444" width="96" height="20" rx="10" fill="#1A1A1A" stroke="#3C3C3C" stroke-width=".75"/>
+        <text class="c-label" x="770" y="458" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="500" fill="#888888" letter-spacing="1.8">SCIENCE</text>
       </g>
 
     </svg>
@@ -1135,7 +1189,7 @@
     </div>
 
     <!-- MOBILE PORTRAIT MAP -->
-    <svg id="map-mobile" viewBox="0 0 360 740" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+    <svg id="map-mobile" viewBox="0 0 360 756" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <filter id="m-g-sm" x="-120%" y="-120%" width="340%" height="340%">
           <feGaussianBlur stdDeviation="3" result="b"/>
@@ -1182,6 +1236,12 @@
       <line class="c-conn" data-c="cat-writing"  data-p="sojourn"        x1="155" y1="308" x2="330" y2="692" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
       <line class="c-conn" data-c="cat-writing"  data-p="already"        x1="322" y1="200" x2="330" y2="692" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
       <line class="c-conn" data-c="cat-writing"  data-p="dimensions"     x1="262" y1="270" x2="330" y2="692" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-music"    data-p="already"        x1="322" y1="200" x2="68"  y2="672" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-theatre"  data-p="sojourn"        x1="155" y1="308" x2="168" y2="692" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-research" data-p="arrivals"       x1="44"  y1="185" x2="256" y2="672" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-research" data-p="frankenstein"   x1="180" y1="112" x2="256" y2="672" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-research" data-p="proper-time"    x1="178" y1="368" x2="256" y2="672" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
+      <line class="c-conn" data-c="cat-science"  data-p="on-growth"      x1="268" y1="428" x2="200" y2="712" stroke="#1C1C1C" stroke-width=".6" stroke-opacity=".8"/>
 
       <!-- WORLD NODES -->
       <g class="w-node" data-id="inner">
@@ -1272,20 +1332,24 @@
 
       <!-- CATEGORY NODES -->
       <g class="c-node" data-id="cat-music">
-        <rect class="c-box" x="24"  y="662" width="88" height="19" rx="9.5" fill="#111" stroke="#1C1C1C" stroke-width=".75"/>
-        <text class="c-label" x="68"  y="675" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" font-weight="500" fill="#444" letter-spacing="1.8">MUSIC</text>
+        <rect class="c-box" x="24"  y="662" width="88" height="19" rx="9.5" fill="#1A1A1A" stroke="#3C3C3C" stroke-width=".75"/>
+        <text class="c-label" x="68"  y="675" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" font-weight="500" fill="#888888" letter-spacing="1.8">MUSIC</text>
       </g>
       <g class="c-node" data-id="cat-theatre">
-        <rect class="c-box" x="120" y="682" width="96" height="19" rx="9.5" fill="#111" stroke="#1C1C1C" stroke-width=".75"/>
-        <text class="c-label" x="168" y="695" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" font-weight="500" fill="#444" letter-spacing="1.8">THEATRE</text>
+        <rect class="c-box" x="120" y="682" width="96" height="19" rx="9.5" fill="#1A1A1A" stroke="#3C3C3C" stroke-width=".75"/>
+        <text class="c-label" x="168" y="695" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" font-weight="500" fill="#888888" letter-spacing="1.8">THEATRE</text>
       </g>
       <g class="c-node" data-id="cat-research">
-        <rect class="c-box" x="210" y="662" width="92" height="19" rx="9.5" fill="#111" stroke="#1C1C1C" stroke-width=".75"/>
-        <text class="c-label" x="256" y="675" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" font-weight="500" fill="#444" letter-spacing="1.8">RESEARCH</text>
+        <rect class="c-box" x="210" y="662" width="92" height="19" rx="9.5" fill="#1A1A1A" stroke="#3C3C3C" stroke-width=".75"/>
+        <text class="c-label" x="256" y="675" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" font-weight="500" fill="#888888" letter-spacing="1.8">RESEARCH</text>
       </g>
       <g class="c-node" data-id="cat-writing">
-        <rect class="c-box" x="284" y="682" width="70" height="19" rx="9.5" fill="#111" stroke="#1C1C1C" stroke-width=".75"/>
-        <text class="c-label" x="319" y="695" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" font-weight="500" fill="#444" letter-spacing="1.8">WRITING</text>
+        <rect class="c-box" x="284" y="682" width="70" height="19" rx="9.5" fill="#1A1A1A" stroke="#3C3C3C" stroke-width=".75"/>
+        <text class="c-label" x="319" y="695" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" font-weight="500" fill="#888888" letter-spacing="1.8">WRITING</text>
+      </g>
+      <g class="c-node" data-id="cat-science">
+        <rect class="c-box" x="156" y="702" width="88" height="19" rx="9.5" fill="#1A1A1A" stroke="#3C3C3C" stroke-width=".75"/>
+        <text class="c-label" x="200" y="715" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" font-weight="500" fill="#888888" letter-spacing="1.8">SCIENCE</text>
       </g>
     </svg>
 
@@ -1297,6 +1361,7 @@
     </div>
 
   </div>
+
 </section>
 
 <!-- PROJECT MODAL (mobile only) -->
@@ -1311,8 +1376,12 @@
     <div class="pm-desc" id="pm-desc"></div>
     <div class="pm-tags" id="pm-tags"></div>
     <div class="pm-funding" id="pm-funding">
-      <div class="pm-fund-label">Supported by</div>
+      <div class="pm-fund-label" id="pm-fund-label">Supported by</div>
       <div class="pm-fund-list" id="pm-fund-list"></div>
+    </div>
+    <div class="pm-perf" id="pm-perf">
+      <div class="pm-perf-label">Performances</div>
+      <div class="pm-perf-list" id="pm-perf-list"></div>
     </div>
     <a class="pm-link" id="pm-link" href="#">View Project →</a>
   </div>
@@ -1450,39 +1519,55 @@ const worlds = {
 };
 
 const projects = {
-  'still-flow':    { label:'Still Flow',        worlds:['inner'],          type:'Movement research — ongoing',
+  'still-flow':    { label:'Still Flow',        worlds:['inner'],           type:'Movement Research — ongoing',
+    cats:['Research'],
     desc:'A movement method that grants access to a non-dual state of being, developed through years of embodied practice research. It forms the perceptual foundation of the performance and composition work.',
-    thumb:'/demo-thumb.png', funding:['MIND Foundation'] },
-  'method-singer': { label:'Method Singer',     worlds:['inner'],          type:'Vocal research — ongoing',
+    thumb:'/brand_assets/Still-Flow.png', partnerType:'Supported by', funding:['MIND Foundation'] },
+  'method-singer': { label:'Method Singer',     worlds:['inner'],           type:'Vocal Research — Ongoing',
+    cats:['Music','Research'],
     desc:'An inquiry into how the singer\'s interior state shapes what becomes possible in composition and performance. A study of the threshold between technical mastery and genuine presence.',
-    thumb:'/demo-thumb.png' },
-  'sojourn':       { label:'Sojourn',           worlds:['inner'],          type:'Album — music theatre',
+    thumb:'/brand_assets/Method-Singer.jpg' },
+  'sojourn':       { label:'Sojourn',           worlds:['inner'],           type:'Music Theatre',
+    cats:['Music','Writing','Theatre'],
     desc:'A concept album for the music theatre piece "The Call of the Sea," tracing a woman\'s journey through solitude, madness, and return. Composed as a direct record of states of inner transformation.',
-    thumb:'/demo-thumb.png', funding:['Culture Moves Europe', 'Bezirkskulturfond Berlin'] },
-  'arrivals':      { label:'Arrivals',          worlds:['inner'],          type:'Theatre — Berlin Art Week',
+    thumb:'/brand_assets/Sojourn.png', partnerType:'Supported by', funding:['Goethe Institute', 'Bezirkskulturfonds Berlin'],
+    performances:['Goethe Institut Berlin — 2024', 'HAU Hebbel am Ufer, Berlin — 2025'] },
+  'arrivals':      { label:'Arrivals',          worlds:['inner'],           type:'Movement Research',
+    cats:['Theatre','Research'],
     desc:'An experimental theatre of slowness, built from a single poetic text about secrets, birth, and what goes unnamed. Uses deliberate pacing as a method to shift the audience\'s perceptual state.',
-    thumb:'/demo-thumb.png' },
-  'frankenstein':  { label:'FrankenstAIn',      worlds:['inner','shared'], type:'Music theatre — premiering Oct 2026',
+    thumb:'/brand_assets/arrivals.png',
+    performances:['Berlin Art Week, Uferstudios — Sep 2024'] },
+  'frankenstein':  { label:'FrankenstAIn',      worlds:['inner','shared'],  type:'Music Theatre',
+    cats:['Music','Theatre','Research'],
     desc:'A new music theatre composition for inclusive ensemble DIE ECKIGEN, translating Shelley\'s creature into sound and AI. Live voice modulation and 3D audio make "the self that becomes strange to us" physically audible.',
-    thumb:'/demo-thumb.png', funding:['MusikFonds', 'Kreisdiakonisches Werk Stralsund e.V'] },
-  'dimensions':    { label:'Dimensions',        worlds:['shared'],         type:'Research framework — open to collaborators',
+    thumb:'/demo-thumb.png', partnerType:'Supported by', funding:['Musikfonds e.V.', 'Berliner Senat'],
+    performances:['Theater Vorpommern, Greifswald — Oct 2026 (premiere)'] },
+  'dimensions':    { label:'Dimensions',        worlds:['shared'],          type:'Research framework — open to collaborators',
+    cats:['Research','Writing'],
     desc:'A systematic framework for analyzing what an artwork actually does to a human being, drawing on the eight-circuit model of consciousness. Being developed publicly — looking for people to think through it with.',
-    thumb:'/demo-thumb.png' },
-  'already':       { label:'Already Not Here',  worlds:['shared'],         type:'Sound installation — Schreibhain 2026',
+    thumb:'/brand_assets/Dimensions.png', partnerType:'Brainstormed with', funding:['Anne-Lorraine Selke'] },
+  'already':       { label:'Already Not Here',  worlds:['shared'],          type:'Sound Installation',
+    cats:['Writing','Music'],
     desc:'An octophonic installation with eight simultaneous voices, each telling a story of a disappeared girl. The listener walks through the room, slowly building intimacy with someone who is no longer there.',
-    thumb:'/demo-thumb.png', funding:['Schreibhain Scholarship'] },
-  'proper-time':   { label:'Proper Time',       worlds:['built','shared'], type:'Installation — Audience Award INSIGHT 2023',
+    thumb:'/brand_assets/already-not-here.png', partnerType:'Supported by', funding:['Schreibhain writing scholarship'],
+    performances:['Schreibhain, Berlin — 2026'] },
+  'proper-time':   { label:'Proper Time',       worlds:['built','shared'],  type:'Multi-room experience — Audience Award INSIGHT 2023',
+    cats:['Theatre','Research'],
     desc:'An immersive multi-sensory installation asking whether personal time and physical time are the same thing. Spatial design, sound, and video are composed to dissolve the stability of your sense of causality.',
-    thumb:'/demo-thumb.png', funding:['MIND Foundation'] },
-  'unsichtbar':    { label:'Unsichtbar',         worlds:['built'],          type:'Theatre — sensory',
+    thumb:'/brand_assets/proper-time.png', partnerType:'Funded by', funding:['MIND Foundation'],
+    performances:['INSIGHT Festival, Berlin — 2023 (Audience Award)'] },
+  'unsichtbar':    { label:'Unsichtbar',         worlds:['built'],           type:'Sensory Theatre',
+    cats:['Theatre'],
     desc:'A blindfolded, multi-sensory adaptation of The Little Prince for audiences of all ages. When vision is removed, touch, scent, and sound unlock dimensions of experience normally closed to us.',
-    thumb:'/demo-thumb.png', funding:['KiA Berlin'] },
-  'on-growth':     { label:'On Growth',         worlds:['living','shared'], type:'Scientific research — PhD',
+    thumb:'/demo-thumb.png', partnerType:'Funded by', funding:['KiA Berlin'] },
+  'on-growth':     { label:'On Growth',         worlds:['living'],          type:'Doctoral Thesis',
+    cats:['Science','Research'],
     desc:'Doctoral research in theoretical biophysics on how bacteria grow and adapt to their environment. A foundational study in how living systems generate organized complexity from simple principles.',
-    thumb:'/demo-thumb.png', funding:['Humboldt University Berlin'] },
-  'world-scores':  { label:'World Scores',      worlds:['living'],          type:'Research — ongoing',
+    thumb:'/demo-thumb.png', partnerType:'University', funding:['Humboldt University Berlin', 'INRAE France'] },
+  'world-scores':  { label:'World Scores',      worlds:['living','shared'], type:'Music for artificial societies',
+    cats:['Music','Research'],
     desc:'A current research project writing "worlds" — conditions and constraints from which communities of AI agents compose music. What environment must you build for something alive to emerge?',
-    thumb:'/demo-thumb.png' },
+    thumb:'/brand_assets/world-scores.png', partnerType:'Advised by', funding:['Ellie Hein', 'Joe Edelman'] },
 };
 
 const svg = document.getElementById('map');
@@ -1513,12 +1598,18 @@ function renderProjectCard(id) {
   const tags = p.worlds.map(w =>
     `<span class="h-tag" style="color:${worlds[w].color};border-color:${worlds[w].color}44">${worlds[w].label}</span>`
   ).join('');
+  const catTags = (p.cats || []).map(c =>
+    `<span class="h-tag h-tag-cat">${c}</span>`
+  ).join('');
   const fundingCol = p.funding && p.funding.length ? `
     <div class="h-card-divider"></div>
     <div class="h-card-funding">
-      <div class="h-fund-label">Supported by</div>
+      <div class="h-fund-label">${p.partnerType || 'Supported by'}</div>
       <div class="h-fund-list">${p.funding.join('<br>')}</div>
     </div>` : '';
+  const perfHtml = p.performances && p.performances.length ? `
+    <div class="h-perf-label">Performances</div>
+    <div class="h-perf-list">${p.performances.map(s => `<div class="h-perf-item">${s}</div>`).join('')}</div>` : '';
   cardBody.innerHTML = `
     <div class="h-card-img"><img src="${p.thumb || '/demo-thumb.png'}" alt="${p.label}"/></div>
     <div class="h-card-bottom">
@@ -1526,7 +1617,8 @@ function renderProjectCard(id) {
         <div class="h-card-eye">${p.type}</div>
         <a class="h-card-name" href="project.html?id=${id}">${p.label}</a>
         <div class="h-card-desc">${p.desc}</div>
-        <div class="h-card-tags">${tags}</div>
+        <div class="h-card-tags">${tags}${catTags}</div>
+        ${perfHtml}
       </div>
       ${fundingCol}
     </div>`;
@@ -1652,10 +1744,11 @@ svg.querySelectorAll('.w-node').forEach(node => {
 });
 
 const categories = {
-  'cat-music':    ['method-singer','sojourn','frankenstein','world-scores'],
-  'cat-theatre':  ['arrivals','frankenstein','proper-time','unsichtbar'],
-  'cat-research': ['still-flow','method-singer','dimensions','on-growth','world-scores'],
+  'cat-music':    ['method-singer','sojourn','frankenstein','already','world-scores'],
+  'cat-theatre':  ['sojourn','arrivals','frankenstein','proper-time','unsichtbar'],
+  'cat-research': ['still-flow','method-singer','arrivals','frankenstein','dimensions','proper-time','on-growth','world-scores'],
   'cat-writing':  ['sojourn','already','dimensions'],
+  'cat-science':  ['on-growth'],
 };
 
 svg.querySelectorAll('.c-node').forEach(node => {
@@ -1704,7 +1797,10 @@ svg.querySelectorAll('.c-node').forEach(node => {
   const pmDesc     = document.getElementById('pm-desc');
   const pmTags     = document.getElementById('pm-tags');
   const pmFunding  = document.getElementById('pm-funding');
+  const pmFundLabel = document.getElementById('pm-fund-label');
   const pmFundList = document.getElementById('pm-fund-list');
+  const pmPerf     = document.getElementById('pm-perf');
+  const pmPerfList = document.getElementById('pm-perf-list');
   const pmLink     = document.getElementById('pm-link');
 
   let activeWorld = null;
@@ -1800,13 +1896,23 @@ svg.querySelectorAll('.c-node').forEach(node => {
 
     pmTags.innerHTML = (p.worlds || []).map(w =>
       `<span class="pm-tag" style="color:${worlds[w].color};border-color:${worlds[w].color}44">${worlds[w].label}</span>`
+    ).join('') + (p.cats || []).map(c =>
+      `<span class="pm-tag" style="color:var(--text3);border-color:var(--border)">${c}</span>`
     ).join('');
 
     if (p.funding && p.funding.length) {
+      pmFundLabel.textContent = p.partnerType || 'Supported by';
       pmFundList.innerHTML = p.funding.join('<br>');
       pmFunding.style.display = '';
     } else {
       pmFunding.style.display = 'none';
+    }
+
+    if (p.performances && p.performances.length) {
+      pmPerfList.innerHTML = p.performances.map(s => `<div class="pm-perf-item">${s}</div>`).join('');
+      pmPerf.style.display = '';
+    } else {
+      pmPerf.style.display = 'none';
     }
 
     pmLink.href = `project.html?id=${id}`;
