@@ -107,22 +107,22 @@
       align-items: center;
       padding: 4px 11px;
       border-radius: 20px;
-      border: 1px solid var(--border);
+      border: 1px solid #2E2E2E;
       background: transparent;
       font-family: var(--font-b);
       font-size: 9.5px;
       font-weight: 500;
       letter-spacing: .13em;
       text-transform: uppercase;
-      color: var(--text3);
+      color: var(--text2);
       cursor: pointer;
       transition: border-color .2s ease, color .2s ease, background .2s ease;
       -webkit-tap-highlight-color: transparent;
       white-space: nowrap;
     }
     .filter-pill:hover {
-      color: var(--text2);
-      border-color: var(--text3);
+      color: var(--text);
+      border-color: #4A4A4A;
     }
     .filter-pill.active {
       color: var(--text);
@@ -170,9 +170,9 @@
     }
     .project-row:hover .row-name { color: var(--text); }
     .row-type {
-      font-size: 11.5px;
+      font-size: 12.5px;
       font-weight: 300;
-      color: var(--text2);
+      color: #9E9D9A;
       letter-spacing: .01em;
     }
 
@@ -198,8 +198,8 @@
       /* color and border set inline */
     }
     .r-tag-cat {
-      color: var(--text3);
-      border-color: var(--border);
+      color: var(--text2);
+      border-color: #2E2E2E;
     }
 
     /* EMPTY STATE */
@@ -272,17 +272,17 @@ const worldLabels = {
 };
 
 const projects = [
-  { id:'still-flow',    label:'Still Flow',          type:'Movement Research — ongoing',                          worlds:['inner'],          cats:['Research'] },
-  { id:'method-singer', label:'Method Singer',        type:'Vocal Research — Ongoing',                            worlds:['inner'],          cats:['Music','Research'] },
-  { id:'sojourn',       label:'Sojourn',              type:'Music Theatre',                                       worlds:['inner'],          cats:['Music','Writing','Theatre'] },
-  { id:'arrivals',      label:'Arrivals',             type:'Movement Research',                                   worlds:['inner'],          cats:['Theatre','Research'] },
-  { id:'frankenstein',  label:'FrankenstAIn',         type:'Music Theatre',                                       worlds:['inner','shared'], cats:['Music','Theatre','Research'] },
-  { id:'dimensions',    label:'Dimensions',           type:'Research framework — open to collaborators',          worlds:['shared'],         cats:['Research','Writing'] },
-  { id:'already',       label:'Already Not Here',     type:'Sound Installation',                                  worlds:['shared'],         cats:['Writing','Music'] },
-  { id:'proper-time',   label:'Proper Time',          type:'Multi-room experience — Audience Award INSIGHT 2023', worlds:['built','shared'], cats:['Theatre','Research'] },
-  { id:'unsichtbar',    label:'Unsichtbar',            type:'Sensory Theatre',                                     worlds:['built'],          cats:['Theatre'] },
-  { id:'on-growth',     label:'On Growth',            type:'Doctoral Thesis',                                     worlds:['living'],         cats:['Science','Research'] },
-  { id:'world-scores',  label:'World Scores',         type:'Music for artificial societies',                      worlds:['living','shared'], cats:['Music','Research'] },
+  { id:'still-flow',    label:'Still Flow',          type:'Movement Research — ongoing',                          year: 2022, worlds:['inner'],           cats:['Research'] },
+  { id:'method-singer', label:'Method Singer',        type:'Vocal Research — ongoing',                            year: 2025, worlds:['inner'],           cats:['Music','Research'] },
+  { id:'sojourn',       label:'Sojourn',              type:'Music Theatre',                                       year: 2024, worlds:['inner'],           cats:['Music','Writing','Theatre'] },
+  { id:'arrivals',      label:'Arrivals',             type:'Movement Research',                                   year: 2023, worlds:['inner'],           cats:['Theatre','Research'] },
+  { id:'frankenstein',  label:'FrankenstAIn',         type:'Music Theatre — ongoing',                             year: 2026, worlds:['inner','shared'],  cats:['Music','Theatre','Research'] },
+  { id:'dimensions',    label:'Dimensions',           type:'Research framework — open to collaborators',          year: 2025, worlds:['shared'],          cats:['Research','Writing'] },
+  { id:'already',       label:'Already Not Here',     type:'Sound Installation',                                  year: 2026, worlds:['shared'],          cats:['Writing','Music'] },
+  { id:'proper-time',   label:'Proper Time',          type:'Multi-room experience — Audience Award INSIGHT 2023', year: 2023, worlds:['built','shared'],  cats:['Theatre','Research'] },
+  { id:'unsichtbar',    label:'Unsichtbar',            type:'Sensory Theatre',                                     year: 2023, worlds:['built'],           cats:['Theatre'] },
+  { id:'on-growth',     label:'On Growth',            type:'Doctoral Thesis',                                     year: 2023, worlds:['living'],          cats:['Science','Research'] },
+  { id:'world-scores',  label:'World Scores',         type:'Music for artificial societies — ongoing',            year: 2026, worlds:['living','shared'], cats:['Music','Research'] },
 ];
 
 const list = document.getElementById('project-list');
@@ -291,7 +291,7 @@ const countEl = document.getElementById('visible-count');
 
 projects.forEach(p => {
   const worldTagsHtml = p.worlds.map(w =>
-    `<span class="r-tag r-tag-world" style="color:${worldColors[w]};border-color:${worldColors[w]}44">${worldLabels[w]}</span>`
+    `<span class="r-tag r-tag-world" style="color:${worldColors[w]};border-color:${worldColors[w]}99">${worldLabels[w]}</span>`
   ).join('');
   const catTagsHtml = p.cats.map(c =>
     `<span class="r-tag r-tag-cat">${c}</span>`
@@ -305,7 +305,7 @@ projects.forEach(p => {
   row.innerHTML = `
     <div class="row-left">
       <div class="row-name">${p.label}</div>
-      <div class="row-type">${p.type}</div>
+      <div class="row-type">${p.year ? `<span style="opacity:.85;margin-right:.55em;font-variant-numeric:tabular-nums">${p.year}</span>` : ''}${p.type}</div>
     </div>
     <div class="row-tags">${worldTagsHtml}${catTagsHtml}</div>`;
   list.appendChild(row);
