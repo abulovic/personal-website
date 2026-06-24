@@ -145,6 +145,60 @@
     .footer-mail { font-size: 12px; font-weight: 300; color: var(--text3); text-decoration: none; transition: color .25s ease; }
     .footer-mail:hover { color: var(--text); }
 
+    /* ─── MEDIA ─── */
+    .p-media {
+      padding: clamp(40px, 6vh, 72px) clamp(24px, 7vw, 110px) clamp(60px, 9vh, 100px);
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: clamp(40px, 5vh, 64px);
+    }
+    .p-media-label {
+      font-size: 9.5px; font-weight: 500; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--text3); margin-bottom: 18px;
+    }
+
+    /* Video */
+    .p-video-wrap {
+      width: 100%; aspect-ratio: 16 / 9;
+      background: #0a0a0a; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .p-video-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+
+    /* Audio player */
+    .p-audio-player {
+      display: flex; align-items: center; gap: 16px;
+      padding: 14px 18px;
+      border: 1px solid var(--border); background: var(--surface);
+    }
+    .pau-play {
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 1px solid var(--border); background: transparent;
+      color: var(--text2); display: flex; align-items: center; justify-content: center;
+      cursor: pointer; flex-shrink: 0;
+      transition: border-color .2s ease, color .2s ease;
+    }
+    .pau-play:hover { color: var(--text); border-color: var(--text3); }
+    .pau-play:focus-visible { outline: 1px solid var(--text3); outline-offset: 2px; }
+    .pau-progress { flex: 1; }
+    .pau-bar { height: 1px; background: var(--border); cursor: pointer; position: relative; }
+    .pau-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--text2); width: 0%; pointer-events: none; }
+    .pau-time { font-size: 10px; font-weight: 400; letter-spacing: .06em; color: var(--text3); flex-shrink: 0; font-variant-numeric: tabular-nums; }
+
+    /* Gallery */
+    .p-gallery-strip {
+      display: flex; gap: 12px;
+      overflow-x: auto; padding-bottom: 12px;
+      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+      -webkit-overflow-scrolling: touch;
+    }
+    .p-gallery-strip::-webkit-scrollbar { height: 3px; }
+    .p-gallery-strip::-webkit-scrollbar-thumb { background: var(--border); }
+    .pg-item { flex-shrink: 0; }
+    .pg-item img { height: 260px; width: auto; display: block; object-fit: cover; border: 1px solid var(--border); }
+    .pg-caption { font-size: 10px; font-weight: 300; color: var(--text3); margin-top: 8px; letter-spacing: .04em; }
+
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; }
     }
@@ -173,6 +227,8 @@
   <div class="p-meta" id="p-meta"></div>
 </div>
 
+<section class="p-media" id="p-media" hidden></section>
+
 <footer>
   <span class="footer-tagline">Performance · Sound · Research · Berlin</span>
   <a class="footer-mail" href="mailto:bulovic.ana@gmail.com">bulovic.ana@gmail.com</a>
@@ -200,7 +256,8 @@ const projects = {
     thumb:'/brand_assets/Sojourn.png', imgPosition:'center top',
     desc:`SojournSojourn is a 75-minute interdisciplinary performance told through movement, live music, masks, aerial imagery and symbolic visual worlds. My role in the work was composition, co-direction and performance.The piece follows a woman born on land who hears the call of the sea. She wants to escape the structures that shaped her — the logic of control, effort, self-direction and survival. But the sea does not ask her to conquer anything. It asks her to listen, to let go, and to enter a different relationship with power.At the centre of Sojourn is the balance between action and surrender. The protagonist's transformation does not come from becoming stronger in the usual sense. It comes from learning when to act, when to stop forcing, and when to allow herself to be moved by something larger than her own will.The work grew from my personal relationship to the coast: from growing up in Ploče, a post-industrial town in ex-Yugoslavia where concrete, abandoned military structures and harbour infrastructure stand beside the vastness of the Mediterranean Sea. This tension between built control and elemental life became one of the emotional sources of the piece.Sojourn was developed with my women-led art collective Not One Not Two and emerged from our bodily practice Navigating the Still Flow — a slow, unintentional movement practice in which images, emotions and archetypal figures are allowed to surface through the body.Rather than telling a linear story of overcoming, Sojourn follows a process of transformation: from resistance to listening, from control to relation, from the wish to master the world toward the wisdom of knowing when to surrender.`,
     worlds:['inner'], categories:['Music','Writing','Theatre'], performances:['Goethe Institut Berlin — 2024', 'HAU Hebbel am Ufer, Berlin — 2025'],
-    partnerType:'Supported by', funding:['Goethe Institute', 'Bezirkskulturfonds Berlin'] },
+    partnerType:'Supported by', funding:['Goethe Institute', 'Bezirkskulturfonds Berlin'],
+    media: { video: { type: 'youtube', id: 'q4Z_KTNBO3E' } } },
   'arrivals':      { title:'Arrivals',          type:'Movement Research',
     thumb:'/brand_assets/arrivals.png',
     desc:`An experimental theatre of slowness, built from a single poetic text about secrets, birth, and what goes unnamed. Uses deliberate pacing as a method to shift the audience's perceptual state.`,
@@ -283,6 +340,103 @@ if (!p) {
   if (p.funding && p.funding.length) {
     meta.innerHTML += `<div class="p-meta-row"><div class="p-meta-label">${p.partnerType || 'Supported by'}</div><div class="p-meta-value">${p.funding.join('<br>')}</div></div>`;
   }
+
+  renderMedia(p);
+}
+
+function renderMedia(p) {
+  if (!p.media) return;
+  const section = document.getElementById('p-media');
+  let html = '';
+
+  if (p.media.video) {
+    const v = p.media.video;
+    let src = '';
+    if (v.type === 'youtube') src = `https://www.youtube-nocookie.com/embed/${v.id}?rel=0&modestbranding=1&color=white`;
+    if (v.type === 'vimeo')   src = `https://player.vimeo.com/video/${v.id}?color=ffffff&title=0&byline=0&portrait=0`;
+    if (v.type === 'self')    src = v.src;
+    html += `<div>
+      <div class="p-media-label">Documentation</div>
+      <div class="p-video-wrap">
+        <iframe src="${src}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; fullscreen" loading="lazy" title="${p.title} — video documentation"></iframe>
+      </div>
+    </div>`;
+  }
+
+  if (p.media.audio) {
+    const a = p.media.audio;
+    const playIcon = `<svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor"><path d="M2.5 1.5L11.5 6.5 2.5 11.5V1.5z"/></svg>`;
+    html += `<div>
+      <div class="p-media-label">${a.label || 'Listen'}</div>
+      <div class="p-audio-player" data-src="${a.src}">
+        <button class="pau-play" aria-label="Play">${playIcon}</button>
+        <div class="pau-progress">
+          <div class="pau-bar"><div class="pau-fill"></div></div>
+        </div>
+        <span class="pau-time">0:00</span>
+      </div>
+    </div>`;
+  }
+
+  if (p.media.gallery && p.media.gallery.length) {
+    const items = p.media.gallery.map(item =>
+      `<div class="pg-item">
+        <img src="${item.src}" alt="${item.caption || ''}" loading="lazy">
+        ${item.caption ? `<p class="pg-caption">${item.caption}</p>` : ''}
+      </div>`
+    ).join('');
+    html += `<div>
+      <div class="p-media-label">Images</div>
+      <div class="p-gallery-strip">${items}</div>
+    </div>`;
+  }
+
+  if (html) {
+    section.innerHTML = html;
+    section.removeAttribute('hidden');
+    initAudioPlayers();
+  }
+}
+
+function initAudioPlayers() {
+  const playIcon  = `<svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor"><path d="M2.5 1.5L11.5 6.5 2.5 11.5V1.5z"/></svg>`;
+  const pauseIcon = `<svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor"><rect x="2" y="1.5" width="3.5" height="10"/><rect x="7.5" y="1.5" width="3.5" height="10"/></svg>`;
+
+  document.querySelectorAll('.p-audio-player').forEach(player => {
+    const audio   = new Audio(player.dataset.src);
+    const playBtn = player.querySelector('.pau-play');
+    const fill    = player.querySelector('.pau-fill');
+    const bar     = player.querySelector('.pau-bar');
+    const timeEl  = player.querySelector('.pau-time');
+    let playing   = false;
+
+    const fmt = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+
+    playBtn.addEventListener('click', () => {
+      if (playing) { audio.pause(); playBtn.innerHTML = playIcon; }
+      else         { audio.play();  playBtn.innerHTML = pauseIcon; }
+      playing = !playing;
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+      fill.style.width = pct + '%';
+      timeEl.textContent = fmt(audio.currentTime);
+    });
+
+    audio.addEventListener('ended', () => {
+      playing = false;
+      playBtn.innerHTML = playIcon;
+      fill.style.width = '0%';
+      timeEl.textContent = '0:00';
+    });
+
+    bar.addEventListener('click', e => {
+      if (!audio.duration) return;
+      const rect = bar.getBoundingClientRect();
+      audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+    });
+  });
 }
 </script>
 </body>
