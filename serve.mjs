@@ -9,10 +9,11 @@ const MIME = {
   '.html': 'text/html', '.css': 'text/css', '.js': 'application/javascript',
   '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml',
   '.mjs': 'application/javascript', '.ico': 'image/x-icon', '.woff2': 'font/woff2',
+  '.pdf': 'application/pdf', '.mp3': 'audio/mpeg', '.wav': 'audio/wav', '.ogg': 'audio/ogg',
 };
 
 http.createServer((req, res) => {
-  const urlPath = req.url === '/' ? '/index.html' : req.url.split('?')[0];
+  const urlPath = req.url === '/' ? '/index.html' : decodeURIComponent(req.url.split('?')[0]);
   const filePath = path.join(__dirname, urlPath);
   const ext = path.extname(filePath);
   fs.readFile(filePath, (err, data) => {

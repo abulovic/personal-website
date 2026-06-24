@@ -208,6 +208,19 @@
     }
     .p-spotify-wrap iframe { width: 100%; border: none; display: block; }
 
+    /* PDF download */
+    .p-pdf-link {
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 11px 16px;
+      border: 1px solid var(--border); background: var(--surface);
+      color: var(--text2); text-decoration: none;
+      font-size: 10.5px; font-weight: 400; letter-spacing: .08em;
+      transition: border-color .2s ease, color .2s ease;
+    }
+    .p-pdf-link:hover { color: var(--text); border-color: var(--text3); }
+    .p-pdf-link:focus-visible { outline: 1px solid var(--text3); outline-offset: 2px; }
+    .p-pdf-link:active { opacity: .7; }
+
     /* Gallery */
     .p-gallery-strip {
       display: flex; gap: 12px;
@@ -273,13 +286,14 @@ const projects = {
   'method-singer': { title:'Method Singer',     type:'Vocal Research — ongoing', year: 2025,
     thumb:'/brand_assets/Method-Singer.jpg',
     desc:`Befindlichkeit und Gestimmtheit is a practice-based research project on voice, inner state, and the field that opens between a singer and an audience.The project begins from a simple observation: a voice does not affect us only because of its sound, technique, or musical material. It carries the state of the person singing. Sometimes this state remains private; sometimes it reaches others with unusual force. I am interested in whether this difference can be perceived, trained, and worked with deliberately.Drawing on vocal practice, psychophysical theatre, contemplative state-work, ritual practice, and theories of listening, I am developing the framework of the Method Singer: a performer who treats their own state of being as artistic material. The Method Singer is not defined by a genre or vocal style, but by the ability to listen inwardly, enter and transform states, and use the voice to shape a shared relational space.The research asks three connected questions: Can a singer relate to their own voice in different ways? Can the relationship between singer and audience become an artistic material in itself? And how does a singer know what genuinely needs to be sung, beyond habit, technique, or performed conviction?At its centre is the possibility of communion: not as sentimentality, but as a precise performative condition in which voice, body, attention, material, and audience begin to belong to the same event.`,
-    worlds:['inner'], categories:['Music','Research'], performances:[] },
+    worlds:['inner'], categories:['Music','Research'], performances:[],
+    media: { pdf: { url: '/pdfs/Ana-Bulovic-Befindlichkeit-and-Gestimmtheit.pdf', label: 'Essay' } } },
   'sojourn':       { title:'Sojourn',           type:'Music Theatre', year: 2024,
     thumb:'/brand_assets/Sojourn.png', imgPosition:'center top',
     desc:`SojournSojourn is a 75-minute interdisciplinary performance told through movement, live music, masks, aerial imagery and symbolic visual worlds. My role in the work was composition, co-direction and performance.The piece follows a woman born on land who hears the call of the sea. She wants to escape the structures that shaped her — the logic of control, effort, self-direction and survival. But the sea does not ask her to conquer anything. It asks her to listen, to let go, and to enter a different relationship with power.At the centre of Sojourn is the balance between action and surrender. The protagonist's transformation does not come from becoming stronger in the usual sense. It comes from learning when to act, when to stop forcing, and when to allow herself to be moved by something larger than her own will.The work grew from my personal relationship to the coast: from growing up in Ploče, a post-industrial town in ex-Yugoslavia where concrete, abandoned military structures and harbour infrastructure stand beside the vastness of the Mediterranean Sea. This tension between built control and elemental life became one of the emotional sources of the piece.Sojourn was developed with my women-led art collective Not One Not Two and emerged from our bodily practice Navigating the Still Flow — a slow, unintentional movement practice in which images, emotions and archetypal figures are allowed to surface through the body.Rather than telling a linear story of overcoming, Sojourn follows a process of transformation: from resistance to listening, from control to relation, from the wish to master the world toward the wisdom of knowing when to surrender.`,
     worlds:['inner'], categories:['Music','Writing','Theatre'], performances:['Goethe Institut Berlin — 2024', 'HAU Hebbel am Ufer, Berlin — 2025'],
     partnerType:'Supported by', funding:['Goethe Institute', 'Bezirkskulturfonds Berlin'],
-    media: { video: { type: 'youtube', id: 'q4Z_KTNBO3E' } } },
+    media: { video: { type: 'youtube', id: 'q4Z_KTNBO3E' }, soundcloud: { url: 'https://soundcloud.com/ana-bulovi/sets/sojourn', label: 'Music' } } },
   'arrivals':      { title:'Arrivals',          type:'Movement Research', year: 2023,
     thumb:'/brand_assets/arrivals.png',
     desc:`An experimental theatre of slowness, built from a single poetic text about secrets, birth, and what goes unnamed. Uses deliberate pacing as a method to shift the audience's perceptual state.`,
@@ -300,7 +314,7 @@ const projects = {
     desc:`An octophonic installation with eight simultaneous voices, each telling a story of a disappeared girl. The listener walks through the room, slowly building intimacy with someone who is no longer there.`,
     worlds:['shared'], categories:['Writing','Music'], performances:['Schreibhain, Berlin — 2026'],
     partnerType:'Supported by', funding:['Schreibhain writing scholarship'],
-    media: { soundcloud: { url: 'https://soundcloud.com/ana-bulovi/sets/radius-of-truth', label: 'Music' } } },
+    media: { soundcloud: { url: 'https://soundcloud.com/ana-bulovi/sets/radius-of-truth', label: 'Music' }, pdf: { url: '/pdfs/Ana-Bulovic-Room-for-Truth.pdf', label: 'Essay' } } },
   'proper-time':   { title:'Proper Time',       type:'Multi-room experience — Audience Award INSIGHT 2023', year: 2023,
     thumb:'/brand_assets/proper-time.png',
     desc:`An immersive multi-sensory installation asking whether personal time and physical time are the same thing. Spatial design, sound, and video are composed to dissolve the stability of your sense of causality.`,
@@ -372,7 +386,7 @@ if (!p) {
 function renderMedia(p) {
   if (!p.media) return;
   const section = document.getElementById('p-media');
-  const mediaCount = ['video','soundcloud','spotify','audio'].filter(k => p.media[k]).length
+  const mediaCount = ['video','soundcloud','spotify','audio','pdf'].filter(k => p.media[k]).length
                    + (p.media.gallery && p.media.gallery.length ? 1 : 0);
   let html = mediaCount > 1 ? '<div class="p-traces-title">Traces</div>' : '';
 
@@ -441,6 +455,20 @@ function renderMedia(p) {
     html += `<div>
       <div class="p-media-label">Images</div>
       <div class="p-gallery-strip">${items}</div>
+    </div>`;
+  }
+
+  if (p.media.pdf) {
+    const pf = p.media.pdf;
+    html += `
+    <div>
+      <div class="p-media-label">${pf.label || 'Text'}</div>
+      <a class="p-pdf-link" href="${pf.url}" download>
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6.5 1v7.5M3.5 6L6.5 9 9.5 6M2 12h9"/>
+        </svg>
+        Download PDF
+      </a>
     </div>`;
   }
 
