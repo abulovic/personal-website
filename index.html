@@ -376,6 +376,9 @@
       overflow: hidden;
       cursor: pointer;
       background: var(--surface);
+      display: block;
+      text-decoration: none;
+      color: inherit;
     }
 
     .work-item--tall { grid-row: span 2; }
@@ -385,11 +388,12 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      filter: grayscale(0.75) brightness(0.9);
+      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.5s ease;
       min-height: 280px;
     }
 
-    .work-item:hover img { transform: scale(1.05); }
+    .work-item:hover img { transform: scale(1.05); filter: grayscale(0.4) brightness(0.95); }
 
     .work-item-overlay {
       position: absolute;
@@ -403,15 +407,15 @@
 
     .work-item-eye {
       font-size: 9.5px;
-      font-weight: 500;
+      font-weight: 600;
       letter-spacing: .18em;
       text-transform: uppercase;
-      color: var(--text3);
+      color: var(--text);
       margin-bottom: 7px;
       transition: color 0.3s ease;
     }
 
-    .work-item:hover .work-item-eye { color: var(--text2); }
+    .work-item:hover .work-item-eye { color: var(--text); }
 
     .work-item-title {
       font-family: var(--font-d);
@@ -491,13 +495,13 @@
       font-weight: 300;
       letter-spacing: .12em;
       text-transform: uppercase;
-      color: var(--text3);
+      color: var(--text2);
     }
 
     .footer-mail {
       font-size: 12px;
       font-weight: 300;
-      color: var(--text3);
+      color: var(--text2);
       text-decoration: none;
       transition: color .25s ease;
       letter-spacing: .04em;
@@ -931,7 +935,7 @@
           <tspan x="280" dy="25">an agent shapes the world,</tspan>
           <tspan x="280" dy="25">the world shapes back."</tspan>
         </text>
-        <text text-anchor="middle" x="280" y="322" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#7A7A76" letter-spacing="0.1em">— Ian Chang, Emissaries</text>
+        <text text-anchor="middle" x="280" y="322" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#7A7A76" letter-spacing="0.1em">— Ian Cheng, Emissaries</text>
       </g>
     </svg>
   </div>
@@ -946,7 +950,10 @@
 <!-- ═══ CONSTELLATION ═══ -->
 <section class="const-section snap-section">
   <div class="const-header">
-    <h2 class="const-title">Research &amp; Projects</h2>
+    <div>
+      <p class="eyebrow">Research &amp; Projects</p>
+      <h2 class="const-title" style="margin-top:10px">A constellation<br>of worlds</h2>
+    </div>
     <span class="const-tap-hint">tap a node<br>to explore</span>
   </div>
 
@@ -999,6 +1006,8 @@
       <line class="conn" data-w="shared" data-p="dimensions"     x1="418" y1="104" x2="440" y2="238" stroke="#6FA09A" stroke-width=".75" stroke-opacity=".38"/>
       <line class="conn" data-w="shared" data-p="proper-time"    x1="418" y1="104" x2="590" y2="268" stroke="#6FA09A" stroke-width=".75" stroke-opacity=".38"/>
       <line class="conn" data-w="shared" data-p="world-scores"   x1="418" y1="104" x2="926" y2="330" stroke="#6FA09A" stroke-width=".75" stroke-opacity=".38"/>
+      <line class="conn" data-w="shared" data-p="frankenstein"   x1="418" y1="104" x2="342" y2="192" stroke="#6FA09A" stroke-width=".75" stroke-opacity=".38"/>
+      <line class="conn" data-w="shared" data-p="already"        x1="418" y1="104" x2="486" y2="328" stroke="#6FA09A" stroke-width=".75" stroke-opacity=".38"/>
       <line class="conn" data-w="built" data-p="proper-time"     x1="648" y1="144" x2="590" y2="268" stroke="#BF7055" stroke-width=".75" stroke-opacity=".38"/>
       <line class="conn" data-w="built" data-p="unsichtbar"      x1="648" y1="144" x2="706" y2="298" stroke="#BF7055" stroke-width=".75" stroke-opacity=".38"/>
       <line class="conn" data-w="living" data-p="on-growth"      x1="868" y1="132" x2="808" y2="260" stroke="#C09A6A" stroke-width=".75" stroke-opacity=".38"/>
@@ -1091,9 +1100,9 @@
         <circle class="p-dot p-ring" cx="272" cy="268" r="18" fill="none" stroke="#A28EC8" stroke-width="1" stroke-opacity=".64"/>
         <text class="p-label" x="296" y="272" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".75" letter-spacing=".4">[ Arrivals ]</text>
       </g></a>
-      <a href="project.html?id=frankenstein"><g class="p-node" data-id="frankenstein" data-worlds="inner">
+      <a href="project.html?id=frankenstein"><g class="p-node" data-id="frankenstein" data-worlds="inner,shared">
         <circle cx="342" cy="192" r="20" fill="transparent"/>
-        <image class="p-img" href="/demo-thumb.png" x="324" y="174" width="36" height="36" clip-path="url(#cpn-frankenstein)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <image class="p-img" href="/brand_assets/frankenstAIn.jpg" x="324" y="174" width="36" height="36" clip-path="url(#cpn-frankenstein)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
         <circle class="p-dot p-ring" cx="342" cy="192" r="18" fill="none" stroke="#A28EC8" stroke-width="1" stroke-opacity=".64"/>
         <text class="p-label" x="366" y="196" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".75" letter-spacing=".4">[ FrankenstAIn ]</text>
       </g></a>
@@ -1103,10 +1112,10 @@
         <circle class="p-dot p-ring" cx="440" cy="238" r="18" fill="none" stroke="#6FA09A" stroke-width="1" stroke-opacity=".64"/>
         <text class="p-label" x="464" y="242" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".75" letter-spacing=".4">[ Dimensions ]</text>
       </g></a>
-      <a href="project.html?id=already"><g class="p-node" data-id="already" data-worlds="">
+      <a href="project.html?id=already"><g class="p-node" data-id="already" data-worlds="shared">
         <circle cx="486" cy="328" r="20" fill="transparent"/>
         <image class="p-img" href="/brand_assets/already-not-here.png" x="468" y="310" width="36" height="36" clip-path="url(#cpn-already)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
-        <circle class="p-dot p-ring" cx="486" cy="328" r="18" fill="none" stroke="#7A7A76" stroke-width="1" stroke-opacity=".52"/>
+        <circle class="p-dot p-ring" cx="486" cy="328" r="18" fill="none" stroke="#6FA09A" stroke-width="1" stroke-opacity=".64"/>
         <text class="p-label" x="510" y="332" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".75" letter-spacing=".4">[ Already Not Here ]</text>
       </g></a>
       <a href="project.html?id=proper-time"><g class="p-node" data-id="proper-time" data-worlds="built,shared">
@@ -1118,13 +1127,13 @@
       </g></a>
       <a href="project.html?id=unsichtbar"><g class="p-node" data-id="unsichtbar" data-worlds="built">
         <circle cx="706" cy="298" r="20" fill="transparent"/>
-        <image class="p-img" href="/demo-thumb.png" x="688" y="280" width="36" height="36" clip-path="url(#cpn-unsichtbar)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <image class="p-img" href="/brand_assets/unsichtbar.png" x="688" y="280" width="36" height="36" clip-path="url(#cpn-unsichtbar)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
         <circle class="p-dot p-ring" cx="706" cy="298" r="18" fill="none" stroke="#BF7055" stroke-width="1" stroke-opacity=".64"/>
         <text class="p-label" x="730" y="302" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".75" letter-spacing=".4">[ Unsichtbar ]</text>
       </g></a>
       <a href="project.html?id=on-growth"><g class="p-node" data-id="on-growth" data-worlds="living">
         <circle cx="808" cy="260" r="20" fill="transparent"/>
-        <image class="p-img" href="/demo-thumb.png" x="790" y="242" width="36" height="36" clip-path="url(#cpn-on-growth)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
+        <image class="p-img" href="/brand_assets/on-growth.png" x="790" y="242" width="36" height="36" clip-path="url(#cpn-on-growth)" filter="url(#bw)" preserveAspectRatio="xMidYMid slice"/>
         <circle class="p-dot p-ring" cx="808" cy="260" r="18" fill="none" stroke="#C09A6A" stroke-width="1" stroke-opacity=".64"/>
         <text class="p-label" x="832" y="264" font-family="DM Sans,sans-serif" font-size="11" font-weight="300" fill="#F0EFEC" fill-opacity=".75" letter-spacing=".4">[ On Growth ]</text>
       </g></a>
@@ -1214,6 +1223,8 @@
       <line class="conn" data-w="shared" data-p="dimensions"    x1="260" y1="150" x2="262" y2="270" stroke="#6FA09A" stroke-width=".7" stroke-opacity=".38"/>
       <line class="conn" data-w="shared" data-p="proper-time"   x1="260" y1="150" x2="178" y2="368" stroke="#6FA09A" stroke-width=".7" stroke-opacity=".38"/>
       <line class="conn" data-w="shared" data-p="world-scores"  x1="260" y1="150" x2="318" y2="382" stroke="#6FA09A" stroke-width=".7" stroke-opacity=".38"/>
+      <line class="conn" data-w="shared" data-p="frankenstein"  x1="260" y1="150" x2="180" y2="112" stroke="#6FA09A" stroke-width=".7" stroke-opacity=".38"/>
+      <line class="conn" data-w="shared" data-p="already"       x1="260" y1="150" x2="322" y2="200" stroke="#6FA09A" stroke-width=".7" stroke-opacity=".38"/>
       <line class="conn" data-w="built"  data-p="proper-time"   x1="100" y1="510" x2="178" y2="368" stroke="#BF7055" stroke-width=".7" stroke-opacity=".38"/>
       <line class="conn" data-w="built"  data-p="unsichtbar"    x1="100" y1="510" x2="40"  y2="580" stroke="#BF7055" stroke-width=".7" stroke-opacity=".38"/>
       <line class="conn" data-w="living" data-p="on-growth"     x1="260" y1="510" x2="268" y2="428" stroke="#C09A6A" stroke-width=".7" stroke-opacity=".38"/>
@@ -1304,9 +1315,9 @@
         <circle class="p-dot" cx="262" cy="270" r="4.5" fill="#6FA09A" fill-opacity=".8" filter="url(#m-g-sm)"/>
         <text class="p-label" x="262" y="286" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".75" letter-spacing=".3">[ Dimensions ]</text>
       </g></a>
-      <a href="project.html?id=already"><g class="p-node" data-id="already" data-worlds="">
+      <a href="project.html?id=already"><g class="p-node" data-id="already" data-worlds="shared">
         <circle cx="322" cy="200" r="16" fill="transparent"/>
-        <circle class="p-dot" cx="322" cy="200" r="4.5" fill="#7A7A76" fill-opacity=".8" filter="url(#m-g-sm)"/>
+        <circle class="p-dot" cx="322" cy="200" r="4.5" fill="#6FA09A" fill-opacity=".8" filter="url(#m-g-sm)"/>
         <text class="p-label" x="304" y="214" text-anchor="end" font-family="DM Sans,sans-serif" font-size="9" font-weight="300" fill="#F0EFEC" fill-opacity=".75" letter-spacing=".3">[ Already Not Here ]</text>
       </g></a>
       <a href="project.html?id=proper-time"><g class="p-node" data-id="proper-time" data-worlds="built,shared">
@@ -1396,41 +1407,41 @@
     </div>
   </div>
   <div class="work-grid">
-    <div class="work-item work-item--tall">
-      <img src="https://placehold.co/700x860/1a1a1a/1a1a1a" alt="Proper Time"/>
-      <div class="work-item-overlay">
-        <div class="work-item-eye">Installation · Audience Award INSIGHT 2023</div>
-        <div class="work-item-title">Proper Time</div>
-      </div>
-    </div>
-    <div class="work-item">
-      <img src="https://placehold.co/500x400/141414/141414" alt="FrankenstAIn"/>
+    <a class="work-item work-item--tall" href="project.html?id=frankenstein">
+      <img src="/brand_assets/frankenstAIn.jpg" alt="FrankenstAIn"/>
       <div class="work-item-overlay">
         <div class="work-item-eye">Music Theatre · Premiering Oct 2026</div>
         <div class="work-item-title">FrankenstAIn</div>
       </div>
-    </div>
-    <div class="work-item">
-      <img src="https://placehold.co/500x400/161616/161616" alt="Already Not Here"/>
+    </a>
+    <a class="work-item" href="project.html?id=proper-time">
+      <img src="/brand_assets/proper-time.png" alt="Proper Time"/>
+      <div class="work-item-overlay">
+        <div class="work-item-eye">Installation · Audience Award INSIGHT 2023</div>
+        <div class="work-item-title">Proper Time</div>
+      </div>
+    </a>
+    <a class="work-item" href="project.html?id=sojourn">
+      <img src="/brand_assets/Sojourn.png" alt="Sojourn"/>
+      <div class="work-item-overlay">
+        <div class="work-item-eye">Music Theatre · 2024</div>
+        <div class="work-item-title">Sojourn</div>
+      </div>
+    </a>
+    <a class="work-item" href="project.html?id=world-scores">
+      <img src="/brand_assets/world-scores.png" alt="World Scores"/>
+      <div class="work-item-overlay">
+        <div class="work-item-eye">Music for Artificial Societies · ongoing</div>
+        <div class="work-item-title">World Scores</div>
+      </div>
+    </a>
+    <a class="work-item" href="project.html?id=already">
+      <img src="/brand_assets/already-not-here.png" alt="Already Not Here"/>
       <div class="work-item-overlay">
         <div class="work-item-eye">Sound Installation · Schreibhain 2026</div>
         <div class="work-item-title">Already Not Here</div>
       </div>
-    </div>
-    <div class="work-item">
-      <img src="https://placehold.co/500x400/181818/181818" alt="Unsichtbar"/>
-      <div class="work-item-overlay">
-        <div class="work-item-eye">Theatre · Sensory</div>
-        <div class="work-item-title">Unsichtbar</div>
-      </div>
-    </div>
-    <div class="work-item">
-      <img src="https://placehold.co/500x400/121212/121212" alt="Arrivals"/>
-      <div class="work-item-overlay">
-        <div class="work-item-eye">Theatre · Berlin Art Week</div>
-        <div class="work-item-title">Arrivals</div>
-      </div>
-    </div>
+    </a>
   </div>
 </section>
 
@@ -1500,9 +1511,6 @@
     <span class="footer-tagline">Performance · Sound · Research · Berlin</span>
     <a class="footer-mail" href="mailto:bulovic.ana@gmail.com">bulovic.ana@gmail.com</a>
   </div>
-  <div class="footer-wordmark">
-    <span class="footer-wordmark-text">Ana <span class="accent">Bulović</span></span>
-  </div>
 </footer>
 
 <script>
@@ -1523,7 +1531,7 @@ const projects = {
     cats:['Research'],
     desc:'A movement method that grants access to a non-dual state of being, developed through years of embodied practice research. It forms the perceptual foundation of the performance and composition work.',
     thumb:'/brand_assets/Still-Flow.png', partnerType:'Supported by', funding:['MIND Foundation'] },
-  'method-singer': { label:'Method Singer',     worlds:['inner'],           type:'Vocal Research — Ongoing',
+  'method-singer': { label:'Method Singer',     worlds:['inner'],           type:'Vocal Research — ongoing',
     cats:['Music','Research'],
     desc:'An inquiry into how the singer\'s interior state shapes what becomes possible in composition and performance. A study of the threshold between technical mastery and genuine presence.',
     thumb:'/brand_assets/Method-Singer.jpg' },
@@ -1537,10 +1545,10 @@ const projects = {
     desc:'An experimental theatre of slowness, built from a single poetic text about secrets, birth, and what goes unnamed. Uses deliberate pacing as a method to shift the audience\'s perceptual state.',
     thumb:'/brand_assets/arrivals.png',
     performances:['Berlin Art Week, Uferstudios — Sep 2024'] },
-  'frankenstein':  { label:'FrankenstAIn',      worlds:['inner','shared'],  type:'Music Theatre',
+  'frankenstein':  { label:'FrankenstAIn',      worlds:['inner','shared'],  type:'Music Theatre — ongoing',
     cats:['Music','Theatre','Research'],
     desc:'A new music theatre composition for inclusive ensemble DIE ECKIGEN, translating Shelley\'s creature into sound and AI. Live voice modulation and 3D audio make "the self that becomes strange to us" physically audible.',
-    thumb:'/demo-thumb.png', partnerType:'Supported by', funding:['Musikfonds e.V.', 'Berliner Senat'],
+    thumb:'/brand_assets/frankenstAIn.jpg', partnerType:'Supported by', funding:['Musikfonds e.V.', 'Berliner Senat'],
     performances:['Theater Vorpommern, Greifswald — Oct 2026 (premiere)'] },
   'dimensions':    { label:'Dimensions',        worlds:['shared'],          type:'Research framework — open to collaborators',
     cats:['Research','Writing'],
@@ -1559,12 +1567,12 @@ const projects = {
   'unsichtbar':    { label:'Unsichtbar',         worlds:['built'],           type:'Sensory Theatre',
     cats:['Theatre'],
     desc:'A blindfolded, multi-sensory adaptation of The Little Prince for audiences of all ages. When vision is removed, touch, scent, and sound unlock dimensions of experience normally closed to us.',
-    thumb:'/demo-thumb.png', partnerType:'Funded by', funding:['KiA Berlin'] },
+    thumb:'/brand_assets/unsichtbar.png', partnerType:'Funded by', funding:['KiA Berlin'] },
   'on-growth':     { label:'On Growth',         worlds:['living'],          type:'Doctoral Thesis',
     cats:['Science','Research'],
     desc:'Doctoral research in theoretical biophysics on how bacteria grow and adapt to their environment. A foundational study in how living systems generate organized complexity from simple principles.',
-    thumb:'/demo-thumb.png', partnerType:'University', funding:['Humboldt University Berlin', 'INRAE France'] },
-  'world-scores':  { label:'World Scores',      worlds:['living','shared'], type:'Music for artificial societies',
+    thumb:'/brand_assets/on-growth.png', partnerType:'University', funding:['Humboldt University Berlin', 'INRAE France'] },
+  'world-scores':  { label:'World Scores',      worlds:['living','shared'], type:'Music for artificial societies — ongoing',
     cats:['Music','Research'],
     desc:'A current research project writing "worlds" — conditions and constraints from which communities of AI agents compose music. What environment must you build for something alive to emerge?',
     thumb:'/brand_assets/world-scores.png', partnerType:'Advised by', funding:['Ellie Hein', 'Joe Edelman'] },
