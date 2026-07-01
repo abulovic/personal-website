@@ -137,6 +137,24 @@
     .filter-pill[data-world="shared"]:not(.active):hover { color: var(--shared); border-color: #6FA09A44; }
     .filter-pill[data-world="built"]:not(.active):hover  { color: var(--built);  border-color: #BF705544; }
     .filter-pill[data-world="living"]:not(.active):hover { color: var(--living); border-color: #C09A6A44; }
+    .filter-clear {
+      display: none;
+      align-items: center;
+      padding: 4px 11px;
+      border-radius: 20px;
+      border: 1px solid #2E2E2E;
+      background: transparent;
+      font-family: var(--font-b);
+      font-size: 9.5px;
+      font-weight: 500;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: var(--text3);
+      cursor: pointer;
+      transition: border-color .2s ease, color .2s ease;
+      margin-left: 4px;
+    }
+    .filter-clear:hover { color: var(--text2); border-color: #3A3A3A; }
 
     /* PROJECT LIST */
     .project-list {
@@ -238,20 +256,21 @@
 <div class="filters" id="filters">
   <!-- World type filters -->
   <div class="filter-group">
-    <button class="filter-pill" data-filter="world" data-world="inner">Inner Worlds</button>
-    <button class="filter-pill" data-filter="world" data-world="shared">Shared Worlds</button>
-    <button class="filter-pill" data-filter="world" data-world="built">Felt Worlds</button>
-    <button class="filter-pill" data-filter="world" data-world="living">Emergent Worlds</button>
+    <button class="filter-pill" data-filter="world" data-world="inner" aria-pressed="false">Inner Worlds</button>
+    <button class="filter-pill" data-filter="world" data-world="shared" aria-pressed="false">Shared Worlds</button>
+    <button class="filter-pill" data-filter="world" data-world="built" aria-pressed="false">Felt Worlds</button>
+    <button class="filter-pill" data-filter="world" data-world="living" aria-pressed="false">Emergent Worlds</button>
   </div>
   <div class="filter-divider"></div>
   <!-- Category filters -->
   <div class="filter-group">
-    <button class="filter-pill" data-filter="cat" data-cat="Music">Music</button>
-    <button class="filter-pill" data-filter="cat" data-cat="Theatre">Theatre</button>
-    <button class="filter-pill" data-filter="cat" data-cat="Research">Research</button>
-    <button class="filter-pill" data-filter="cat" data-cat="Writing">Writing</button>
-    <button class="filter-pill" data-filter="cat" data-cat="Science">Science</button>
+    <button class="filter-pill" data-filter="cat" data-cat="Music" aria-pressed="false">Music</button>
+    <button class="filter-pill" data-filter="cat" data-cat="Theatre" aria-pressed="false">Theatre</button>
+    <button class="filter-pill" data-filter="cat" data-cat="Research" aria-pressed="false">Research</button>
+    <button class="filter-pill" data-filter="cat" data-cat="Writing" aria-pressed="false">Writing</button>
+    <button class="filter-pill" data-filter="cat" data-cat="Science" aria-pressed="false">Science</button>
   </div>
+  <button class="filter-clear" id="filter-clear" aria-label="Clear all filters" style="display:none">Clear</button>
 </div>
 
 <div class="project-list" id="project-list"></div>
@@ -272,17 +291,17 @@ const worldLabels = {
 };
 
 const projects = [
-  { id:'still-flow',    label:'Still Flow',          type:'Movement Research — ongoing',                          year: 2022, worlds:['inner'],           cats:['Research'] },
-  { id:'method-singer', label:'Method Singer',        type:'Vocal Research — ongoing',                            year: 2025, worlds:['inner'],           cats:['Music','Research'] },
-  { id:'sojourn',       label:'Sojourn',              type:'Music Theatre',                                       year: 2024, worlds:['inner'],           cats:['Music','Writing','Theatre'] },
-  { id:'arrivals',      label:'Arrivals',             type:'Movement Research',                                   year: 2023, worlds:['inner'],           cats:['Theatre','Research'] },
+  { id:'world-scores',  label:'World Scores',         type:'Music for artificial societies — ongoing',            year: 2026, worlds:['living','shared'], cats:['Music','Research'] },
   { id:'frankenstein',  label:'FrankenstAIn',         type:'Music Theatre — ongoing',                             year: 2026, worlds:['inner','shared'],  cats:['Music','Theatre','Research'] },
-  { id:'dimensions',    label:'Dimensions',           type:'Research framework — open to collaborators',          year: 2025, worlds:['shared'],          cats:['Research','Writing'] },
   { id:'already',       label:'Already Not Here',     type:'Sound Installation',                                  year: 2026, worlds:['shared'],          cats:['Writing','Music'] },
+  { id:'method-singer', label:'Method Singer',        type:'Vocal Research — ongoing',                            year: 2025, worlds:['inner'],           cats:['Music','Research'] },
+  { id:'dimensions',    label:'Dimensions',           type:'Research framework — open to collaborators',          year: 2025, worlds:['shared'],          cats:['Research','Writing'] },
+  { id:'sojourn',       label:'Sojourn',              type:'Music Theatre',                                       year: 2024, worlds:['inner'],           cats:['Music','Writing','Theatre'] },
   { id:'proper-time',   label:'Proper Time',          type:'Multi-room experience — Audience Award INSIGHT 2023', year: 2023, worlds:['built','shared'],  cats:['Theatre','Research'] },
   { id:'unsichtbar',    label:'Unsichtbar',            type:'Sensory Theatre',                                     year: 2023, worlds:['built'],           cats:['Theatre'] },
+  { id:'arrivals',      label:'Arrivals',             type:'Movement Research',                                   year: 2023, worlds:['inner'],           cats:['Theatre','Research'] },
   { id:'on-growth',     label:'On Growth',            type:'Doctoral Thesis',                                     year: 2023, worlds:['living'],          cats:['Science','Research'] },
-  { id:'world-scores',  label:'World Scores',         type:'Music for artificial societies — ongoing',            year: 2026, worlds:['living','shared'], cats:['Music','Research'] },
+  { id:'still-flow',    label:'Still Flow',           type:'Movement Research — ongoing',                         year: 2022, worlds:['inner'],           cats:['Research'] },
 ];
 
 const list = document.getElementById('project-list');
@@ -315,6 +334,8 @@ projects.forEach(p => {
 let activeWorlds = new Set();
 let activeCats   = new Set();
 
+const clearBtn = document.getElementById('filter-clear');
+
 function applyFilters() {
   const rows = list.querySelectorAll('.project-row');
   let visible = 0;
@@ -336,22 +357,33 @@ function applyFilters() {
 
   countEl.textContent = `${visible} project${visible !== 1 ? 's' : ''}`;
   noResults.classList.toggle('visible', visible === 0);
+  clearBtn.style.display = (activeWorlds.size > 0 || activeCats.size > 0) ? 'inline-flex' : 'none';
 }
 
 document.getElementById('filters').addEventListener('click', e => {
   const pill = e.target.closest('.filter-pill');
+  if (e.target === clearBtn || clearBtn.contains(e.target)) {
+    activeWorlds.clear();
+    activeCats.clear();
+    document.querySelectorAll('.filter-pill').forEach(p => {
+      p.classList.remove('active');
+      p.setAttribute('aria-pressed', 'false');
+    });
+    applyFilters();
+    return;
+  }
   if (!pill) return;
 
   const filterType = pill.dataset.filter;
 
   if (filterType === 'world') {
     const w = pill.dataset.world;
-    if (activeWorlds.has(w)) { activeWorlds.delete(w); pill.classList.remove('active'); }
-    else                      { activeWorlds.add(w);    pill.classList.add('active'); }
+    if (activeWorlds.has(w)) { activeWorlds.delete(w); pill.classList.remove('active'); pill.setAttribute('aria-pressed', 'false'); }
+    else                      { activeWorlds.add(w);    pill.classList.add('active');    pill.setAttribute('aria-pressed', 'true'); }
   } else {
     const c = pill.dataset.cat;
-    if (activeCats.has(c)) { activeCats.delete(c); pill.classList.remove('active'); }
-    else                    { activeCats.add(c);    pill.classList.add('active'); }
+    if (activeCats.has(c)) { activeCats.delete(c); pill.classList.remove('active'); pill.setAttribute('aria-pressed', 'false'); }
+    else                    { activeCats.add(c);    pill.classList.add('active');    pill.setAttribute('aria-pressed', 'true'); }
   }
 
   applyFilters();
