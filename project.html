@@ -117,6 +117,31 @@
     }
     .p-desc em { font-style: italic; color: var(--text); }
 
+    .p-quote {
+      margin: 36px 0 0;
+      padding: 0 0 0 20px;
+      border-left: 2px solid var(--accent);
+      font-family: var(--font-b);
+      font-size: clamp(14px, 1.4vw, 17px);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.72;
+      color: var(--text2);
+    }
+    .p-quote-source {
+      display: block;
+      margin-top: 14px;
+      font-style: normal;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--text3);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .p-quote-source:hover { color: var(--text2); }
+
     .p-meta { display: flex; flex-direction: column; gap: 28px; padding-top: 4px; }
     .p-meta-row { display: block; }
     .p-meta-label { font-size: 9.5px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--text3); margin-bottom: 7px; }
@@ -259,6 +284,7 @@
 
 <div class="p-body">
   <p class="p-desc" id="p-desc"></p>
+  <blockquote class="p-quote" id="p-quote" hidden></blockquote>
   <div class="p-meta" id="p-meta"></div>
 </div>
 
@@ -314,6 +340,7 @@ const projects = {
     desc:`An octophonic installation with eight simultaneous voices, each telling a story of a disappeared girl. The listener walks through the room, slowly building intimacy with someone who is no longer there.`,
     worlds:['shared'], categories:['Writing','Music'], performances:['Schreibhain, Berlin — 2026'],
     partnerType:'Supported by', funding:['Schreibhain writing scholarship'],
+    quote: { text: `From the very first sentence, Bulovic narrates with intensity, almost intimacy. The world that gradually opens before us is, at first, an unfamiliar one. 'Raum für die Wahrheit' works with surprising images and skillfully guided perspectives. Present and past condition each other. A mosaic of narrative voices — as powerful as it is fragile.`, source: 'Schreibhain Jury, Jahrgang XXIV', url: 'https://schreibhain.com/ana-bulovic-ist-stipendiatin-im-jahrgang-xxiv/' },
     media: { soundcloud: { url: 'https://soundcloud.com/ana-bulovi/sets/radius-of-truth', label: 'Music' }, pdf: { url: '/pdfs/Ana-Bulovic-Room-for-Truth.pdf', label: 'Essay' } } },
   'proper-time':   { title:'Proper Time',       type:'Multi-room experience — Audience Award INSIGHT 2023', year: 2023,
     thumb:'/brand_assets/proper-time.webp',
@@ -349,6 +376,12 @@ if (!p) {
   document.getElementById('p-type').textContent = p.year ? `${p.year} · ${p.type}` : p.type;
   document.getElementById('p-title').textContent = p.title;
   document.getElementById('p-desc').innerHTML = p.desc;
+
+  if (p.quote) {
+    const qEl = document.getElementById('p-quote');
+    qEl.innerHTML = `"${p.quote.text}"<a class="p-quote-source" href="${p.quote.url}" target="_blank" rel="noopener">${p.quote.source} ↗</a>`;
+    qEl.hidden = false;
+  }
 
   if (p.thumb) {
     const img = document.getElementById('hero-img');
