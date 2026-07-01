@@ -79,6 +79,87 @@
         radial-gradient(ellipse 85% 80% at 50% 45%, transparent 30%, rgba(9,9,9,0.38) 100%);
     }
 
+    /* ─── PERSISTENT TOP NAV ─── */
+    .top-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 300;
+      padding: 14px clamp(24px, 7vw, 110px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(9,9,9,0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-6px);
+      transition: opacity .35s ease, transform .35s ease;
+    }
+    .top-nav.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    .top-nav-logo {
+      font-size: 10px; font-weight: 500; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--text2); text-decoration: none;
+      transition: color .2s ease;
+    }
+    .top-nav-logo:hover { color: var(--text); }
+    .top-nav-links { display: flex; gap: 28px; }
+    .top-nav-links a {
+      font-size: 10px; font-weight: 400; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--text3); text-decoration: none;
+      transition: color .2s ease;
+    }
+    .top-nav-links a:hover, .top-nav-links a:focus-visible { color: var(--text); outline: none; }
+
+    /* ─── FLOATING ALL-PROJECTS BUTTON ─── */
+    .work-float {
+      position: fixed;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%) translateX(100%);
+      z-index: 250;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .4s ease, transform .4s ease;
+    }
+    .work-float.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(-50%) translateX(0);
+    }
+    .work-float a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      rotate: 180deg;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--text3);
+      text-decoration: none;
+      padding: 20px 10px;
+      border-left: 1px solid var(--border);
+      background: rgba(9,9,9,0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: color .2s ease, border-color .2s ease, background .2s ease;
+    }
+    .work-float a:hover, .work-float a:focus-visible {
+      color: var(--text2);
+      border-color: var(--text3);
+      background: rgba(17,17,17,0.8);
+      outline: none;
+    }
+    @media (max-width: 640px) { .work-float { display: none; } }
+
     /* Grain */
     .hero::after {
       content: '';
@@ -1175,6 +1256,21 @@
 </head>
 <body>
 
+<!-- ─── PERSISTENT NAV (hidden until past hero) ─── -->
+<nav class="top-nav" id="top-nav" aria-label="Site navigation">
+  <a class="top-nav-logo" href="/">Ana Bulović</a>
+  <div class="top-nav-links">
+    <a href="#about">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- ─── FLOATING ALL PROJECTS BUTTON ─── -->
+<div class="work-float" id="work-float" aria-hidden="true">
+  <a href="projects.html" tabindex="-1">All projects ↑</a>
+</div>
+
 <!-- ═══ HERO ═══ -->
 <section class="hero snap-section">
   <nav class="hero-nav">
@@ -1354,7 +1450,7 @@
             <span class="ws-role-label">My role</span>
             <span class="ws-roles">Concept · Composer</span>
           </div>
-          <p class="ws-desc">Every piece of music is a language of relationship. World Scores composes the conditions under which communities of AI agents listen, align, contradict, and remember — building sound societies whose values and conflicts we are only beginning to hear.</p>
+          <p class="ws-desc">Every piece of music is a language of relationship. A World Score is not an instruction for sound — it is a small constitution: it defines how AI agents relate, what is remembered, when contradiction is possible, how value is assigned. Together, the agents form distributed, multi-channel sound societies — developing taste, loyalties, and disagreements we are only beginning to hear.</p>
           <a class="ws-cta" href="project.html?id=world-scores">View project</a>
         </div>
       </div>
@@ -1946,7 +2042,7 @@
 
 
 <!-- ═══ ABOUT ═══ -->
-<section class="about-section snap-section">
+<section class="about-section snap-section" id="about">
   <div>
     <p class="eyebrow" style="margin-bottom:28px">About</p>
     <p class="about-text">
@@ -2815,6 +2911,36 @@ if (cfForm) {
     btn.textContent = 'Send message';
     btn.disabled = false;
   });
+}
+
+/* ── TOP NAV — appears once hero leaves view ─────────────────── */
+const topNav = document.getElementById('top-nav');
+const heroSection = document.querySelector('.hero');
+if (topNav && heroSection) {
+  const heroObs = new IntersectionObserver(([e]) => {
+    topNav.classList.toggle('visible', !e.isIntersecting);
+  }, { threshold: 0.15 });
+  heroObs.observe(heroSection);
+}
+
+/* ── FLOATING ALL-PROJECTS BUTTON ────────────────────────────── */
+const workFloat = document.getElementById('work-float');
+const workSection = document.querySelector('.work-scroll-section');
+const constSection2 = document.querySelector('.const-section');
+if (workFloat && workSection) {
+  const sections = [workSection, constSection2].filter(Boolean);
+  const floatObs = new IntersectionObserver((entries) => {
+    const anyIn = entries.some(e => e.isIntersecting);
+    const show = anyIn || sections.some(s => {
+      const r = s.getBoundingClientRect();
+      return r.top < window.innerHeight && r.bottom > 0;
+    });
+    workFloat.classList.toggle('visible', show);
+    const a = workFloat.querySelector('a');
+    if (show) { a.removeAttribute('tabindex'); workFloat.removeAttribute('aria-hidden'); }
+    else { a.setAttribute('tabindex', '-1'); workFloat.setAttribute('aria-hidden', 'true'); }
+  }, { threshold: 0 });
+  sections.forEach(s => floatObs.observe(s));
 }
 </script>
 </body>
