@@ -17,10 +17,10 @@
       --bg:       #090909;
       --surface:  #111111;
       --surface2: #181818;
-      --border:   #1C1C1C;
+      --border:   #2E2E2E;
       --text:     #F0EFEC;
-      --text2:    #7A7A76;
-      --text3:    #606060;
+      --text2:    #9A9A96;
+      --text3:    #787874;
       --inner:    #A28EC8;
       --shared:   #6FA09A;
       --built:    #BF7055;
@@ -804,22 +804,43 @@
 
     /* ─── CONTACT ─── */
     #contact {
-      padding: clamp(64px, 10vh, 120px) clamp(24px, 7vw, 110px);
+      background: var(--surface);
+      padding: clamp(80px, 12vh, 140px) clamp(24px, 7vw, 110px);
       border-top: 1px solid var(--border);
     }
-    .contact-inner { max-width: 600px; }
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(48px, 8vw, 120px);
+      align-items: start;
+      max-width: 1100px;
+    }
+    .contact-display {
+      font-family: var(--font-d);
+      font-size: clamp(52px, 6.5vw, 88px);
+      font-weight: 700;
+      line-height: .93;
+      letter-spacing: -.03em;
+      color: var(--text);
+      margin-top: 20px;
+      margin-bottom: 36px;
+    }
+    .contact-display em {
+      font-style: normal;
+      color: var(--accent);
+    }
     .contact-sub {
       font-size: 14px;
       font-weight: 300;
       color: var(--text2);
-      line-height: 1.65;
-      margin-top: 12px;
-      margin-bottom: 40px;
+      line-height: 1.75;
+      max-width: 320px;
     }
     .contact-form {
       display: flex;
       flex-direction: column;
       gap: 28px;
+      padding-top: 4px;
     }
     .cf-row {
       display: grid;
@@ -836,46 +857,46 @@
       font-weight: 500;
       letter-spacing: .18em;
       text-transform: uppercase;
-      color: var(--text3);
+      color: var(--text2);
     }
     .cf-input {
       background: transparent;
       border: none;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid rgba(240,239,236,0.18);
       color: var(--text);
       font-family: var(--font-b);
       font-size: 14px;
       font-weight: 300;
-      padding: 10px 0;
+      padding: 12px 0;
       outline: none;
       width: 100%;
       transition: border-color .2s ease;
     }
     .cf-input::placeholder { color: var(--text3); }
-    .cf-input:focus { border-color: var(--text3); }
+    .cf-input:focus { border-color: rgba(240,239,236,0.45); }
     .cf-textarea {
       resize: vertical;
-      min-height: 120px;
+      min-height: 130px;
     }
     .cf-submit {
       align-self: flex-start;
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text2);
+      background: var(--text);
+      border: 1px solid var(--text);
+      color: var(--bg);
       font-family: var(--font-b);
       font-size: 10px;
-      font-weight: 400;
+      font-weight: 500;
       letter-spacing: .16em;
       text-transform: uppercase;
-      padding: 12px 32px;
+      padding: 13px 36px;
       cursor: pointer;
-      transition: color .2s ease, border-color .2s ease;
+      transition: opacity .2s ease;
     }
     .cf-submit:hover, .cf-submit:focus-visible {
-      color: var(--text);
-      border-color: var(--text2);
+      opacity: .8;
       outline: none;
     }
+    .cf-submit:active { opacity: .6; }
     .cf-status {
       font-size: 12px;
       font-weight: 300;
@@ -884,6 +905,10 @@
     }
     /* Turnstile renders its own iframe — dark theme is set via data-theme="dark" on the widget */
     .cf-turnstile iframe { border: none; }
+    @media (max-width: 860px) {
+      .contact-layout { grid-template-columns: 1fr; gap: 40px; }
+      .contact-sub { max-width: none; }
+    }
     @media (max-width: 640px) {
       .cf-row { grid-template-columns: 1fr; }
     }
@@ -1935,13 +1960,6 @@
     <div class="creds">
       <div class="cred">
         <div>
-          <div class="cred-title">PhD in Theoretical Biophysics</div>
-          <div class="cred-sub">Humboldt University, Berlin — summa cum laude<br>Modelling growth and adaptation in bacteria</div>
-        </div>
-        <div class="cred-year">2023</div>
-      </div>
-      <div class="cred">
-        <div>
           <div class="cred-title">Schreibhain XXIV Literary Stipend</div>
           <div class="cred-sub">For literary work <em>Raum für die Wahrheit</em></div>
         </div>
@@ -1949,10 +1967,24 @@
       </div>
       <div class="cred">
         <div>
-          <div class="cred-title">Session Chair</div>
-          <div class="cred-sub">International Conference on Systems Biology — Young Scientists Forum</div>
+          <div class="cred-title">Arbeits- und Recherchestipendium</div>
+          <div class="cred-sub">For research on sonic dramaturgy and spatial sound</div>
         </div>
-        <div class="cred-year">2022</div>
+        <div class="cred-year">2026</div>
+      </div>
+      <div class="cred">
+        <div>
+          <div class="cred-title">MusikFonds Production Grant</div>
+          <div class="cred-sub">For music theatre composition <em>FrankenstAIn</em>, premiering Theater Vorpommern 2026</div>
+        </div>
+        <div class="cred-year">2025</div>
+      </div>
+      <div class="cred">
+        <div>
+          <div class="cred-title">PhD in Theoretical Biophysics</div>
+          <div class="cred-sub">Humboldt University, Berlin — summa cum laude<br>Modelling growth and adaptation in bacteria</div>
+        </div>
+        <div class="cred-year">2023</div>
       </div>
       <div class="cred">
         <div>
@@ -1963,10 +1995,10 @@
       </div>
       <div class="cred">
         <div>
-          <div class="cred-title">MusikFonds Grant</div>
-          <div class="cred-sub">For music theatre composition <em>FrankenstAIn</em>, premiering Theater Vorpommern 2026</div>
+          <div class="cred-title">Session Chair</div>
+          <div class="cred-sub">International Conference on Systems Biology — Young Scientists Forum</div>
         </div>
-        <div class="cred-year">2025</div>
+        <div class="cred-year">2022</div>
       </div>
     </div>
   </div>
@@ -1982,9 +2014,12 @@
 
 <!-- ═══ CONTACT ═══ -->
 <section id="contact">
-  <div class="contact-inner">
-    <p class="eyebrow">Contact</p>
-    <p class="contact-sub">For presentations, commissions, research conversations, and collaborations.</p>
+  <div class="contact-layout">
+    <div class="contact-left">
+      <p class="eyebrow">Contact</p>
+      <p class="contact-display">Write<br>to<br><em>me.</em></p>
+      <p class="contact-sub">For presentations, commissions, research conversations, and collaborations.</p>
+    </div>
     <form class="contact-form" id="cf-form">
       <!-- Honeypot: bots fill this, humans don't see it -->
       <input type="text" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
