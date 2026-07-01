@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <!-- Cloudflare Turnstile captcha -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -18,7 +20,7 @@
       --border:   #1C1C1C;
       --text:     #F0EFEC;
       --text2:    #7A7A76;
-      --text3:    #363636;
+      --text3:    #606060;
       --inner:    #A28EC8;
       --shared:   #6FA09A;
       --built:    #BF7055;
@@ -316,7 +318,7 @@
       padding: 18px 18px 18px 16px;
     }
     .h-fund-label {
-      font-size: 8.5px;
+      font-size: 10px;
       font-weight: 500;
       letter-spacing: .2em;
       text-transform: uppercase;
@@ -330,7 +332,7 @@
       line-height: 1.72;
       color: var(--text2);
     }
-    .h-card-eye  { font-size: 9.5px; font-weight: 500; letter-spacing: .17em; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; }
+    .h-card-eye  { font-size: 10.5px; font-weight: 500; letter-spacing: .17em; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; }
     .h-card-name { font-family: var(--font-d); font-size: 20px; font-weight: 700; letter-spacing: -.02em; color: var(--text); margin-bottom: 10px; line-height: 1.1; }
     .h-card-desc { font-size: 12px; font-weight: 300; line-height: 1.68; color: var(--text2); margin-bottom: 12px; }
     .h-card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -424,6 +426,263 @@
       letter-spacing: -0.01em;
       line-height: 1.15;
       color: var(--text);
+    }
+
+    /* ─── STICKY WORK SCENES ─── */
+    .work-scroll-section {
+      border-top: 1px solid var(--border);
+    }
+
+    .ws-scene {
+      height: 200vh;
+      position: relative;
+    }
+
+    .ws-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .ws-img {
+      position: absolute;
+      inset: 0;
+      transition: left 0.95s cubic-bezier(0.65, 0, 0.35, 1);
+      will-change: left;
+    }
+
+    .ws-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(0.55) brightness(0.88);
+      transition: filter 0.9s ease;
+      display: block;
+    }
+
+    .ws-img::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(9,9,9,0.92) 0%, transparent 55%);
+      z-index: 1;
+      opacity: 1;
+      transition: opacity 0.75s ease;
+    }
+
+    .ws-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(9,9,9,0.97) 0%, rgba(9,9,9,0) 48%);
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.2s;
+    }
+
+    .ws-title-initial {
+      position: absolute;
+      bottom: clamp(40px, 6vh, 72px);
+      left: clamp(24px, 7vw, 110px);
+      z-index: 5;
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      pointer-events: none;
+    }
+
+    .ws-eye-initial {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--text2);
+      margin-bottom: 10px;
+    }
+
+    .ws-name-initial {
+      font-family: var(--font-d);
+      font-size: clamp(32px, 4.5vw, 62px);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      color: var(--text);
+      line-height: 1.0;
+    }
+
+    .ws-panel {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 44%;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      padding: clamp(48px, 7vh, 96px) clamp(24px, 7vw, 110px);
+      opacity: 0;
+      transform: translateX(-28px);
+      transition: opacity 0.7s ease 0.4s, transform 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s;
+      pointer-events: none;
+    }
+
+    .ws-panel-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .ws-eye {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--text2);
+    }
+
+    .ws-title {
+      font-family: var(--font-d);
+      font-size: clamp(30px, 3.8vw, 52px);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      color: var(--text);
+      line-height: 1.0;
+      margin: 0;
+    }
+
+    .ws-desc {
+      font-size: clamp(13px, 1.1vw, 15px);
+      font-weight: 300;
+      line-height: 1.72;
+      color: var(--text2);
+      max-width: 380px;
+    }
+
+    .ws-cta {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 3px;
+      transition: border-color 0.25s ease;
+      align-self: flex-start;
+    }
+    .ws-cta:hover, .ws-cta:focus-visible {
+      border-color: var(--text2);
+      outline: none;
+    }
+
+    .ws-scene-num {
+      position: absolute;
+      bottom: clamp(36px, 5vh, 64px);
+      right: clamp(24px, 7vw, 110px);
+      z-index: 5;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: .1em;
+      color: var(--text3);
+      pointer-events: none;
+    }
+
+    .ws-scene.ws-revealed .ws-img { left: 44%; }
+    .ws-scene.ws-revealed .ws-img::before { opacity: 0; }
+    .ws-scene.ws-revealed .ws-img::after  { opacity: 1; }
+    .ws-scene.ws-revealed .ws-title-initial { opacity: 0; transform: translateY(10px); }
+    .ws-scene.ws-revealed .ws-panel { opacity: 1; transform: translateX(0); pointer-events: auto; }
+    .ws-scene.ws-revealed .ws-img img { filter: grayscale(0.2) brightness(0.92); }
+
+    .ws-role-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-top: -8px;
+    }
+    .ws-role-label {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--text3);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .ws-roles {
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: .04em;
+      color: var(--text2);
+    }
+    .ws-funders {
+      margin-top: 4px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+    .ws-funders-label {
+      font-size: 8.5px;
+      font-weight: 500;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--text3);
+      margin-bottom: 10px;
+    }
+    .ws-funder-logos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .ws-funder-logo {
+      /* swap inner span for <img> when real logo files are available */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 26px;
+      padding: 0 11px;
+      border: 1px solid var(--border);
+    }
+    .ws-funder-logo span {
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: .06em;
+      color: var(--text3);
+      white-space: nowrap;
+    }
+    .ws-funder-logo img {
+      height: 100%;
+      width: auto;
+      object-fit: contain;
+      filter: brightness(0) invert(0.45);
+    }
+
+    @media (max-width: 768px) {
+      .ws-scene { height: auto; margin-bottom: 2px; }
+      .ws-sticky { position: relative; height: auto; overflow: visible; }
+      .ws-img {
+        position: relative;
+        left: 0 !important;
+        height: 68vw;
+        min-height: 260px;
+      }
+      .ws-img::after { display: none; }
+      .ws-img::before { opacity: 1 !important; }
+      .ws-title-initial { opacity: 1 !important; transform: none !important; bottom: 24px; left: 22px; }
+      .ws-name-initial { font-size: 28px; }
+      .ws-panel {
+        position: relative;
+        width: 100%;
+        opacity: 1 !important;
+        transform: none !important;
+        pointer-events: auto !important;
+        padding: 28px 22px 36px;
+        background: var(--bg);
+      }
+      .ws-panel .ws-title { display: none; }
+      .ws-scene-num { display: none; }
+      .ws-funders { display: none; }
     }
 
     /* ─── ABOUT ─── */
@@ -543,6 +802,92 @@
 
     footer:hover .footer-wordmark-text .accent { color: var(--text2); }
 
+    /* ─── CONTACT ─── */
+    #contact {
+      padding: clamp(64px, 10vh, 120px) clamp(24px, 7vw, 110px);
+      border-top: 1px solid var(--border);
+    }
+    .contact-inner { max-width: 600px; }
+    .contact-sub {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text2);
+      line-height: 1.65;
+      margin-top: 12px;
+      margin-bottom: 40px;
+    }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .cf-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+    .cf-field {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .cf-label {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--text3);
+    }
+    .cf-input {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--font-b);
+      font-size: 14px;
+      font-weight: 300;
+      padding: 10px 0;
+      outline: none;
+      width: 100%;
+      transition: border-color .2s ease;
+    }
+    .cf-input::placeholder { color: var(--text3); }
+    .cf-input:focus { border-color: var(--text3); }
+    .cf-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+    .cf-submit {
+      align-self: flex-start;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text2);
+      font-family: var(--font-b);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      padding: 12px 32px;
+      cursor: pointer;
+      transition: color .2s ease, border-color .2s ease;
+    }
+    .cf-submit:hover, .cf-submit:focus-visible {
+      color: var(--text);
+      border-color: var(--text2);
+      outline: none;
+    }
+    .cf-status {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--text2);
+      letter-spacing: .04em;
+    }
+    /* Turnstile renders its own iframe — dark theme is set via data-theme="dark" on the widget */
+    .cf-turnstile iframe { border: none; }
+    @media (max-width: 640px) {
+      .cf-row { grid-template-columns: 1fr; }
+    }
+
     /* ─── QUOTE GRAPH ─── */
     .qg-section {
       min-height: 100vh;
@@ -661,12 +1006,12 @@
     }
 
     /* ─── PERFORMANCES ─── */
-    .h-perf-label { font-size: 8.5px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--text3); margin-top: 12px; margin-bottom: 5px; }
+    .h-perf-label { font-size: 10px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--text3); margin-top: 12px; margin-bottom: 5px; }
     .h-perf-list  { font-size: 11px; font-weight: 300; line-height: 1.72; color: var(--text2); }
     .h-perf-item  { display: flex; gap: 7px; }
     .h-perf-item::before { content: '—'; color: var(--text3); flex-shrink: 0; }
     .pm-perf { margin-bottom: 18px; }
-    .pm-perf-label { font-size: 9px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--text3); margin-bottom: 5px; }
+    .pm-perf-label { font-size: 10px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--text3); margin-bottom: 5px; }
     .pm-perf-list  { font-size: 12px; font-weight: 300; line-height: 1.65; color: var(--text2); }
     .pm-perf-item  { display: flex; gap: 7px; }
     .pm-perf-item::before { content: '—'; color: var(--text3); flex-shrink: 0; }
@@ -787,13 +1132,13 @@
         background: linear-gradient(to top, var(--bg) 0%, transparent 52%);
       }
       .pm-body { padding: 20px 22px 52px; flex: 1; }
-      .pm-eye  { font-size: 9.5px; font-weight: 500; letter-spacing: .17em; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; }
+      .pm-eye  { font-size: 10.5px; font-weight: 500; letter-spacing: .17em; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; }
       .pm-name { font-family: var(--font-d); font-size: 24px; font-weight: 700; letter-spacing: -.03em; color: var(--text); margin-bottom: 12px; line-height: 1.05; }
       .pm-desc { font-size: 13px; font-weight: 300; line-height: 1.72; color: var(--text2); margin-bottom: 18px; }
       .pm-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
       .pm-tag  { font-size: 9.5px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; padding: 3px 9px; border-radius: 1px; border: 1px solid; }
       .pm-funding { margin-bottom: 22px; }
-      .pm-fund-label { font-size: 9px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--text3); margin-bottom: 5px; }
+      .pm-fund-label { font-size: 10px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--text3); margin-bottom: 5px; }
       .pm-fund-list  { font-size: 12px; font-weight: 300; line-height: 1.65; color: var(--text2); }
       .pm-link {
         display: block; border: 1px solid var(--border); text-align: center;
@@ -809,7 +1154,7 @@
 <section class="hero snap-section">
   <nav class="hero-nav">
     <span class="hero-nav-name">ANA BULOVIĆ</span>
-    <a class="hero-nav-contact" href="mailto:bulovic.ana@gmail.com">Contact</a>
+    <a class="hero-nav-contact" href="#contact">Contact</a>
   </nav>
 
   <!-- Full-bleed photo -->
@@ -957,49 +1302,169 @@
 </section>
 
 <!-- ═══ SELECTED WORK ═══ -->
-<section class="work-section snap-section">
+<section class="work-scroll-section snap-section">
   <div class="work-header">
     <div>
       <p class="eyebrow">Selected Work</p>
       <h2 class="const-title" style="margin-top:10px">Performance,<br>installation, sound</h2>
     </div>
+    <a href="projects.html" style="font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--text2);text-decoration:none;border-bottom:1px solid var(--border);padding-bottom:2px;transition:color .25s ease,border-color .25s ease;align-self:flex-end" onmouseover="this.style.color='var(--text)';this.style.borderColor='var(--text2)'" onmouseout="this.style.color='var(--text2)';this.style.borderColor='var(--border)'">All projects →</a>
   </div>
-  <div class="work-grid">
-    <a class="work-item work-item--tall" href="project.html?id=world-scores">
-      <img src="/brand_assets/world-scores.webp" alt="World Scores" loading="lazy"/>
-      <div class="work-item-overlay">
-        <div class="work-item-eye">Music for Artificial Societies · ongoing</div>
-        <div class="work-item-title">World Scores</div>
+
+  <!-- Scene 1: World Scores -->
+  <div class="ws-scene">
+    <div class="ws-sticky">
+      <div class="ws-img">
+        <img src="/brand_assets/world-scores.webp" alt="World Scores" loading="lazy"/>
       </div>
-    </a>
-    <a class="work-item" href="project.html?id=frankenstein">
-      <img src="/brand_assets/frankenstAIn.webp" alt="FrankenstAIn" loading="lazy"/>
-      <div class="work-item-overlay">
-        <div class="work-item-eye">Music Theatre · Premiering Oct 2026</div>
-        <div class="work-item-title">FrankenstAIn</div>
+      <div class="ws-title-initial">
+        <div class="ws-eye-initial">Music for Artificial Societies · ongoing</div>
+        <div class="ws-name-initial">World Scores</div>
       </div>
-    </a>
-    <a class="work-item" href="project.html?id=proper-time">
-      <img src="/brand_assets/proper-time.webp" alt="Proper Time" loading="lazy"/>
-      <div class="work-item-overlay">
-        <div class="work-item-eye">Installation · Audience Award INSIGHT 2023</div>
-        <div class="work-item-title">Proper Time</div>
+      <div class="ws-panel">
+        <div class="ws-panel-inner">
+          <span class="ws-eye">Music for Artificial Societies · ongoing</span>
+          <h3 class="ws-title">World Scores</h3>
+          <div class="ws-role-row">
+            <span class="ws-role-label">My role</span>
+            <span class="ws-roles">Concept · Composer</span>
+          </div>
+          <p class="ws-desc">Every piece of music is a language of relationship. World Scores composes the conditions under which communities of AI agents listen, align, contradict, and remember — building sound societies whose values and conflicts we are only beginning to hear.</p>
+          <a class="ws-cta" href="project.html?id=world-scores">View project</a>
+        </div>
       </div>
-    </a>
-    <a class="work-item" href="project.html?id=sojourn">
-      <img src="/brand_assets/Sojourn.webp" alt="Sojourn" loading="lazy"/>
-      <div class="work-item-overlay">
-        <div class="work-item-eye">Music Theatre · 2024</div>
-        <div class="work-item-title">Sojourn</div>
+      <div class="ws-scene-num">01 / 05</div>
+    </div>
+  </div>
+
+  <!-- Scene 2: FrankenstAIn -->
+  <div class="ws-scene">
+    <div class="ws-sticky">
+      <div class="ws-img">
+        <img src="/brand_assets/frankenstAIn.webp" alt="FrankenstAIn" loading="lazy"/>
       </div>
-    </a>
-    <a class="work-item" href="project.html?id=already">
-      <img src="/brand_assets/already-not-here.webp" alt="Already Not Here" loading="lazy"/>
-      <div class="work-item-overlay">
-        <div class="work-item-eye">Sound Installation · Schreibhain 2026</div>
-        <div class="work-item-title">Already Not Here</div>
+      <div class="ws-title-initial">
+        <div class="ws-eye-initial">Music Theatre · Premiering Oct 2026</div>
+        <div class="ws-name-initial">FrankenstAIn</div>
       </div>
-    </a>
+      <div class="ws-panel">
+        <div class="ws-panel-inner">
+          <span class="ws-eye">Music Theatre · Premiering Oct 2026</span>
+          <h3 class="ws-title">FrankenstAIn</h3>
+          <div class="ws-role-row">
+            <span class="ws-role-label">My role</span>
+            <span class="ws-roles">Composer · Sound Design · Concept</span>
+          </div>
+          <p class="ws-desc">Individual voices — not adapted to a musical ideal, but taken as source material. Through live voice modulation and spatial sound, a new theatrical language grows from difference.</p>
+          <a class="ws-cta" href="project.html?id=frankenstein">View project</a>
+          <div class="ws-funders">
+            <div class="ws-funders-label">Supported by</div>
+            <div class="ws-funder-logos">
+              <div class="ws-funder-logo"><span>Musikfonds e.V.</span></div>
+              <div class="ws-funder-logo"><span>Berliner Senat</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ws-scene-num">02 / 05</div>
+    </div>
+  </div>
+
+  <!-- Scene 3: Proper Time -->
+  <div class="ws-scene">
+    <div class="ws-sticky">
+      <div class="ws-img">
+        <img src="/brand_assets/proper-time.webp" alt="Proper Time" loading="lazy"/>
+      </div>
+      <div class="ws-title-initial">
+        <div class="ws-eye-initial">Installation · Audience Award INSIGHT 2023</div>
+        <div class="ws-name-initial">Proper Time</div>
+      </div>
+      <div class="ws-panel">
+        <div class="ws-panel-inner">
+          <span class="ws-eye">Installation · Audience Award INSIGHT 2023</span>
+          <h3 class="ws-title">Proper Time</h3>
+          <div class="ws-role-row">
+            <span class="ws-role-label">My role</span>
+            <span class="ws-roles">Concept · Sound Design</span>
+          </div>
+          <p class="ws-desc">An immersive multi-sensory installation asking whether personal time and physical time are the same. Spatial design, sound, and video compose the dissolution of your sense of causality.</p>
+          <a class="ws-cta" href="project.html?id=proper-time">View project</a>
+          <div class="ws-funders">
+            <div class="ws-funders-label">Funded by</div>
+            <div class="ws-funder-logos">
+              <div class="ws-funder-logo"><span>MIND Foundation</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ws-scene-num">03 / 05</div>
+    </div>
+  </div>
+
+  <!-- Scene 4: Sojourn -->
+  <div class="ws-scene">
+    <div class="ws-sticky">
+      <div class="ws-img">
+        <img src="/brand_assets/Sojourn.webp" alt="Sojourn" loading="lazy"/>
+      </div>
+      <div class="ws-title-initial">
+        <div class="ws-eye-initial">Music Theatre · 2024</div>
+        <div class="ws-name-initial">Sojourn</div>
+      </div>
+      <div class="ws-panel">
+        <div class="ws-panel-inner">
+          <span class="ws-eye">Music Theatre · 2024</span>
+          <h3 class="ws-title">Sojourn</h3>
+          <div class="ws-role-row">
+            <span class="ws-role-label">My role</span>
+            <span class="ws-roles">Composer · Performer · Concept</span>
+          </div>
+          <p class="ws-desc">A 75-minute performance tracing transformation through music, movement, masks, and aerial imagery. From resistance to listening; from control to relation.</p>
+          <a class="ws-cta" href="project.html?id=sojourn">View project</a>
+          <div class="ws-funders">
+            <div class="ws-funders-label">Supported by</div>
+            <div class="ws-funder-logos">
+              <div class="ws-funder-logo"><span>Goethe Institute</span></div>
+              <div class="ws-funder-logo"><span>Bezirkskulturfonds Berlin</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ws-scene-num">04 / 05</div>
+    </div>
+  </div>
+
+  <!-- Scene 5: Already Not Here -->
+  <div class="ws-scene">
+    <div class="ws-sticky">
+      <div class="ws-img">
+        <img src="/brand_assets/already-not-here.webp" alt="Already Not Here" loading="lazy"/>
+      </div>
+      <div class="ws-title-initial">
+        <div class="ws-eye-initial">Sound Installation · Schreibhain 2026</div>
+        <div class="ws-name-initial">Already Not Here</div>
+      </div>
+      <div class="ws-panel">
+        <div class="ws-panel-inner">
+          <span class="ws-eye">Sound Installation · Schreibhain 2026</span>
+          <h3 class="ws-title">Already Not Here</h3>
+          <div class="ws-role-row">
+            <span class="ws-role-label">My role</span>
+            <span class="ws-roles">Writer · Composer · Sound Design</span>
+          </div>
+          <p class="ws-desc">Eight simultaneous voices, each telling the story of a disappeared girl. The listener walks through the room, slowly building intimacy with someone who is no longer there.</p>
+          <a class="ws-cta" href="project.html?id=already">View project</a>
+          <div class="ws-funders">
+            <div class="ws-funders-label">Supported by</div>
+            <div class="ws-funder-logos">
+              <div class="ws-funder-logo"><span>Schreibhain</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ws-scene-num">05 / 05</div>
+    </div>
   </div>
 </section>
 
@@ -1473,7 +1938,7 @@
           <div class="cred-title">PhD in Theoretical Biophysics</div>
           <div class="cred-sub">Humboldt University, Berlin — summa cum laude<br>Modelling growth and adaptation in bacteria</div>
         </div>
-        <div class="cred-year">2022</div>
+        <div class="cred-year">2023</div>
       </div>
       <div class="cred">
         <div>
@@ -1515,13 +1980,45 @@
   </p>
 </div>
 
+<!-- ═══ CONTACT ═══ -->
+<section id="contact">
+  <div class="contact-inner">
+    <p class="eyebrow">Contact</p>
+    <p class="contact-sub">For presentations, commissions, research conversations, and collaborations.</p>
+    <form class="contact-form" id="cf-form">
+      <!-- Honeypot: bots fill this, humans don't see it -->
+      <input type="text" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+      <div class="cf-row">
+        <div class="cf-field">
+          <label class="cf-label" for="cf-name">Name</label>
+          <input class="cf-input" type="text" id="cf-name" name="name" placeholder="Your name" required>
+        </div>
+        <div class="cf-field">
+          <label class="cf-label" for="cf-email">Email</label>
+          <input class="cf-input" type="email" id="cf-email" name="email" placeholder="your@email.com" required>
+        </div>
+      </div>
+      <div class="cf-field">
+        <label class="cf-label" for="cf-message">Message</label>
+        <textarea class="cf-input cf-textarea" id="cf-message" name="message" placeholder="Your message" required></textarea>
+      </div>
+      <!-- Cloudflare Turnstile — replace sitekey with your own from dash.cloudflare.com/turnstile (free) -->
+      <div class="cf-turnstile-wrap">
+        <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-theme="dark"></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+        <button class="cf-submit" type="submit">Send message</button>
+        <span class="cf-status" id="cf-status" style="display:none"></span>
+      </div>
+    </form>
+  </div>
+</section>
+
 <!-- ═══ FOOTER ═══ -->
 <footer>
   <div class="footer-meta">
     <span class="footer-tagline">Performance · Sound · Research · Berlin</span>
-    <a class="footer-mail" href="mailto:bulovic.ana@gmail.com">bulovic.ana@gmail.com</a>
   </div>
-  <p class="footer-invite">For presentations, commissions, research conversations, and collaborations — write to <a href="mailto:bulovic.ana@gmail.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--text3)">bulovic.ana@gmail.com</a></p>
 </footer>
 
 <script>
@@ -1585,7 +2082,7 @@ const projects = {
     thumb:'/brand_assets/on-growth.webp', partnerType:'University', funding:['Humboldt University Berlin', 'INRAE France'] },
   'world-scores':  { label:'World Scores',      worlds:['living','shared'], type:'Music for artificial societies — ongoing',
     cats:['Music','Research'],
-    desc:'A current research project writing "worlds" — conditions and constraints from which communities of AI agents compose music. What environment must you build for something alive to emerge?',
+    desc:'A compositional practice designing artificial social environments — small constitutions from which communities of AI agents compose music by translating shared conditions into habits of listening, memory, contradiction, and time.',
     thumb:'/brand_assets/world-scores.webp', partnerType:'Advised by', funding:['Ellie Hein', 'Joe Edelman'] },
 };
 
@@ -2157,6 +2654,25 @@ if (!reduced) {
     updateRings();
   }
 
+  /* ── STICKY WORK SCENES ─────────────────────────────────── */
+  (function() {
+    const scenes = document.querySelectorAll('.ws-scene');
+    if (!scenes.length) return;
+    function updateScenes() {
+      scenes.forEach(scene => {
+        const rect = scene.getBoundingClientRect();
+        const scrolledIn = -rect.top;
+        if (scrolledIn > window.innerHeight * 0.18) {
+          scene.classList.add('ws-revealed');
+        } else if (scrolledIn < window.innerHeight * 0.05) {
+          scene.classList.remove('ws-revealed');
+        }
+      });
+    }
+    window.addEventListener('scroll', updateScenes, { passive: true });
+    updateScenes();
+  })();
+
   /* ── SHOOTING STARS ─────────────────────────────────────── */
   const starsLayer = document.getElementById('stars-layer');
   if (starsLayer) {
@@ -2203,6 +2719,67 @@ if (!reduced) {
       setTimeout(() => { spawnStar(); scheduleNext(); }, 1400 + Math.random() * 3000);
     })();
   }
+}
+
+/* ── CONTACT FORM ──────────────────────────────────────────
+   Two things to configure before going live:
+
+   1. Web3Forms key — go to web3forms.com, enter your email,
+      copy the key and replace WEB3FORMS_ACCESS_KEY below.
+
+   2. Cloudflare Turnstile key — go to dash.cloudflare.com/turnstile
+      (free), create a site, copy the Site Key and replace the
+      data-sitekey="1x00000000000000000000AA" on the widget div
+      in the HTML above (1x00… is the public test key).
+   ────────────────────────────────────────────────────────── */
+const cfForm = document.getElementById('cf-form');
+const cfStatus = document.getElementById('cf-status');
+if (cfForm) {
+  cfForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = cfForm.querySelector('.cf-submit');
+
+    // Honeypot check — silently drop if bot filled the hidden field
+    if (cfForm.querySelector('[name="botcheck"]')?.value) return;
+
+    // Turnstile check — widget must be completed before submitting
+    const turnstileToken = cfForm.querySelector('[name="cf-turnstile-response"]')?.value;
+    if (!turnstileToken) {
+      cfStatus.textContent = 'Please complete the verification above.';
+      cfStatus.style.display = '';
+      return;
+    }
+
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+    cfStatus.style.display = 'none';
+
+    const data = new FormData(cfForm);
+    data.delete('cf-turnstile-response'); // validated client-side above; don't send to Web3Forms
+    data.append('access_key', '1eb2cc0b-d95f-485f-8803-c09f7418327a');
+    data.append('subject', 'New message from anabulovic.art');
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: data,
+      });
+      const json = await res.json();
+      if (json.success) {
+        cfForm.reset();
+        if (window.turnstile) window.turnstile.reset();
+        cfStatus.textContent = 'Message sent.';
+      } else {
+        cfStatus.textContent = json.message || 'Something went wrong — please try again.';
+      }
+    } catch {
+      cfStatus.textContent = 'Could not send — check your connection.';
+    }
+
+    cfStatus.style.display = '';
+    btn.textContent = 'Send message';
+    btn.disabled = false;
+  });
 }
 </script>
 </body>
