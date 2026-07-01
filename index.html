@@ -114,7 +114,7 @@
       text-transform: uppercase; color: var(--text3); text-decoration: none;
       transition: color .2s ease;
     }
-    .top-nav-links a:hover, .top-nav-links a:focus-visible { color: var(--text); outline: none; }
+    .top-nav-links a:hover, .top-nav-links a:focus-visible { color: var(--accent); outline: none; }
 
     /* ─── FLOATING ALL-PROJECTS BUTTON ─── */
     .work-float {
@@ -139,13 +139,13 @@
       writing-mode: vertical-rl;
       text-orientation: mixed;
       rotate: 180deg;
-      font-size: 9px;
+      font-size: 11px;
       font-weight: 500;
-      letter-spacing: .2em;
+      letter-spacing: .22em;
       text-transform: uppercase;
       color: var(--text3);
       text-decoration: none;
-      padding: 20px 10px;
+      padding: 28px 14px;
       border-left: 1px solid var(--border);
       background: rgba(9,9,9,0.6);
       backdrop-filter: blur(8px);
@@ -768,7 +768,6 @@
 
     /* ─── ABOUT ─── */
     .about-section {
-      min-height: 100vh;
       padding: clamp(80px, 12vh, 140px) clamp(24px, 7vw, 110px);
       display: grid;
       grid-template-columns: 1.1fr 1fr;
@@ -784,7 +783,7 @@
       line-height: 1.78;
       color: var(--text2);
     }
-    .about-text em { font-style: italic; color: var(--text); }
+    .about-text em { font-style: italic; color: var(--accent); }
 
     .creds { display: flex; flex-direction: column; }
     .cred {
@@ -800,6 +799,7 @@
     .cred-sub   { font-size: 11.5px; font-weight: 300; color: var(--text2); line-height: 1.5; }
     .cred-sub em { font-style: italic; }
     .cred-year  { font-size: 11px; color: var(--text3); white-space: nowrap; padding-top: 1px; }
+    .cred-year.current { color: var(--accent); }
 
     /* ─── TURTLE MAFIA ─── */
     .turtle {
@@ -2047,8 +2047,8 @@
     <p class="eyebrow" style="margin-bottom:28px">About</p>
     <p class="about-text">
       Born in Yugoslavia in 1989, based in Berlin.<br><br>
-      I compose performances, installations, and spatial sound works that make hidden relations perceptible — searching for what remains untranslatable between body, language, and memory.<br><br>
-      I am a former academic with a doctorate in Theoretical Biophysics from Humboldt University, Berlin. I left academia to refocus my research on the questions that began it: the organizing principles of living systems, and what they reveal about how meaning is made.
+      I compose performances, installations, and spatial sound works that make <em>hidden relations perceptible</em> — searching for what remains untranslatable between body, language, and memory.<br><br>
+      I am a former academic with a doctorate in Theoretical Biophysics from Humboldt University, Berlin. I left academia to refocus my research on the questions that began it: the <em>organizing principles of living systems</em>, and what they reveal about how meaning is made.
     </p>
   </div>
   <div>
@@ -2059,14 +2059,14 @@
           <div class="cred-title">Schreibhain XXIV Literary Stipend</div>
           <div class="cred-sub">For literary work <em>Raum für die Wahrheit</em></div>
         </div>
-        <div class="cred-year">2026</div>
+        <div class="cred-year current">2026</div>
       </div>
       <div class="cred">
         <div>
           <div class="cred-title">Arbeits- und Recherchestipendium</div>
           <div class="cred-sub">For research on sonic dramaturgy and spatial sound</div>
         </div>
-        <div class="cred-year">2026</div>
+        <div class="cred-year current">2026</div>
       </div>
       <div class="cred">
         <div>
