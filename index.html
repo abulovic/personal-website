@@ -8,8 +8,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <!-- Cloudflare Turnstile captcha -->
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1006,8 +1004,6 @@
       color: var(--text2);
       letter-spacing: .04em;
     }
-    /* Turnstile renders its own iframe — dark theme is set via data-theme="dark" on the widget */
-    .cf-turnstile iframe { border: none; }
     @media (max-width: 860px) {
       .contact-layout { grid-template-columns: 1fr; gap: 40px; }
       .contact-sub { max-width: none; }
@@ -2144,11 +2140,7 @@
         <label class="cf-label" for="cf-message">Message</label>
         <textarea class="cf-input cf-textarea" id="cf-message" name="message" placeholder="Your message" required></textarea>
       </div>
-      <!-- Cloudflare Turnstile — replace sitekey with your own from dash.cloudflare.com/turnstile (free) -->
-      <div class="cf-turnstile-wrap">
-        <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-theme="dark"></div>
-      </div>
-      <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+<div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
         <button class="cf-submit" type="submit">Send message</button>
         <span class="cf-status" id="cf-status" style="display:none"></span>
       </div>
@@ -2883,10 +2875,6 @@ if (!reduced) {
    1. Web3Forms key — go to web3forms.com, enter your email,
       copy the key and replace WEB3FORMS_ACCESS_KEY below.
 
-   2. Cloudflare Turnstile key — go to dash.cloudflare.com/turnstile
-      (free), create a site, copy the Site Key and replace the
-      data-sitekey="1x00000000000000000000AA" on the widget div
-      in the HTML above (1x00… is the public test key).
    ────────────────────────────────────────────────────────── */
 const cfForm = document.getElementById('cf-form');
 const cfStatus = document.getElementById('cf-status');
@@ -2898,20 +2886,11 @@ if (cfForm) {
     // Honeypot check — silently drop if bot filled the hidden field
     if (cfForm.querySelector('[name="botcheck"]')?.value) return;
 
-    // Turnstile check — widget must be completed before submitting
-    const turnstileToken = cfForm.querySelector('[name="cf-turnstile-response"]')?.value;
-    if (!turnstileToken) {
-      cfStatus.textContent = 'Please complete the verification above.';
-      cfStatus.style.display = '';
-      return;
-    }
-
     btn.textContent = 'Sending…';
     btn.disabled = true;
     cfStatus.style.display = 'none';
 
     const data = new FormData(cfForm);
-    data.delete('cf-turnstile-response'); // validated client-side above; don't send to Web3Forms
     data.append('access_key', '1eb2cc0b-d95f-485f-8803-c09f7418327a');
     data.append('subject', 'New message from anabulovic.art');
 
@@ -2923,7 +2902,6 @@ if (cfForm) {
       const json = await res.json();
       if (json.success) {
         cfForm.reset();
-        if (window.turnstile) window.turnstile.reset();
         cfStatus.textContent = 'Message sent.';
       } else {
         cfStatus.textContent = json.message || 'Something went wrong — please try again.';
